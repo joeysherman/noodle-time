@@ -12,14 +12,19 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
+import RamenButton from '../../components/RamenButton/ramenButton';
+import Paper from 'material-ui/Paper';
 
 export default class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   render() {
     return (
-      <h1>
-        <FormattedMessage {...messages.header} />
-      </h1>
+      <div>
+        <Paper zDepth={3}>
+          <RamenButton style={{ margin: 'auto'}}></RamenButton>
+          <h1 style={{ margin: 'auto'}}>Lets find ramen!</h1>
+        </Paper>
+      </div>
     );
   }
 }
