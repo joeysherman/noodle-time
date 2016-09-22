@@ -14,8 +14,14 @@ import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import RamenButton from '../../components/RamenButton/ramenButton';
 import Paper from 'material-ui/Paper';
+import { connect } from 'react-redux';
 
-export default class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+import {
+  selectLoading,
+  selectError,
+} from './selectors';
+
+class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   render() {
     return (
@@ -28,3 +34,22 @@ export default class HomePage extends React.Component { // eslint-disable-line r
     );
   }
 }
+
+const mapStateToProps = (state) => {
+
+  return {
+    error: selectError(state),
+    loading: selectLoading(state)
+  }
+
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    dispatch
+  }
+};
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
