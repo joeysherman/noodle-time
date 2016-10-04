@@ -7,7 +7,7 @@ import * as constants from './constants';
 export function userLocationFound(userLocation) {
   return {
     type: constants.USER_LOCATION_FOUND,
-    payload: userLocation
+    userLocation
   }
 }
 
@@ -17,10 +17,16 @@ export function userLocationRequest() {
   }
 }
 
+export function userLocationPending() {
+  return {
+    type: constants.USER_LOCATION_PENDING
+  }
+}
+
 export function userLocationError(error) {
   return {
     type: constants.USER_LOCATION_ERROR,
-    payload: error
+    error
   }
 }
 
@@ -29,13 +35,13 @@ export function getUserLocation() {
   return new Promise((resolve, reject) => {
     if ("navigator" in window) {
       window.navigator.geolocation.getCurrentPosition((location) => {
-        resolve(location);
+        resolve({ data: location });
       }, (error) => {
-        reject(error);
+        reject({ error: error });
       });
     } else {
       reject({
-        message: 'No Navigator',
+        error: 'No Navigator',
       })
     }
   });

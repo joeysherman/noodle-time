@@ -8,7 +8,7 @@ import ramenBowl from './ramen.svg';
 class RamenButton extends React.Component {
   render(){
     return (
-      <img src={ramenBowl}></img>
+      <img onClick={this.props.onClick} src={ramenBowl}></img>
     )
   }
 }

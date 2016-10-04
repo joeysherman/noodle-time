@@ -20,11 +20,11 @@ export default function homeReducer (state = initialState, action){
             return state
               .set('loading', false)
               .set('error', false)
-              .set('userLocation', fromJS(action.payload));
+              .setIn('userLocation', action.userLocation);
       case constants.USER_LOCATION_ERROR :
             return state
               .set('loading', false)
-              .set('error', action.payload);
+              .setIn('error', action.error);
     }
   return state;
 }

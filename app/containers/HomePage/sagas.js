@@ -9,16 +9,19 @@ import {
   getUserLocation,
   userLocationError,
   userLocationFound,
+  userLocationPending,
 } from './actions';
 
 export function* homePageSaga() {
   yield take(FETCH_USER_LOCATION);
-  
-  try {
-    const location = yield call(getUserLocation);
-    yield put(userLocationFound(location));
-  } catch (error) {
-    yield put(userLocationError(error));
+
+  yield put(userLocationPending());
+  const location = yield call(getUserLocation);
+
+  if (!location.error) {
+    yield put(userLocationFound(location.data));
+  } else {
+    yield put(userLocationError(location.error));
   }
 }
 

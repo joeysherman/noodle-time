@@ -16,6 +16,8 @@ import RamenButton from '../../components/RamenButton/ramenButton';
 import Paper from 'material-ui/Paper';
 import { connect } from 'react-redux';
 
+import { userLocationRequest } from './actions';
+
 import {
   selectLoading,
   selectError,
@@ -27,7 +29,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
     return (
       <div>
         <Paper zDepth={3}>
-          <RamenButton style={{ margin: 'auto'}}></RamenButton>
+          <RamenButton onClick={() => {this.props.dispatch(userLocationRequest())}} style={{ margin: 'auto'}}></RamenButton>
           <h1 style={{ margin: 'auto'}}>Lets find ramen!</h1>
         </Paper>
       </div>
