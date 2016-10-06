@@ -18,7 +18,7 @@ const selectLoading = createSelector(
 
 const selectUserLocation = () => createSelector(
   selectHomeDomain,
-  (home) => home.get('userLocation').toJS(),
+  (home) => home.get('userLocation'),
 );
 
 export {

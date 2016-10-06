@@ -13,15 +13,18 @@ import {
 } from './actions';
 
 export function* homePageSaga() {
-  yield take(FETCH_USER_LOCATION);
+  while (yield take(FETCH_USER_LOCATION)) {
 
-  yield put(userLocationPending());
-  const location = yield call(getUserLocation);
+    yield put(userLocationPending());
+    const {location, error} = yield call(getUserLocation);
 
-  if (!location.error) {
-    yield put(userLocationFound(location.data));
-  } else {
-    yield put(userLocationError(location.error));
+    if (location) {
+      console.log(location);
+      yield put(userLocationFound(location));
+    } else if (error) {
+      console.log(error);
+      yield put(userLocationError(error));
+    }
   }
 }
 
