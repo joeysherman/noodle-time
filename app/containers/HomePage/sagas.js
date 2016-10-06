@@ -4,7 +4,7 @@
 
 
 import { take, put, fork, call } from 'redux-saga/effects';
-import { FETCH_USER_LOCATION } from './constants';
+import { FETCH_USER_LOCATION, USER_LOCATION_ERROR } from './constants';
 import {
   getUserLocation,
   userLocationError,
@@ -19,10 +19,9 @@ export function* homePageSaga() {
     const {location, error} = yield call(getUserLocation);
 
     if (location) {
-      console.log(location);
       yield put(userLocationFound(location));
     } else if (error) {
-      console.log(error);
+
       yield put(userLocationError(error));
     }
   }

@@ -7,7 +7,7 @@ import * as constants from './constants';
 export function userLocationFound(userLocation) {
   return {
     type: constants.USER_LOCATION_FOUND,
-    payload: userLocation
+    payload: userLocation,
   }
 }
 
