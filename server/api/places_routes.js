@@ -66,7 +66,7 @@ module.exports = (function places(){
   Router.get('/api/place', function(req, res, next) {
     var id = req.query.id;
 
-    if (!id) return res.statusCode(402).send('No place ID given in request');
+    if (!id) return res.status(402).send('No place ID given in request');
 
     req.app.locals.google.place({
       placeid: id,
