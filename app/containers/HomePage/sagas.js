@@ -21,7 +21,6 @@ export function* homePageSaga() {
     if (location) {
       yield put(userLocationFound(location));
     } else if (error) {
-
       yield put(userLocationError(error));
     }
   }

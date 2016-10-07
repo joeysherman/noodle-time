@@ -9,11 +9,11 @@ module.exports = (function places(){
   Router.get('/api/near', function(req, res, next){
     var radius = req.query.radius || 1000,
        language = req.query.language || 'en',
-       opennow = req.query.opennow || false,
+       opennow = true,
        lat = req.query.lat,
        lng = req.query.lng;
 
-    console.log('Lat: '+ lat + '/nLng: '+ lng);
+    console.log('Lat: '+ lat + '\nLng: '+ lng);
     req.app.locals.google.places({
       query: 'ramen',
       language: language,
@@ -61,6 +61,24 @@ module.exports = (function places(){
     } else {
       res.status(402).send('No input for autocomplete supplied');
     }
+  });
+
+  Router.get('/api/place', function(req, res, next) {
+    var id = req.query.id;
+
+    if (!id) return res.statusCode(402).send('No place ID given in request');
+
+    req.app.locals.google.place({
+      placeid: id,
+      language: 'en',
+    })
+    .asPromise()
+    .then((response) => {
+      res.send(response);
+    }, (error) => {
+      res.send(error);
+    });
+
   });
 
   return Router;
