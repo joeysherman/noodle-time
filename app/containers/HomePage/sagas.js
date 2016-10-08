@@ -4,27 +4,68 @@
 
 
 import { take, put, fork, call } from 'redux-saga/effects';
-import { FETCH_USER_LOCATION, USER_LOCATION_ERROR } from './constants';
+import { delay } from 'redux-saga';
+
 import {
-  getUserLocation,
+
+  USER_LOCATION_REQUEST,
+  USER_LOCATION_ERROR,
+
+  AUTOCOMPLETE_REQUEST,
+  AUTOCOMPLETE_ERROR,
+
+} from './constants';
+
+import {
+
+  userLocationRequest,
   userLocationError,
-  userLocationFound,
+  userLocationSuccess,
   userLocationPending,
+
+  autoCompleteRequest,
+  autoCompleteError,
+  autoCompleteSuccess,
+
 } from './actions';
 
+const autoCompleteUrl = 'http://localhost:3000/api/autocomplete';
+
 export function* homePageSaga() {
-  while (yield take(FETCH_USER_LOCATION)) {
+  while (true) {
 
     yield put(userLocationPending());
-    const {location, error} = yield call(getUserLocation);
+    const {location, error} = yield call(userLocationRequest);
 
     if (location) {
-      yield put(userLocationFound(location));
-    } else if (error) {
+      yield put(userLocationSuccess(location));
+    } else {
       yield put(userLocationError(error));
+      yield call(throttleAutocomplete);
     }
   }
 }
+
+function* fetchAutocomplete(action) {
+  var url = autoCompleteUrl + '?input=' + action.input;
+  const autoCompleteResults = yield call(request, url);
+  yield put(autoCompleteSuccess(autoCompleteResults));
+};
+
+function* throttleAutocomplete() {
+  yield throttle(500, AUTOCOMPLETE_REQUEST, fetchAutocomplete);
+};
+
+/* From the redux docs */
+function* throttle(ms, pattern, task, ...args) {
+  const throttleChannel = yield actionChannel(pattern, buffers.sliding(1));
+
+  while (true) {
+    const action = yield take(throttleChannel);
+    yield fork(task, ...args, action);
+    yield call(delay, ms);
+  };
+};
 
 export default [
   homePageSaga,
