@@ -66,7 +66,7 @@ module.exports = (function places(){
   Router.get('/api/place', function(req, res, next) {
     var id = req.query.id;
 
-    if (!id) return res.status(402).send('No place ID given in request');
+    if (!id) return res.status(402).send('No place ID supplied in request');
 
     req.app.locals.google.place({
       placeid: id,
@@ -75,6 +75,25 @@ module.exports = (function places(){
     .asPromise()
     .then((response) => {
       res.send(response);
+    }, (error) => {
+      res.send(error);
+    });
+
+  });
+
+  Router.get('/api/placePhoto', function(req, res, next) {
+    var reference = req.query.reference;
+
+    if (!reference) return res.status(402).send('No Photo Reference supplied in request.');
+
+    req.app.locals.google.placesPhoto({
+      photoreference: "CoQBdwAAAPVwoTvroc0TxdCFEo4rqNV7VypNHQTzKXt5XRxrHvmA1R3b6HuFcNlofgdOypsQPhtmn5YOOIe_L0OaRn4UelIDJbNzpTvdNOoFS6wmGtE6mnW7pHCfQpVU9ucKUo9vq_PSCikocF7UV4HiG01UHDfA-LAme5iC39Lr4YEWFLNBEhAHKfQcdOjtF_O8cjTFSZCZGhShFHmz-WFzypH74uB5OiQSLroaHw",
+      maxwidth: 100,
+      maxheight: 100
+    })
+    .asPromise()
+    .then((response) => {
+      
     }, (error) => {
       res.send(error);
     });
