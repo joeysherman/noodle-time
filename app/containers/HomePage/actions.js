@@ -6,14 +6,14 @@ import * as constants from './constants';
 
 export function userLocationFound(userLocation) {
   return {
-    type: constants.USER_LOCATION_FOUND,
+    type: constants.USER_LOCATION_SUCCESS,
     payload: userLocation,
   }
 }
 
 export function userLocationRequest() {
   return {
-    type: constants.FETCH_USER_LOCATION,
+    type: constants.USER_LOCATION_REQUEST,
   }
 }
 
@@ -30,12 +30,38 @@ export function userLocationError(error) {
   }
 }
 
+export function autoCompleteRequest() {
+  return {
+    type: constants.AUTOCOMPLETE_REQUEST,
+  }
+}
+
+export function autoCompleteSuccess(response) {
+  return {
+    type: constants.AUTOCOMPLETE_SUCCESS,
+    payload: response,
+  }
+}
+
+export function autoCompleteError(error) {
+  return {
+    type: constants.AUTOCOMPLETE_ERROR,
+    payload: error,
+  }
+}
+
+export function autoCompletePending() {
+  return {
+    type: constants.AUTOCOMPLETE_PENDING
+  }
+}
+
 
 export function getUserLocation() {
   return new Promise((resolve, reject) => {
     let options = {
       enableHighAccuracy: true,
-      timeout: 5000,
+      timeout: 1000,
       maximumAge: 10
     };
 
