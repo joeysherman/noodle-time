@@ -20,6 +20,8 @@ module.exports = function addApiMiddleware(app) {
   app.use(morgan(setting));
 
   app.use(require('../api/places_routes'));
+  
+  app.use(require('../api/direction_routes'));
 
   app.use(Router);
 };

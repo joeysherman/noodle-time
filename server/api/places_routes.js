@@ -12,8 +12,8 @@ module.exports = (function places(){
        opennow = true,
        lat = req.query.lat,
        lng = req.query.lng;
-
-    console.log('Lat: '+ lat + '\nLng: '+ lng);
+    
+    
     req.app.locals.google.places({
       query: 'ramen',
       language: language,
