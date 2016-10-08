@@ -6,23 +6,25 @@ var Router = require('express').Router();
 
 module.exports = (function places(){
 
-  Router.get('/api/near', function(req, res, next){
+  Router.get('/api/places', function(req, res, next){
+    console.log(JSON.stringify(req.query));
     var radius = req.query.radius || 1000,
        language = req.query.language || 'en',
-       opennow = true,
+       opennow = req.query.open ?
+         req.query.open == 'false' ? false : true :
+         true,
        lat = req.query.lat,
        lng = req.query.lng;
     
-    
+    console.log(opennow);
     req.app.locals.google.places({
       query: 'ramen',
-      language: language,
+      language: 'en',
       location: [lat, lng],
-      radius: radius,
+      radius: 5000,
       minprice: 1,
-      maxprice: 5,
-      opennow: opennow,
-      type: 'restaurant'
+      maxprice: 4,
+      opennow: false,
     }, function(err, places){
       if (!err){
         res.send(places);

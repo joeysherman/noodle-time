@@ -13,22 +13,27 @@ const app = express();
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);
-setupBackend(app);
+  setupBackend(app);
 
 // In production we need to pass these values in instead of relying on webpack
-setupFrontend(app, {
-  outputPath: resolve(process.cwd(), 'build'),
-  publicPath: '/',
-});
+  setupFrontend(app, {
+    outputPath: resolve(process.cwd(), 'build'),
+    publicPath: '/',
+  });
 
 // get the intended port number, use port 3000 if not provided
-const port = argv.port || process.env.PORT || 3000;
+var port;
+  if (!process.env.SERVER_DEV == true) {
+    port = argv.port || process.env.PORT || 3000;
+  } else {
+    port = 8080;
+  }
 
 // Start your app.
-app.listen(port, (err) => {
-  if (err) {
-    return logger.error(err.message);
-  }
+  app.listen(port, (err) => {
+    if (err) {
+      return logger.error(err.message);
+    }});
 
   // Connect to ngrok in dev mode
   if (ngrok) {
@@ -41,5 +46,4 @@ app.listen(port, (err) => {
     });
   } else {
     logger.appStarted(port);
-  }
-});
+  };
