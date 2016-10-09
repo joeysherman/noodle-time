@@ -16,14 +16,23 @@ const selectLoading = createSelector(
   (home) => home.get('loading'),
 );
 
-const selectUserLocation = () => createSelector(
+const selectUserLocation = createSelector(
   selectHomeDomain,
   (home) => home.get('userLocation'),
 );
 
+const selectAutoCompleteData = createSelector(
+  selectHomeDomain,
+  (home) => home.get('autoComplete'),
+);
+
+
+
 export {
   selectHomeDomain,
   selectError,
-  selectLoading
+  selectLoading,
+  selectUserLocation,
+  selectAutoCompleteData,
 };
 

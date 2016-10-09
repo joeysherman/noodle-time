@@ -5,12 +5,9 @@
 var React = require('react');
 import ramenBowl from './ramen.svg';
 
-class RamenButton extends React.Component {
-  render(){
-    return (
-      <img onClick={this.props.onClick} src={ramenBowl}></img>
-    )
-  }
+const RamenButton = function(props) {
+  return (
+    <img onClick={props.onClick} src={ramenBowl} className={props.className}></img>
+  )
 }
-
 export default RamenButton;

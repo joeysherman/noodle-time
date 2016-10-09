@@ -4,7 +4,7 @@
 
 import * as constants from './constants';
 
-export function userLocationFound(userLocation) {
+export function userLocationSuccess(userLocation) {
   return {
     type: constants.USER_LOCATION_SUCCESS,
     payload: userLocation,
@@ -30,9 +30,10 @@ export function userLocationError(error) {
   }
 }
 
-export function autoCompleteRequest() {
+export function autoCompleteRequest(input) {
   return {
     type: constants.AUTOCOMPLETE_REQUEST,
+    payload: input
   }
 }
 
@@ -56,8 +57,7 @@ export function autoCompletePending() {
   }
 }
 
-
-export function getUserLocation() {
+export function userLocationRequest() {
   return new Promise((resolve, reject) => {
     let options = {
       enableHighAccuracy: true,

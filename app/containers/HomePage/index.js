@@ -14,24 +14,48 @@ import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import RamenButton from '../../components/RamenButton/ramenButton';
 import Paper from 'material-ui/Paper';
+import AutoComplete from 'material-ui/AutoComplete';
 import { connect } from 'react-redux';
 
-import { userLocationRequest } from './actions';
+import {
+
+  userLocationRequest,
+  autoCompleteRequest,
+
+} from './actions';
 
 import {
+
   selectLoading,
   selectError,
+  selectUserLocation,
+  selectAutoCompleteData,
+
 } from './selectors';
 
 class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   render() {
+
+    var main;
+
+    if (this.props.error){
+      main = ( <AutoComplete
+        hintText="Type anything"
+        dataSource={this.props.autoCompleteDataSource || []}
+        onUpdateInput={(input) => { this.props.dispatch(autoCompleteRequest(input)) }}
+      /> )
+    } else {
+      main = (
+        <div>
+          <RamenButton onClick={() => {this.props.dispatch(userLocationRequest())}} style={{ margin: 'auto'}}></RamenButton>
+        <h1 style={{ margin: 'auto'}}>Lets find ramen!</h1>
+        </div> )
+    }
+
     return (
       <div>
-        <Paper zDepth={3}>
-          <RamenButton onClick={() => {this.props.dispatch(userLocationRequest())}} style={{ margin: 'auto'}}></RamenButton>
-          <h1 style={{ margin: 'auto'}}>Lets find ramen!</h1>
-        </Paper>
+        {main}
       </div>
     );
   }
@@ -41,9 +65,11 @@ const mapStateToProps = (state) => {
 
   return {
     error: selectError(state),
-    loading: selectLoading(state)
-  }
+    loading: selectLoading(state),
+    autoCompleteDataSource: selectAutoCompleteData(state),
+    userLocation: selectUserLocation(state),
 
+  }
 };
 
 const mapDispatchToProps = (dispatch) => {

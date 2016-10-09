@@ -3,8 +3,10 @@
  */
 
 
-import { take, put, fork, call } from 'redux-saga/effects';
-import { delay } from 'redux-saga';
+import { take, actionChannel, put, fork, call } from 'redux-saga/effects';
+import { delay, buffers } from 'redux-saga';
+import request from '../../utils/request';
+
 
 import {
 
@@ -29,7 +31,7 @@ import {
 
 } from './actions';
 
-const autoCompleteUrl = 'http://localhost:3000/api/autocomplete';
+const autoCompleteUrl = 'http://localhost:8080/api/autocomplete';
 
 export function* homePageSaga() {
   while (true) {
@@ -47,8 +49,14 @@ export function* homePageSaga() {
 }
 
 function* fetchAutocomplete(action) {
-  var url = autoCompleteUrl + '?input=' + action.input;
-  const autoCompleteResults = yield call(request, url);
+  var url = autoCompleteUrl + '?input=' + action.payload,
+      options = {
+        method: 'GET',
+        mode: 'no-cors',
+        cache: 'default'
+      };
+
+  const autoCompleteResults = yield call(request, url, options);
   yield put(autoCompleteSuccess(autoCompleteResults));
 };
 

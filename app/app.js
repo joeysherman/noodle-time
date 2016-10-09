@@ -59,11 +59,6 @@ const render = (translatedMessages) => {
         <Router
           history={history}
           routes={rootRoute}
-          render={
-            // Scroll to top when going to a new page, imitating default browser
-            // behaviour
-            applyRouterMiddleware(useScroll())
-          }
         />
       </LanguageProvider>
     </Provider>,
