@@ -13,13 +13,21 @@ module.exports = (function directions_routes() {
         lng = req.query.lng, 
         location = lat + "|" + lng;
 
-    var destlat = req.query.destlat,
-        destlng = req.query.destlng,
-        destination = destlat + "|" + destlng;
+    var destinations = [];
+
+    if (typeof req.query.destlat == 'object' && req.query.destlat.length) {
+      console.log('is array');
+      req.query.destlat.forEach(function(item, i) {
+        destinations.push({
+          lat: req.query.destlat[i],
+          lng: req.query.destlng[i],
+        });
+      });
+    }
     
     req.app.locals.google.distanceMatrix({
-      origins: location,
-      destinations: destination,
+      origins: [{ lat: lat, lng: lng }],
+      destinations: destinations,
     })
     .asPromise()
     .then((response) => {

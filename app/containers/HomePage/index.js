@@ -25,6 +25,10 @@ import {
 } from './actions';
 
 import {
+  USER_LOCATION_REQUEST
+} from './constants';
+
+import {
 
   selectLoading,
   selectError,
@@ -35,20 +39,24 @@ import {
 
 class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
+  noodleTime = () => {
+    this.props.noodleTime();
+  };
+
   render() {
 
     var main;
 
     if (this.props.error){
       main = ( <AutoComplete
-        hintText="Type anything"
+        hintText="Search for your location"
         dataSource={this.props.autoCompleteDataSource || []}
         onUpdateInput={(input) => { this.props.dispatch(autoCompleteRequest(input)) }}
       /> )
     } else {
       main = (
         <div>
-          <RamenButton onClick={() => {this.props.dispatch(userLocationRequest())}} style={{ margin: 'auto'}}></RamenButton>
+          <RamenButton onClick={this.props.noodleTime}></RamenButton>
         <h1 style={{ margin: 'auto'}}>Lets find ramen!</h1>
         </div> )
     }
@@ -74,8 +82,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    dispatch
-  }
+    noodleTime: () => {
+      let action = userLocationRequest();
+      console.log(action);
+      dispatch(action);
+    },
+    dispatch,
+    }
 };
 
 

@@ -57,7 +57,7 @@ export function autoCompletePending() {
   }
 }
 
-export function userLocationRequest() {
+export function fetchUserLocationGeo() {
   return new Promise((resolve, reject) => {
     let options = {
       enableHighAccuracy: true,

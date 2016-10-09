@@ -24,6 +24,7 @@ import {
   userLocationError,
   userLocationSuccess,
   userLocationPending,
+  fetchUserLocationGeo,
 
   autoCompleteRequest,
   autoCompleteError,
@@ -35,9 +36,9 @@ const autoCompleteUrl = 'http://localhost:8080/api/autocomplete';
 
 export function* homePageSaga() {
   while (true) {
-
+    yield take(USER_LOCATION_REQUEST);
     yield put(userLocationPending());
-    const {location, error} = yield call(userLocationRequest);
+    const {location, error} = yield call(fetchUserLocationGeo);
 
     if (location) {
       yield put(userLocationSuccess(location));
