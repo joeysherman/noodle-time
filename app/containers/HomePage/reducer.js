@@ -11,7 +11,7 @@ const initialState = fromJS({
    error: false,
 });
 
-export default function homeReducer (state = initialState, action){
+function homeReducer (state = initialState, action){
   switch (action.type) {
 
     case constants.USER_LOCATION_PENDING :

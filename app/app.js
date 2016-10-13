@@ -18,7 +18,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { applyRouterMiddleware, Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
-import { useScroll } from 'react-router-scroll';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import LanguageProvider from 'containers/LanguageProvider';
 import configureStore from './store';
 
@@ -26,7 +26,9 @@ import configureStore from './store';
 import { translationMessages } from './i18n';
 
 // Import the CSS reset, which HtmlWebpackPlugin transfers to the build folder
+/*
 import 'sanitize.css/sanitize.css';
+*/
 
 // Create redux store with history
 // this uses the singleton browserHistory provided by react-router
@@ -91,6 +93,8 @@ if (!window.Intl) {
 } else {
   render(translationMessages);
 }
+
+injectTapEventPlugin();
 
 /*
 // Install ServiceWorker and AppCache in the end since
