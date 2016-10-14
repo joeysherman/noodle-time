@@ -84,7 +84,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     noodleTime: () => {
       let action = userLocationRequest();
-      console.log(action);
       dispatch(action);
     },
     dispatch,

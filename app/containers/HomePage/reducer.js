@@ -43,16 +43,16 @@ function homeReducer (state = initialState, action){
         .set('loading', false)
         .set('error', true);
     case constants.AUTOCOMPLETE_SUCCESS :
-      let suggestions;
-
+      let predictions;
       console.log(action.payload);
+      if (!action.payload) return state;
 
       if (action.payload.predictions && typeof action.payload.predictions == 'Array'){
-        suggestions = action.payload.predictions.map((item) => item.description );
-      } else suggestions = ['hi', 'hello'];
+        predictions = action.payload.predictions.map((item) => item.description );
+      } ;
       return state
         .set('loading', false)
-        .set('autoComplete', suggestions);
+        .set('autoComplete', predictions);
   }
 
   return state;

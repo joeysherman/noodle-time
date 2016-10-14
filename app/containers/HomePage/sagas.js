@@ -57,12 +57,17 @@ function* fetchAutocomplete(action) {
         cache: 'default'
       };
 
-  const autoCompleteResults = yield call(request, url, options);
-  yield put(autoCompleteSuccess(autoCompleteResults));
+  const predictions = yield call(request, url, options);
+  
+  if (predictions.data) {
+    yield put(autoCompleteSuccess(predictions.data));
+  } else {
+    yield put(autoCompleteError(predictions.err));
+  }
 };
 
 function* throttleAutocomplete() {
-  yield throttle(500, AUTOCOMPLETE_REQUEST, fetchAutocomplete);
+  yield throttle(750, AUTOCOMPLETE_REQUEST, fetchAutocomplete);
 };
 
 /* From the redux docs */

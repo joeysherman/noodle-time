@@ -61,7 +61,7 @@ module.exports = (function places(){
         }
       });
     } else {
-      res.status(402).send('No input for autocomplete supplied');
+      res.status(400).send('No input for autocomplete supplied');
     }
   });
 
