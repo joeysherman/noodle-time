@@ -24,11 +24,14 @@ function homeReducer (state = initialState, action){
       let { timestamp } = action.payload;
 
       return state
-        .set('loading', false)
-        .set('error', false)
-        .setIn(['userLocation', 'timestamp'], timestamp)
-        .setIn(['userLocation', 'latitude'], latitude)
-        .setIn(['userLocation', 'longitude'], longitude);
+        .withMutations((map) => {
+          map
+            .set('loading', false)
+            .set('error', false)
+            .setIn(['userLocation', 'timestamp'], timestamp)
+            .setIn(['userLocation', 'latitude'], latitude)
+            .setIn(['userLocation', 'longitude'], longitude);
+        });
 
     case constants.USER_LOCATION_ERROR :
         let { code } = action.payload;
