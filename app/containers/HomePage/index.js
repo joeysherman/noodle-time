@@ -13,6 +13,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import RamenButton from '../../components/RamenButton/ramenButton';
+import styles from './styles.css';
 import Paper from 'material-ui/Paper';
 import AutoComplete from 'material-ui/AutoComplete';
 import { connect } from 'react-redux';
@@ -39,30 +40,46 @@ import {
 
 class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
-  noodleTime = () => {
-    this.props.noodleTime();
+
+
+  autoCompleteNeededForLocation = () => {
+    return this.props.error;
+  };
+
+  noodleTimeClickHandler = () => {
+    if (this.props.userLocation) return null;
+
+    return this.props.noodleTime;
+  };
+
+  determineHeaderMessage = () => {
+    let { userLocation, error, loading, autoCompleteDataSource } = this.props;
+    if (userLocation) {
+
+    }
   };
 
   render() {
 
     var main;
 
-    if (this.props.error){
+    if (this.autoCompleteNeededForLocation()){
       main = ( <AutoComplete
         hintText="Search for your location"
-        dataSource={this.props.autoCompleteDataSource || []}
-        onUpdateInput={(input) => { this.props.dispatch(autoCompleteRequest(input)) }}
+        dataSource={this.props.autoCompleteDataSource || ['hi','hello','San Diego']}
+        filter={AutoComplete.noFilter}
+        openOnFocus={true}
+        /*onUpdateInput={(input) => { this.props.dispatch(autoCompleteRequest(input)) }}*/
       /> )
     } else {
       main = (
-        <div>
-          <RamenButton onClick={this.props.noodleTime}></RamenButton>
-        <h1 style={{ margin: 'auto'}}>Lets find ramen!</h1>
+        <div className={styles.ramen_wrapper}>
+          <RamenButton onClick={this.noodleTimeClickHandler()}></RamenButton>
         </div> )
     }
 
     return (
-      <div>
+      <div className={styles.wrapper}>
         {main}
       </div>
     );

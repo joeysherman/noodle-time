@@ -5,5 +5,5 @@
  */
 
 .container {
-  display: block;
+  display: flex;
 }
