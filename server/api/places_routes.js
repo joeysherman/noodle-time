@@ -25,7 +25,6 @@ module.exports = (function places(){
    *  */
 
   Router.get('/api/places', function(req, res, next){
-    console.log(JSON.stringify(req.query));
     var radius = req.query.radius || 1000,
        language = req.query.language || 'en',
        opennow = req.query.open ?
@@ -33,16 +32,15 @@ module.exports = (function places(){
          true,
        lat = req.query.lat,
        lng = req.query.lng;
-    
-    console.log(opennow);
+
     req.app.locals.google.places({
       query: 'ramen',
       language: 'en',
       location: [lat, lng],
-      radius: 5000,
+      radius: radius,
       minprice: 1,
       maxprice: 4,
-      opennow: false,
+      opennow: opennow,
     }, function(err, places){
       if (!err){
         res.send(places);

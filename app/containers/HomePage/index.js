@@ -18,6 +18,8 @@ import Paper from 'material-ui/Paper';
 import AutoComplete from 'material-ui/AutoComplete';
 import { connect } from 'react-redux';
 
+import request from '../../utils/request';
+
 import {
 
   userLocationRequest,
@@ -39,7 +41,6 @@ import {
 } from './selectors';
 
 class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
-
 
 
   autoCompleteNeededForLocation = () => {
@@ -99,10 +100,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    noodleTime: () => {
-      let action = userLocationRequest();
-      dispatch(action);
-    },
+    noodleTime: () => dispatch(userLocationRequest()),
     dispatch,
     }
 };
