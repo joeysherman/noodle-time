@@ -6,6 +6,24 @@ var Router = require('express').Router();
 
 module.exports = (function places(){
 
+  /*
+   *  Ramen places API route
+   *
+   *  @param : req.query.lat - latitude of user
+   *  @param : req.query.lng - longitude of user
+   *  @param (optional) : req.query.radius - radius around location to search.
+   *  @default : 1000 meters
+   *
+   *  @param : req.query.open - search whether place is open now or closed?
+   *  @default : true
+   *
+   *  @param : req.query.language - language to return response in.
+   *  @default : en = english
+   *
+   *  @return : noodle places near the lat & lng in radius meters.
+   *
+   *  */
+
   Router.get('/api/places', function(req, res, next){
     console.log(JSON.stringify(req.query));
     var radius = req.query.radius || 1000,
@@ -32,6 +50,17 @@ module.exports = (function places(){
     });
   });
 
+
+  /*
+  *  Geocode API route
+  *
+  *  @param : req.query.lat - latitude of user
+  *  @param : req.query.lng - longitude of user
+  *
+  *  @return : location response using google API
+  *
+  *  */
+
   Router.get('/api/geocode', function(req, res, next) {
     var lat = req.query.lat,
         lng = req.query.lng;
@@ -45,6 +74,15 @@ module.exports = (function places(){
       res.send(location);
     });
   });
+
+  /*
+   *  AutoComplete API route
+   *
+   *  @param : req.query.input - input to get predictions on.
+   *
+   *  @return : array on location predictions based on input
+   *
+   *  */
 
   Router.get('/api/autocomplete', function(req, res, next) {
     var input = req.query.input;
@@ -65,6 +103,16 @@ module.exports = (function places(){
     }
   });
 
+  /*
+   *  Places Details API route
+   *
+   *  @param : req.query.id - place id of the requested place
+   *
+   *  @return : details on a specific place from the google API based
+   *   on place ID.
+   *
+   *  */
+
   Router.get('/api/place', function(req, res, next) {
     var id = req.query.id;
 
@@ -83,6 +131,8 @@ module.exports = (function places(){
 
   });
 
+  //Todo: figure out how to forward pictues in node.js
+/*
   Router.get('/api/placePhoto', function(req, res, next) {
     var reference = req.query.reference;
 
@@ -100,7 +150,7 @@ module.exports = (function places(){
       res.send(error);
     });
 
-  });
+  });*/
 
   return Router;
 })();
