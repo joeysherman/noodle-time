@@ -57,6 +57,34 @@ export function autoCompletePending() {
   }
 }
 
+export function placesSuccess(places) {
+  return {
+    type : constants.PLACES_SUCCESS,
+    payload: places
+  }
+}
+
+export function placesError(error) {
+  return {
+    type: constants.PLACES_ERROR,
+    payload: error,
+  }
+}
+
+export function placeDetailsSuccess(details) {
+  return {
+    type : constants.PLACE_DETAILS_SUCCESS,
+    payload: details
+  }
+}
+
+export function placeDetailsError(error) {
+  return {
+    type: constants.PLACE_DETAILS_ERROR,
+    payload: error,
+  }
+}
+
 export function fetchUserLocationGeo() {
   return new Promise((resolve, reject) => {
     let options = {
