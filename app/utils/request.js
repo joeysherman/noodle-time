@@ -1,5 +1,7 @@
 import 'whatwg-fetch';
 
+import { normalize } from 'normalizr;'
+
 /**
  * Parses the JSON returned by a network request
  *
@@ -35,10 +37,10 @@ function checkStatus(response) {
  *
  * @return {object}           An object containing either "data" or "err"
  */
-export default function request(url, options) {
+export default function request(url, options, schema) {
   return fetch(url, options)
     .then(checkStatus)
     .then(parseJSON)
-    .then((data) => ({ data }))
+    .then((data) => ({ data: normalize(data, schema) }))
     .catch((err) => ({ err }));
 }
