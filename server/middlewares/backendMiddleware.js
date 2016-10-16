@@ -17,11 +17,19 @@ module.exports = function addApiMiddleware(app) {
     Promise: q,
   });
 
+  Router.get('/api/*', function(req, res, next){
+    res.set({
+      'Access-Control-Allow-Origin' : '*',
+    });
+    next();
+  });
+
   app.use(morgan(setting));
+
+  app.use(Router);
 
   app.use(require('../api/places_routes'));
   
   app.use(require('../api/direction_routes'));
 
-  app.use(Router);
 };

@@ -39,10 +39,6 @@ const autoCompleteUrl = 'http://localhost:8080/api/autocomplete';
 const placesUrl = 'http://localhost:8080/api/places';
 const placeDetailsUrl = 'http://localhost:8080/api/place';
 const geocodeUrl = 'http://localhost:8080/api/geocode';
-const no_cors_options = {
-  method: 'GET',
-  mode: 'no-cors',
-};
 
 export function* homePageSaga() {
   while (true) {
@@ -67,7 +63,7 @@ function* fetchNoodlePlaces() {
   if (latitude && longitude) {
     let url = placesUrl + '?' + 'lat=' + latitude + '&lng=' + longitude;
 
-    const places = yield call(request, url, no_cors_options);
+    const places = yield call(request, url);
 
     if (places.data) {
       yield put(placesSuccess(places.data));
@@ -81,7 +77,7 @@ function* fetchNoodlePlaces() {
 function* fetchAutocomplete(action) {
   var url = autoCompleteUrl + '?input=' + action.payload;
 
-  const predictions = yield call(request, url, no_cors_options);
+  const predictions = yield call(request, url);
   
   if (predictions.data) {
     yield put(autoCompleteSuccess(predictions.data));
