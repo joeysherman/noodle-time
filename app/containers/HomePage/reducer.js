@@ -24,10 +24,9 @@ const initialState = fromJS({
 function homeReducer (state = initialState, action){
 
   switch (action.type) {
-
-    case constants.USER_LOCATION_PENDING :
+    case constants.USER_LOCATION_REQUEST :
       return state
-        .set('loading', true)
+        .set('loading', 'Location')
         .set('error', false);
 
     case constants.USER_LOCATION_SUCCESS :
@@ -45,17 +44,20 @@ function homeReducer (state = initialState, action){
         });
 
     case constants.USER_LOCATION_ERROR :
-        let { code } = action.payload;
-
       return state
         .set('loading', false)
-        .set('error', true);
+        .set('error', action.payload);
+
+    case constants.AUTOCOMPLETE_REQUEST :
+      return state
+        .set('loading', 'AutoComplete')
+        .set('error', false);
 
     case constants.AUTOCOMPLETE_ERROR :
-
       return state
         .set('loading', false)
-        .set('error', true);
+        .set('error', action.payload);
+
     case constants.AUTOCOMPLETE_SUCCESS :
       let predictions;
       console.log(action.payload);
@@ -67,9 +69,22 @@ function homeReducer (state = initialState, action){
       return state
         .set('loading', false)
         .set('autoComplete', predictions);
-    case constants.PLACES_SUCCESS :
+
+    case constants.PLACES_REQUEST :
       return state
-        .set()
+        .set('loading', 'Places')
+        .set('error', false);
+
+    case constants.PLACES_SUCCESS :
+
+      return state
+        .withMutations((map) => {
+          map
+            .set('loading', false)
+            .set('error', false)
+            .set('places', action.payload.json.results);
+        });
+
     case constants.PLACES_ERROR :
       return state
         .withMutations((map) => {
