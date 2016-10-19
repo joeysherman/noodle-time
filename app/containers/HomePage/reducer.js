@@ -11,7 +11,18 @@ const initialState = fromJS({
    error: false,
 });
 
+/*
+*  Reducer function - takes an action and returns new state based on action.type
+*  action.type layout goes:
+*  - *name*_pending
+*  - *name*_success
+*  - *name*_error
+*
+*
+*  */
+
 function homeReducer (state = initialState, action){
+
   switch (action.type) {
 
     case constants.USER_LOCATION_PENDING :
@@ -56,6 +67,17 @@ function homeReducer (state = initialState, action){
       return state
         .set('loading', false)
         .set('autoComplete', predictions);
+    case constants.PLACES_SUCCESS :
+      return state
+        .set()
+    case constants.PLACES_ERROR :
+      return state
+        .withMutations((map) => {
+          map
+            .set('')
+
+        });
+
   }
 
   return state;

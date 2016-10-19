@@ -10,17 +10,14 @@ import request from '../../utils/request';
 
 import {
   USER_LOCATION_REQUEST,
-  USER_LOCATION_ERROR,
 
   AUTOCOMPLETE_REQUEST,
-  AUTOCOMPLETE_ERROR,
 } from './constants';
 
 import {
   userLocationRequest,
   userLocationError,
   userLocationSuccess,
-  userLocationPending,
   fetchUserLocationGeo,
 
   autoCompleteRequest,
@@ -43,7 +40,6 @@ const geocodeUrl = 'http://localhost:8080/api/geocode';
 export function* homePageSaga() {
   while (true) {
     yield take(USER_LOCATION_REQUEST);
-    yield put(userLocationPending());
     const {location, err } = yield call(fetchUserLocationGeo);
 
     if (location) {

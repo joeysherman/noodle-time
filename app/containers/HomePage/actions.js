@@ -4,6 +4,8 @@
 
 import * as constants from './constants';
 
+/* User Location */
+
 export function userLocationSuccess(userLocation) {
   return {
     type: constants.USER_LOCATION_SUCCESS,
@@ -14,12 +16,9 @@ export function userLocationSuccess(userLocation) {
 export function userLocationRequest() {
   return {
     type: constants.USER_LOCATION_REQUEST,
-  }
-}
-
-export function userLocationPending() {
-  return {
-    type: constants.USER_LOCATION_PENDING
+    payload: {
+      message: 'Searching for your location...',
+    },
   }
 }
 
@@ -30,10 +29,15 @@ export function userLocationError(error) {
   }
 }
 
+/* AutoComplete */
+
 export function autoCompleteRequest(input) {
   return {
     type: constants.AUTOCOMPLETE_REQUEST,
-    payload: input
+    payload: {
+      input,
+      message: "Oh no! Couldn't find your location...",
+    }
   }
 }
 
@@ -51,11 +55,7 @@ export function autoCompleteError(error) {
   }
 }
 
-export function autoCompletePending() {
-  return {
-    type: constants.AUTOCOMPLETE_PENDING
-  }
-}
+/* Places */
 
 export function placesSuccess(places) {
   return {
@@ -71,6 +71,17 @@ export function placesError(error) {
   }
 }
 
+export function placesRequest() {
+  return {
+    type: constants.PLACES_REQUEST,
+    payload: {
+      message: 'Finding locations near you!',
+    }
+  }
+}
+
+/* Place Details */
+
 export function placeDetailsSuccess(details) {
   return {
     type : constants.PLACE_DETAILS_SUCCESS,
@@ -85,6 +96,19 @@ export function placeDetailsError(error) {
   }
 }
 
+export function placeDetailsRequest() {
+  return {
+    type: constants.PLACE_DETAILS_REQUEST,
+  }
+}
+
+/*
+* Fetch user Location by navigator
+*
+* #return Promise that gets resolved with:
+* [Object} location or error as properties
+ *
+* */
 export function fetchUserLocationGeo() {
   return new Promise((resolve, reject) => {
     let options = {
