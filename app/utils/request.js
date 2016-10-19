@@ -1,6 +1,6 @@
 import 'whatwg-fetch';
 
-import { normalize } from 'normalizr;'
+import { normalize } from 'normalizr';
 
 /**
  * Parses the JSON returned by a network request
