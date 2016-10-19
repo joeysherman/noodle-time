@@ -28,6 +28,7 @@ module.exports = (function directions_routes() {
     req.app.locals.google.distanceMatrix({
       origins: [{ lat: lat, lng: lng }],
       destinations: destinations,
+      units: 'imperial',
     })
     .asPromise()
     .then((response) => {

@@ -22,7 +22,6 @@ const selectUserLocation = createSelector(
     if (home.has('userLocation')) {
       return home.get('userLocation').toJS();
     }
-
     return undefined;
   },
 );
@@ -32,6 +31,16 @@ const selectAutoCompleteData = createSelector(
   (home) => home.get('autoComplete'),
 );
 
+const selectPlaces = createSelector(
+  selectHomeDomain,
+  (home) => home.get('places'),
+
+);
+
+const selectPlace = (index) => (createSelector(
+  selectHomeDomain,
+  (home) => home.getIn(['places', index]),
+));
 
 
 export {
@@ -40,5 +49,7 @@ export {
   selectLoading,
   selectUserLocation,
   selectAutoCompleteData,
+  selectPlace,
+  selectPlaces,
 };
 

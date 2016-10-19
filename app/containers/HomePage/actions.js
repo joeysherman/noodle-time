@@ -102,6 +102,22 @@ export function placeDetailsRequest() {
   }
 }
 
+/* Distance Matrix */
+
+export function distanceMatrixSuccess(distances) {
+  return {
+    type: constants.DISTANCE_MATRIX_SUCCESS,
+    payload: distances
+  }
+}
+
+export function distanceMatrixError(error) {
+  return {
+    type: constants.DISTANCE_MATRIX_ERROR,
+    payload: error
+  }
+}
+
 /*
 * Fetch user Location by navigator
 *

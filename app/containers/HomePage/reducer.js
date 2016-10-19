@@ -18,7 +18,6 @@ const initialState = fromJS({
 *  - *name*_success
 *  - *name*_error
 *
-*
 *  */
 
 function homeReducer (state = initialState, action){
@@ -65,7 +64,8 @@ function homeReducer (state = initialState, action){
 
       if (action.payload.predictions && typeof action.payload.predictions == 'Array'){
         predictions = action.payload.predictions.map((item) => item.description );
-      } ;
+      }
+
       return state
         .set('loading', false)
         .set('autoComplete', predictions);
@@ -93,6 +93,15 @@ function homeReducer (state = initialState, action){
 
         });
 
+    case constants.DISTANCE_MATRIX_SUCCESS :
+      let distances = action.payload.json.rows[0].elements;
+      return state
+        .set('distances', distances);
+
+    case constants.DISTANCE_MATRIX_ERROR :
+      return state
+        .set('loading', false)
+        .set('error', action.payload);
   }
 
   return state;

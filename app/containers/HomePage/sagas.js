@@ -26,16 +26,21 @@ import {
 
   placesSuccess,
   placesError,
+
+  distanceMatrixError,
+  distanceMatrixSuccess
 } from './actions';
 
 import {
   selectUserLocation,
+  selectPlaces,
 } from './selectors';
 
 const autoCompleteUrl = 'http://localhost:8080/api/autocomplete';
 const placesUrl = 'http://localhost:8080/api/places';
 const placeDetailsUrl = 'http://localhost:8080/api/place';
 const geocodeUrl = 'http://localhost:8080/api/geocode';
+const distanceMatrixUrl = 'http://localhost:8080/api/distance';
 
 export function* homePageSaga() {
   while (true) {
@@ -53,6 +58,28 @@ export function* homePageSaga() {
   }
 }
 
+function* fetchDistancesFromUserToPlaces() {
+  const { latitude, longitude } = yield select(selectUserLocation);
+  const places = yield select(selectPlaces);
+
+  const places_locations = places.map((place) => {
+    return place.geometry.location;
+  });
+
+  const places_query = places_locations.map((item) => '&destlat=' + item.lat + '&destlng=' + item.lng ).join('');
+
+  const query = distanceMatrixUrl + '?lat=' + latitude
+    + '&lng=' + longitude + places_query;
+
+  const distances = yield call(request, query);
+
+  if (distances.data) {
+    yield put(distanceMatrixSuccess(distances.data))
+  } else {
+    yield put(distances.error)
+  }
+}
+
 function* fetchNoodlePlaces() {
   const { latitude, longitude } = yield select(selectUserLocation);
 
@@ -62,10 +89,9 @@ function* fetchNoodlePlaces() {
     const places = yield call(request, url);
 
     if (places.data) {
-      console.log(places.data);
       yield put(placesSuccess(places.data));
+      yield call(fetchDistancesFromUserToPlaces);
     } else {
-      console.log(places.err);
       yield put(placesError(places.err));
     }
   }
