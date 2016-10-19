@@ -66,6 +66,7 @@ function* fetchNoodlePlaces() {
     const places = yield call(request, url);
 
     if (places.data) {
+      console.log(places.data);
       yield put(placesSuccess(places.data));
     } else {
       console.log(places.err);

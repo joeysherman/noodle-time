@@ -67,7 +67,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
     if (this.autoCompleteNeededForLocation()){
       main = ( <AutoComplete
         hintText="Search for your location"
-        dataSource={this.props.autoCompleteDataSource || ['hi','hello','San Diego']}
+        dataSource={this.props.autoCompleteDataSource || []}
         filter={AutoComplete.noFilter}
         openOnFocus={true}
         /*onUpdateInput={(input) => { this.props.dispatch(autoCompleteRequest(input)) }}*/
