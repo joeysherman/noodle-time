@@ -16,13 +16,12 @@ class MapPage extends React.Component {
     return (
       <h1>Working!</h1>
     )
-};
+  };
 };
 
 const mapStateToProps = (state) => {
   return {
     loaded: selectMapLoaded(state),
-
   }
 };
 
@@ -32,4 +31,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps, MapPage);
+export default connect(mapStateToProps, mapDispatchToProps)(MapPage);

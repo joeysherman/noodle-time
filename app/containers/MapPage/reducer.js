@@ -12,11 +12,11 @@
 
 import { fromJS } from 'immutable';
 
-const state = fromJS({
-
+const initialState = fromJS({
+  loaded: false,
 });
 
-export default function(action) {
+export default function(state = initialState, action) {
   switch(action.type) {
     default :
       return state;
