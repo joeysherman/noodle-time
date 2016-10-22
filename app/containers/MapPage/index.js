@@ -5,16 +5,41 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
+import { push, replace } from 'react-router-redux';
 
 import {
   selectMapLoaded
 } from './selectors';
+import {
+  selectPlaces,
+  selectUserLocation
+} from '../HomePage/selectors';
 
 class MapPage extends React.Component {
 
+  constructor(props) {
+    super(props);
+
+  };
+
+  componentWillMount() {
+    let { userLocation, places } = this.props;
+
+    if ((!userLocation) || (!places)) {
+      this.props.dispatch(replace('/'));
+    }
+  };
+
   render = () => {
+
+    let { loaded } = this.props;
+
+
     return (
-      <h1>Working!</h1>
+      <div>
+        <div id="map">
+        </div>
+      </div>
     )
   };
 };
@@ -22,12 +47,15 @@ class MapPage extends React.Component {
 const mapStateToProps = (state) => {
   return {
     loaded: selectMapLoaded(state),
+    places: selectPlaces(state),
+    userLocation: selectUserLocation(state),
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    dispatch
+    dispatch,
+
   }
 };
 

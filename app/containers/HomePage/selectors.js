@@ -19,7 +19,7 @@ const selectLoading = createSelector(
 const selectUserLocation = createSelector(
   selectHomeDomain,
   (home) => {
-    if (home.has('userLocation')) {
+    if (home && home.has('userLocation')) {
       return home.get('userLocation').toJS();
     }
     return undefined;
@@ -33,7 +33,12 @@ const selectAutoCompleteData = createSelector(
 
 const selectPlaces = createSelector(
   selectHomeDomain,
-  (home) => home.get('places'),
+  (home) => {
+    if (home && home.has('places')) {
+      return home.get('places').toJS();
+    }
+    return undefined;
+  },
 
 );
 

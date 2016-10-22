@@ -6,7 +6,7 @@
 import { take, actionChannel, put, fork, call, select } from 'redux-saga/effects';
 import { delay, buffers } from 'redux-saga';
 import request from '../../utils/request';
-
+import { push } from 'react-router-redux';
 
 import {
   USER_LOCATION_REQUEST,
@@ -74,9 +74,10 @@ function* fetchDistancesFromUserToPlaces() {
   const distances = yield call(request, query);
 
   if (distances.data) {
-    yield put(distanceMatrixSuccess(distances.data))
+    yield put(distanceMatrixSuccess(distances.data));
+    yield put(push('/blah'));
   } else {
-    yield put(distances.error)
+    yield put(distances.error);
   }
 }
 
