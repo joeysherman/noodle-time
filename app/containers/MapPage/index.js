@@ -12,11 +12,17 @@ import {
 
 class MapPage extends React.Component {
 
-}
+  render = () => {
+    return (
+      <h1>Working!</h1>
+    )
+};
+};
 
 const mapStateToProps = (state) => {
   return {
-    loaded:
+    loaded: selectMapLoaded(state),
+
   }
 };
 
