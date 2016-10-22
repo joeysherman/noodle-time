@@ -30,6 +30,12 @@ class MapPage extends React.Component {
     }
   };
 
+  componentDidMount() {
+    if (!window.Google){
+      this.props.loadGoogleMaps();
+    }
+  }
+
   render = () => {
 
     let { loaded } = this.props;
@@ -54,6 +60,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    loadGoogleMaps : () => dispatch(loadGoogleMaps)
     dispatch,
 
   }

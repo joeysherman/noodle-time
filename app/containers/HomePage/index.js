@@ -17,6 +17,7 @@ import styles from './styles.css';
 import Paper from 'material-ui/Paper';
 import AutoComplete from 'material-ui/AutoComplete';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
 import request from '../../utils/request';
 
@@ -62,7 +63,10 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
 
   render() {
 
-    var main;
+    let main;
+    let { userLocation, places } = this.props;
+
+    if (userLocation && places) return this.props.dispatch(push('/map'));
 
     if (this.autoCompleteNeededForLocation()){
       main = ( <AutoComplete

@@ -35,7 +35,7 @@ const selectPlaces = createSelector(
   selectHomeDomain,
   (home) => {
     if (home && home.has('places')) {
-      return home.get('places').toJS();
+      return home.get('places')
     }
     return undefined;
   },

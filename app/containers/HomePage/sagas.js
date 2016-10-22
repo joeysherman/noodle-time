@@ -75,7 +75,7 @@ function* fetchDistancesFromUserToPlaces() {
 
   if (distances.data) {
     yield put(distanceMatrixSuccess(distances.data));
-    yield put(push('/blah'));
+    yield put(push('/map'));
   } else {
     yield put(distances.error);
   }

@@ -37,6 +37,13 @@ export function mapLoadPending() {
   }
 }
 
+export function mapLoadRequest() {
+  return {
+    type: constants.MAP_LOAD_REQUEST,
+
+  }
+}
+
 export function loadMapPromise(){
   return promisescript(promiseScriptOptions);
 }
