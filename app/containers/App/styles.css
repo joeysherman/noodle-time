@@ -5,5 +5,8 @@
  */
 
 .container {
-  display: flex;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(110deg, #F57F17, #FF5722);
 }

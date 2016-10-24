@@ -10,10 +10,16 @@ import { push, replace } from 'react-router-redux';
 import {
   selectMapLoaded
 } from './selectors';
+
 import {
   selectPlaces,
   selectUserLocation
 } from '../HomePage/selectors';
+
+import {
+  mapLoadRequest
+} from './actions';
+
 
 class MapPage extends React.Component {
 
@@ -60,7 +66,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadGoogleMaps : () => dispatch(loadGoogleMaps)
+    loadGoogleMaps : () => dispatch(mapLoadRequest()),
     dispatch,
 
   }
