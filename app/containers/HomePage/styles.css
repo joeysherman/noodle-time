@@ -7,4 +7,34 @@
 
 .ramen_wrapper {
   margin: auto;
+  display: flex;
+  position: relative;
+  padding: 5em 8em 3em 8em;
+  width: 40em;
+  height: 20em;
+  align-items: center;
+  justify-content: center;
+}
+
+.ramen_message {
+  color: #40C0E7;
+
+}
+
+.wrapper2 {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ramen_image {
+  flex: 1;
+  height: 100%;
+  box-shadow: rgba(0, 0, 0, 0.298039) 0px 19px 60px, rgba(0, 0, 0, 0.219608) 0px 15px 20px;
+}
+
+.ramen_paper {
+  flex: 1;
+  height: 100%;
 }

@@ -7,7 +7,7 @@ import ramenBowl from './ramen.svg';
 
 const RamenButton = function(props) {
   return (
-    <img onClick={props.onClick} src={ramenBowl} className={props.className}></img>
+    <img onClick={props.onClick} style={props.style} src={ramenBowl} className={props.className}></img>
   )
 }
 export default RamenButton;

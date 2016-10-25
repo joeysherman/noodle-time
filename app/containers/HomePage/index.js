@@ -18,6 +18,7 @@ import Paper from 'material-ui/Paper';
 import AutoComplete from 'material-ui/AutoComplete';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import ramenImage from '../../assets/ramen-noodles-min.jpg';
 
 import request from '../../utils/request';
 
@@ -79,7 +80,12 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
     } else {
       main = (
         <div className={styles.ramen_wrapper}>
-          <RamenButton onClick={this.noodleTimeClickHandler()}></RamenButton>
+          <div className={styles.wrapper2}>
+            <RamenButton onClick={this.noodleTimeClickHandler()}></RamenButton>
+            <h1 className={styles.ramen_message}>Is it noodle time?</h1>
+          </div>
+          <div className={styles.ramen_image} style={{ background: 'url(' + ramenImage + ') no-repeat left/cover' }}></div>
+          <Paper zDepth={5} style={{ background: 'black' }} className={styles.ramen_paper}></Paper>
         </div> )
     }
 
