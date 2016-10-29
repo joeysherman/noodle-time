@@ -15,7 +15,7 @@ const apiKey = 'AIzaSyC0k6alaE-wq9k46ovNZNpY2ZNQgeRwwsY';
 const promiseScriptOptions = {
   url: 'https://maps.googleapis.com/maps/api/js?key=' + apiKey,
   type: 'script',
-  exposed: 'Google',
+  exposed: 'google',
 };
 
 export function maploadSuccess(){

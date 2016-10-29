@@ -37,7 +37,7 @@ class MapPage extends React.Component {
   };
 
   componentDidMount() {
-    if (!window.Google){
+    if (!window.google){
       this.props.loadGoogleMaps();
     }
   }
