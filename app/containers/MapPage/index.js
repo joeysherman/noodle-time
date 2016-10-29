@@ -6,6 +6,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { push, replace } from 'react-router-redux';
+import styles from './styles.css';
 
 import {
   selectMapLoaded
@@ -42,14 +43,31 @@ class MapPage extends React.Component {
     }
   }
 
-  render = () => {
+  componentWillReceiveProps(nextProps) {
+    let { loaded } = nextProps;
 
-    let { loaded } = this.props;
+    console.log(loaded + typeof loaded);
+    if ((loaded) && (typeof loaded == 'boolean')){
+      this.mountMap();
+    }
+  }
+
+  mountMap = () => {
+    console.log('Mounting Map');
+    if (window.map) return;
+    window.map = new window.google.maps.Map(document.getElementById('map'), {
+      center: {lat: -34.397, lng: 150.644},
+      zoom: 8
+    });
+  };
+
+
+  render = () => {
 
 
     return (
-      <div>
-        <div id="map">
+      <div className={styles.mapWrapper}>
+        <div id="map" className={styles.map}>
         </div>
       </div>
     )
