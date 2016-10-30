@@ -58,13 +58,22 @@ class MapPage extends React.Component {
 
     window.map = new window.google.maps.Map(document.getElementById('map'), {
       center: userLocation,
-      zoom: 12,
+      zoom: 15,
+    });
+    this.placeMarkers();
+  };
+
+  placeMarkers = () => {
+    window.mapMarkers = [];
+    this.props.places.forEach((place) => {
+      window.mapMarkers.push(new window.google.maps.Marker({
+        map: window.map,
+        position: place.geometry.location,
+      }));
     });
   };
 
-
   render = () => {
-
 
     return (
       <div className={styles.mapWrapper}>
