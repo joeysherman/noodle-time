@@ -53,11 +53,12 @@ class MapPage extends React.Component {
   }
 
   mountMap = () => {
-    console.log('Mounting Map');
-    if (window.map) return;
+    let { longitude, latitude } = this.props.userLocation;
+    let userLocation = { lat: latitude, lng: longitude };
+
     window.map = new window.google.maps.Map(document.getElementById('map'), {
-      center: {lat: -34.397, lng: 150.644},
-      zoom: 8
+      center: userLocation,
+      zoom: 12,
     });
   };
 
