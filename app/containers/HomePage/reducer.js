@@ -95,8 +95,13 @@ function homeReducer (state = initialState, action){
 
     case constants.DISTANCE_MATRIX_SUCCESS :
       let distances = action.payload.json.rows[0].elements;
+      let distances_with_index = distances.map((item, i) => Object.assign(item, { place_index: i }));
+
+      distances_with_index.sort((a, b) => a.distance.value - b.distance.value);
+
       return state
-        .set('distances', distances);
+        .set('distances', distances_with_index);
+
 
     case constants.DISTANCE_MATRIX_ERROR :
       return state
