@@ -34,7 +34,7 @@ const selectAutoCompleteData = createSelector(
 const selectPlaces = createSelector(
   selectHomeDomain,
   (home) => {
-    if (home && home.has('places')) {
+    if (home) {
       return home.get('places')
     }
     return undefined;
@@ -43,7 +43,12 @@ const selectPlaces = createSelector(
 
 const selectDistances = createSelector(
   selectHomeDomain,
-  (home) => home.get('distances')
+  (home) => {
+    if (home) {
+      return home.get('distances');
+    }
+    return undefined;
+  }
 );
 
 

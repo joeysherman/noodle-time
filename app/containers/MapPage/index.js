@@ -92,7 +92,7 @@ class MapPage extends React.Component {
   render = () => {
     let cards = null;
 
-    if (this.props.listMode) {
+    if (this.props.listMode && this.props.places) {
       cards = this.renderCardList();
     } else {
       cards = this.renderCard();
