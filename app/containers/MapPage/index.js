@@ -43,6 +43,8 @@ class MapPage extends React.Component {
   componentDidMount() {
     if (!window.google){
       this.props.loadGoogleMaps();
+    } else {
+      this.mountMap();
     }
   }
 
@@ -51,22 +53,35 @@ class MapPage extends React.Component {
 
     console.log(loaded + typeof loaded);
     if ((loaded) && (typeof loaded == 'boolean')){
-      this.mountMap();
+      let { longitude, latitude } = this.props.userLocation;
+      let userLocation = { lat: latitude, lng: longitude };
+
+      this.mountMap(userLocation);
+      this.placeUserLocationMarker(userLocation);
+      this.placeNoodleMarkers();
     }
   }
 
-  mountMap = () => {
-    let { longitude, latitude } = this.props.userLocation;
-    let userLocation = { lat: latitude, lng: longitude };
-
+  mountMap = (center) => {
     window.map = new window.google.maps.Map(document.getElementById('map'), {
-      center: userLocation,
+      center: center,
       zoom: 15,
     });
-    this.placeMarkers();
   };
 
-  placeMarkers = () => {
+  placeUserLocationMarker = (location) => {
+    if (!window.mapMarkers){
+      window.mapMarkers = [];
+    }
+    let marker = new window.google.maps.Marker({
+      map: window.map,
+      position: location,
+      label: 'You',
+    });
+    window.mapMarkers.push(marker);
+  };
+
+  placeNoodleMarkers = () => {
     window.mapMarkers = [];
     this.props.places.forEach((place) => {
       window.mapMarkers.push(new window.google.maps.Marker({
@@ -84,9 +99,11 @@ class MapPage extends React.Component {
   };
 
   renderCard = () => {
-    let index = this.props.distances[0].place_index;
+    if (this.props.distances) {
+      let index = this.props.distances[0].place_index;
 
-    return <PlaceCard place={this.props.places[index]}/>
+      return <PlaceCard place={this.props.places[index]}/>
+    }
   };
 
   render = () => {

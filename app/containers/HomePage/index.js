@@ -67,8 +67,6 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
     let main;
     let { userLocation, places } = this.props;
 
-    if (userLocation && places) return this.props.dispatch(push('/map'));
-
     if (this.autoCompleteNeededForLocation()){
       main = ( <AutoComplete
         hintText="Search for your location"

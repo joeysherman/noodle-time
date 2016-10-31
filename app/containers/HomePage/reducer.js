@@ -89,7 +89,9 @@ function homeReducer (state = initialState, action){
       return state
         .withMutations((map) => {
           map
-            .set('')
+            .set('loading', false)
+            .set('places', null)
+            .set('error', action.payload);
 
         });
 
