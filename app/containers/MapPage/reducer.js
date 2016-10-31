@@ -16,10 +16,13 @@ import * as constants from './constants';
 
 const initialState = fromJS({
   loaded: false,
+  selectedPlaceIndex: null,
 });
 
 export default function(state = initialState, action) {
   switch(action.type) {
+
+    // Map load reducers
     case constants.MAP_LOAD_SUCCESS :
           return state
             .set('loaded', true);
@@ -29,6 +32,11 @@ export default function(state = initialState, action) {
     case constants.MAP_LOAD_ERROR :
           return state
             .set('loaded', 'error');
+
+    // Map Marker selected actions
+    case constants.MAP_MARKER_CLICKED :
+      return state
+        .set('selectedPlaceIndex', action.payload);
     default :
       return state;
   }

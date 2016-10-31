@@ -18,6 +18,8 @@ const promiseScriptOptions = {
   exposed: 'google',
 };
 
+/* Map load actions */
+
 export function maploadSuccess(){
   return {
     type: constants.MAP_LOAD_SUCCESS
@@ -43,6 +45,17 @@ export function mapLoadRequest() {
 
   }
 }
+
+/* Google Map marker selected action */
+
+export function mapMarkerClicked(index) {
+  return {
+    type: constants.MAP_MARKER_CLICKED,
+    payload: index
+  }
+}
+
+/* Map load action */
 
 export function loadMapPromise(){
   return promisescript(promiseScriptOptions);

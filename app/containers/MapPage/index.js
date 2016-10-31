@@ -11,7 +11,8 @@ import styles from './styles.css';
 import PlaceCard from '../../components/PlaceCard';
 
 import {
-  selectMapLoaded
+  selectMapLoaded,
+  selectPlaceIndex,
 } from './selectors';
 
 import {
@@ -21,7 +22,8 @@ import {
 } from '../HomePage/selectors';
 
 import {
-  mapLoadRequest
+  mapLoadRequest,
+  mapMarkerClicked,
 } from './actions';
 
 
@@ -51,8 +53,7 @@ class MapPage extends React.Component {
   componentWillReceiveProps(nextProps) {
     let { loaded } = nextProps;
 
-    console.log(loaded + typeof loaded);
-    if ((loaded) && (typeof loaded == 'boolean')){
+    if ((loaded) && (typeof loaded == 'boolean') && (this.props.loaded == 'pending')){
       let { longitude, latitude } = this.props.userLocation;
       let userLocation = { lat: latitude, lng: longitude };
 
@@ -76,18 +77,20 @@ class MapPage extends React.Component {
     let marker = new window.google.maps.Marker({
       map: window.map,
       position: location,
-      label: 'You',
     });
     window.mapMarkers.push(marker);
   };
 
   placeNoodleMarkers = () => {
+    var marker;
     window.mapMarkers = [];
-    this.props.places.forEach((place) => {
-      window.mapMarkers.push(new window.google.maps.Marker({
+    this.props.places.forEach((place, index) => {
+      marker = new window.google.maps.Marker({
         map: window.map,
         position: place.geometry.location,
-      }));
+      });
+      marker.addListener('click', () => { this.props.markerClicked(index) });
+      window.mapMarkers.push(marker);
     });
   };
 
@@ -98,9 +101,17 @@ class MapPage extends React.Component {
     }
   };
 
+  determineSelectedIndex = () => {
+    if (this.props.selectedPlaceIndex){
+      return this.props.selectedPlaceIndex;
+    } else {
+      return this.props.distances[0].place_index;
+    }
+  };
+
   renderCard = () => {
     if (this.props.distances) {
-      let index = this.props.distances[0].place_index;
+      let index = this.determineSelectedIndex();
 
       return <PlaceCard place={this.props.places[index]}/>
     }
@@ -133,12 +144,14 @@ const mapStateToProps = (state) => {
     places: selectPlaces(state),
     distances: selectDistances(state),
     userLocation: selectUserLocation(state),
+    selectedPlaceIndex: selectPlaceIndex(state),
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     loadGoogleMaps : () => dispatch(mapLoadRequest()),
+    markerClicked: (index) => dispatch(mapMarkerClicked(index)),
     dispatch,
 
   }

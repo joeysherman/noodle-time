@@ -11,8 +11,13 @@ const selectMapLoaded = createSelector(
   (state) => state.get('loaded')
 );
 
+const selectPlaceIndex = createSelector(
+  selectMapDomain,
+  (map) => map.get('selectedPlaceIndex')
+)
+
 export {
   selectMapLoaded,
   selectMapDomain,
-
+  selectPlaceIndex,
 };
