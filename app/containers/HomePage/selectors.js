@@ -39,8 +39,13 @@ const selectPlaces = createSelector(
     }
     return undefined;
   },
-
 );
+
+const selectDistances = createSelector(
+  selectHomeDomain,
+  (home) => home.get('distances')
+);
+
 
 const selectPlace = (index) => (createSelector(
   selectHomeDomain,
@@ -54,6 +59,7 @@ export {
   selectLoading,
   selectUserLocation,
   selectAutoCompleteData,
+  selectDistances,
   selectPlace,
   selectPlaces,
 };

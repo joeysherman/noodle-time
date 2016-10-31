@@ -16,7 +16,8 @@ import {
 
 import {
   selectPlaces,
-  selectUserLocation
+  selectUserLocation,
+  selectDistances,
 } from '../HomePage/selectors';
 
 import {
@@ -75,15 +76,27 @@ class MapPage extends React.Component {
     });
   };
 
-  renderCards = () => {
+  renderCardList = () => {
     let { places } = this.props;
     if (places) {
       return places.map((place, i) => <PlaceCard key={i} place={place}/>);
     }
   };
 
+  renderCard = () => {
+    let index = this.props.distances[0].place_index;
+
+    return <PlaceCard place={this.props.places[index]}/>
+  };
+
   render = () => {
-    let cards = this.renderCards();
+    let cards = null;
+
+    if (this.props.listMode) {
+      cards = this.renderCardList();
+    } else {
+      cards = this.renderCard();
+    }
 
     return (
       <div className={styles.mapWrapper}>
@@ -101,6 +114,7 @@ const mapStateToProps = (state) => {
   return {
     loaded: selectMapLoaded(state),
     places: selectPlaces(state),
+    distances: selectDistances(state),
     userLocation: selectUserLocation(state),
   }
 };
