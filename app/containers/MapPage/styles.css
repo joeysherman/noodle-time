@@ -1,9 +1,15 @@
 .mapWrapper {
   height: 100%;
   width: 100%;
+  overflow-y: hidden;
 }
 
 .map {
   height: 50%;
   margin: 2%;
+}
+
+.cardWrapper {
+  height: 50%;
+  overflow-y: scroll;
 }

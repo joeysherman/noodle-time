@@ -5,19 +5,18 @@
 */
 
 import React from 'react';
-
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import {Card, CardActions, CardHeader, CardTitle, CardText} from 'material-ui/Card';
+import { FlatButton } from 'material-ui/FlatButton';
 import styles from './styles.css';
 
-class PlaceCard extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  render() {
+function PlaceCard(props) { // eslint-disable-line react/prefer-stateless-function
     return (
-      <div className={styles.placeCard}>
-        <FormattedMessage {...messages.header} />
-      </div>
+      <Card>
+        <CardHeader
+          title={props.place.name}
+        />
+      </Card>
     );
-  }
 }
 
 export default PlaceCard;

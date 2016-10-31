@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import { push, replace } from 'react-router-redux';
 import styles from './styles.css';
 
+import PlaceCard from '../../components/PlaceCard';
+
 import {
   selectMapLoaded
 } from './selectors';
@@ -73,11 +75,22 @@ class MapPage extends React.Component {
     });
   };
 
+  renderCards = () => {
+    let { places } = this.props;
+    if (places) {
+      return places.map((place, i) => <PlaceCard key={i} place={place}/>);
+    }
+  };
+
   render = () => {
+    let cards = this.renderCards();
 
     return (
       <div className={styles.mapWrapper}>
         <div id="map" className={styles.map}>
+        </div>
+        <div className={styles.cardWrapper}>
+          {cards}
         </div>
       </div>
     )
