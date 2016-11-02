@@ -7,8 +7,9 @@ import { fromJS } from 'immutable';
 import * as constants from './constants';
 
 const initialState = fromJS({
-   loading: false,
-   error: false,
+  loading: false,
+  error: false,
+  statusMessage: 'Click to begin!',
 });
 
 /*
@@ -109,6 +110,12 @@ function homeReducer (state = initialState, action){
       return state
         .set('loading', false)
         .set('error', action.payload);
+
+    /* Status message reducer */
+
+    case constants.SET_STATUS_MESSAGE :
+      return state
+        .set('statusMessage', action.payload);
   }
 
   return state;

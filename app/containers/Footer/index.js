@@ -18,10 +18,11 @@ export class Footer extends React.Component { // eslint-disable-line react/prefe
     return (
       <Paper zDepth={1}>
         <BottomNavigation selectedIndex={0}>
-          <BottomNavigationItem
+          <span>Crafted in San Diego by <a target="_blank" href="https://www.google.com">Joey</a></span>
+          {/*<BottomNavigationItem
             label="Nearby"
             icon={<IconLocationOn/>}
-          />
+          />*/}
         </BottomNavigation>
       </Paper>
     );

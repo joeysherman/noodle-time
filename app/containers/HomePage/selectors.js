@@ -51,12 +51,10 @@ const selectDistances = createSelector(
   }
 );
 
-
-const selectPlace = (index) => (createSelector(
+const selectStatusMessage = createSelector(
   selectHomeDomain,
-  (home) => home.getIn(['places', index]),
-));
-
+  (home) => home.get('statusMessage'),
+)
 
 export {
   selectHomeDomain,
@@ -65,7 +63,7 @@ export {
   selectUserLocation,
   selectAutoCompleteData,
   selectDistances,
-  selectPlace,
+  selectStatusMessage,
   selectPlaces,
 };
 

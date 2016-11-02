@@ -33,12 +33,11 @@ import {
 } from './constants';
 
 import {
-
+  selectStatusMessage,
   selectLoading,
   selectError,
   selectUserLocation,
   selectAutoCompleteData,
-
 } from './selectors';
 
 class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -65,6 +64,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
 
     let main;
     let { userLocation, places } = this.props;
+    let { statusMessage } = this.props;
 
     if (this.autoCompleteNeededForLocation()){
       main = ( <AutoComplete
@@ -79,7 +79,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
         <div className={styles.ramen_wrapper}>
             <Paper zDepth={5} className={styles.ramen_paper}>
               <RamenButton onClick={this.noodleTimeClickHandler()}></RamenButton>
-              <h1 className={styles.ramen_message}>Click to begin!</h1>
+              <h1 className={styles.ramen_message}>{statusMessage}</h1>
             </Paper>
         </div> )
     }
@@ -99,7 +99,7 @@ const mapStateToProps = (state) => {
     loading: selectLoading(state),
     autoCompleteDataSource: selectAutoCompleteData(state),
     userLocation: selectUserLocation(state),
-
+    statusMessage: selectStatusMessage(state),
   }
 };
 

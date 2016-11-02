@@ -4,6 +4,15 @@
 
 import * as constants from './constants';
 
+/* Status message */
+
+export function setStatusMessage(message) {
+  return {
+    type: constants.SET_STATUS_MESSAGE,
+    payload: message,
+  }
+}
+
 /* User Location */
 
 export function userLocationSuccess(userLocation) {
