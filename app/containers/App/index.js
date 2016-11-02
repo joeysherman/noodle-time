@@ -16,6 +16,7 @@ import styles from './styles.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import Footer from '../Footer';
+import ramenImage from '../../assets/ramen-noodles-min.jpg';
 
 export default class App extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -26,7 +27,7 @@ export default class App extends React.Component { // eslint-disable-line react/
   render() {
     return (
       <MuiThemeProvider>
-          <div className={styles.container}>
+          <div className={styles.container} style={{ background: 'url(' + ramenImage + ') no-repeat center/cover' }}>
           <AppBar
             title={<span>Noodle Time</span>}
             showMenuIconButton={false}/>
