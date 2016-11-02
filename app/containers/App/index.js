@@ -28,8 +28,8 @@ export default class App extends React.Component { // eslint-disable-line react/
       <MuiThemeProvider>
           <div className={styles.container}>
           <AppBar
-            title={<span>Noodle Time</span>}/>
-
+            title={<span>Noodle Time</span>}
+            showMenuIconButton={false}/>
             {React.Children.toArray(this.props.children)}
           <Footer/>
         </div>
