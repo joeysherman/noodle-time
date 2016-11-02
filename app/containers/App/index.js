@@ -14,6 +14,8 @@
 import React from 'react';
 import styles from './styles.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from 'material-ui/AppBar';
+import Footer from '../Footer';
 
 export default class App extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -24,8 +26,12 @@ export default class App extends React.Component { // eslint-disable-line react/
   render() {
     return (
       <MuiThemeProvider>
-        <div className={styles.container}>
-          {React.Children.toArray(this.props.children)}
+          <div className={styles.container}>
+          <AppBar
+            title={<span>Noodle Time</span>}/>
+
+            {React.Children.toArray(this.props.children)}
+          <Footer/>
         </div>
       </MuiThemeProvider>
     );

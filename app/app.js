@@ -54,12 +54,10 @@ const rootRoute = {
 
 ReactDOM.render(
   <Provider store={store}>
-    <LanguageProvider messages={translatedMessages}>
       <Router
         history={history}
         routes={rootRoute}
       />
-    </LanguageProvider>
   </Provider>,
   document.getElementById('app')
 );
