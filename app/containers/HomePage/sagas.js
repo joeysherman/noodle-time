@@ -76,7 +76,7 @@ function* fetchDistancesFromUserToPlaces(places, location) {
   const distances = yield call(request, query);
 
   if (distances.data) {
-    yield put(distanceMatrixSuccess(distances.data));
+    yield [put(setStatusMessage('Lets go!')), put(distanceMatrixSuccess(distances.data))];
   } else {
     yield put(distances.error);
   }

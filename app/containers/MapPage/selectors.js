@@ -14,7 +14,7 @@ const selectMapLoaded = createSelector(
 const selectPlaceIndex = createSelector(
   selectMapDomain,
   (map) => map.get('selectedPlaceIndex')
-)
+);
 
 export {
   selectMapLoaded,
