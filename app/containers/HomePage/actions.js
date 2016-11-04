@@ -25,9 +25,6 @@ export function userLocationSuccess(userLocation) {
 export function userLocationRequest() {
   return {
     type: constants.USER_LOCATION_REQUEST,
-    payload: {
-      message: 'Searching for your location...',
-    },
   }
 }
 
@@ -45,7 +42,6 @@ export function autoCompleteRequest(input) {
     type: constants.AUTOCOMPLETE_REQUEST,
     payload: {
       input,
-      message: "Oh no! Couldn't find your location...",
     }
   }
 }
@@ -83,9 +79,6 @@ export function placesError(error) {
 export function placesRequest() {
   return {
     type: constants.PLACES_REQUEST,
-    payload: {
-      message: 'Finding locations near you!',
-    }
   }
 }
 

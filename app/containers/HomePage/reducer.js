@@ -116,6 +116,7 @@ function homeReducer (state = initialState, action){
     case constants.SET_STATUS_MESSAGE :
       return state
         .set('statusMessage', action.payload);
+
   }
 
   return state;

@@ -45,6 +45,7 @@ const distanceMatrixUrl = 'http://localhost:8080/api/distance';
 export function* homePageSaga() {
   while (true) {
     yield take(USER_LOCATION_REQUEST);
+    yield put()
     const {location, err } = yield call(fetchUserLocationGeo);
 
     if (location) {
