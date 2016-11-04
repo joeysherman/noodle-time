@@ -14,6 +14,7 @@ import RamenButton from '../../components/RamenButton/ramenButton';
 import styles from './styles.css';
 import Paper from 'material-ui/Paper';
 import AutoComplete from 'material-ui/AutoComplete';
+import PlaceCard from '../../components/PlaceCard';
 import { connect } from 'react-redux';
 
 import {
@@ -24,14 +25,11 @@ import {
 } from './actions';
 
 import {
-  USER_LOCATION_REQUEST
-} from './constants';
-
-import {
   selectStatusMessage,
   selectLoading,
   selectError,
-  selectUserLocation,
+  selectDistances,
+  selectPlaces,
   selectAutoCompleteData,
 } from './selectors';
 
@@ -42,10 +40,19 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
     return this.props.error;
   };
 
+  shouldShowCard = () => {
+    let { error, displayMode, places, distances } = this.props;
+
+    if (displayMode !== 'Card')
+      return false;
+
+    return (!error && places && distances);
+  };
+
   render() {
 
     let main;
-    let { userLocation, places } = this.props;
+
     let { statusMessage } = this.props;
 
     if (this.autoCompleteNeededForLocation()){
@@ -56,13 +63,17 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
         openOnFocus={true}
         /*onUpdateInput={(input) => { this.props.dispatch(autoCompleteRequest(input)) }}*/
       /> )
+    } else if (this.shouldShowCard()) {
+      main = (
+        <PlaceCard place=""/>
+      )
     } else {
       main = (
         <div className={styles.ramen_wrapper}>
-            <Paper zDepth={5} className={styles.ramen_paper}>
-              <RamenButton onClick={this.props.noodleTime}></RamenButton>
-              <h1 className={styles.ramen_message}>{statusMessage}</h1>
-            </Paper>
+          <Paper zDepth={5} className={styles.ramen_paper}>
+            <RamenButton onClick={this.props.noodleTime}></RamenButton>
+            <h1 className={styles.ramen_message}>{statusMessage}</h1>
+          </Paper>
         </div> )
     }
 
@@ -79,8 +90,9 @@ const mapStateToProps = (state) => {
   return {
     error: selectError(state),
     loading: selectLoading(state),
+    places: selectPlaces(state),
+    distances: selectDistances(state),
     autoCompleteDataSource: selectAutoCompleteData(state),
-    userLocation: selectUserLocation(state),
     statusMessage: selectStatusMessage(state),
   }
 };
