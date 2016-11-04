@@ -62,13 +62,12 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
       /> )
     } else if (this.shouldShowCard()) {
       let { place_index } = this.props.distances[0];
-      console.log(place_index);
+      let { text } = this.props.distances[0].distance;
       let place = this.props.places[place_index];
-      console.log(place);
 
       main = (
         <div className={styles.place_card_wrapper}>
-          <PlaceCard place={place}/>
+          <PlaceCard place={place} distance={text}/>
         </div>
       )
     } else {
