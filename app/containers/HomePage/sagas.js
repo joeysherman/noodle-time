@@ -6,7 +6,6 @@
 import { take, actionChannel, put, fork, call, select } from 'redux-saga/effects';
 import { delay, buffers } from 'redux-saga';
 import request from '../../utils/request';
-import { push } from 'react-router-redux';
 
 import {
   USER_LOCATION_REQUEST,
@@ -28,7 +27,9 @@ import {
   placesError,
 
   distanceMatrixError,
-  distanceMatrixSuccess
+  distanceMatrixSuccess,
+
+  setStatusMessage,
 } from './actions';
 
 import {
@@ -45,23 +46,23 @@ const distanceMatrixUrl = 'http://localhost:8080/api/distance';
 export function* homePageSaga() {
   while (true) {
     yield take(USER_LOCATION_REQUEST);
-    yield put()
+    yield put(setStatusMessage('Hold tight...grabbing your location...'));
     const {location, err } = yield call(fetchUserLocationGeo);
 
     if (location) {
+      yield put(setStatusMessage('Found you! Finding Ramen near you...'));
       yield put(userLocationSuccess(location));
-      yield call(fetchNoodlePlaces);
+      yield call(fetchNoodlePlaces, location);
     } else {
       yield put(userLocationError(err));
+      yield put(setStatusMessage("Error, where are you?"));
       yield call(throttleAutocomplete);
     }
-
   }
 }
 
-function* fetchDistancesFromUserToPlaces() {
-  const { latitude, longitude } = yield select(selectUserLocation);
-  const places = yield select(selectPlaces);
+function* fetchDistancesFromUserToPlaces(places, location) {
+  const { latitude, longitude } = location.coords;
 
   const places_locations = places.map((place) => {
     return place.geometry.location;
@@ -71,19 +72,18 @@ function* fetchDistancesFromUserToPlaces() {
 
   const query = distanceMatrixUrl + '?lat=' + latitude
     + '&lng=' + longitude + places_query;
-
+  yield put(setStatusMessage('Seeing which Ramen place is closest...'));
   const distances = yield call(request, query);
 
   if (distances.data) {
     yield put(distanceMatrixSuccess(distances.data));
-    yield put(push('/map'));
   } else {
     yield put(distances.error);
   }
 }
 
-function* fetchNoodlePlaces() {
-  const { latitude, longitude } = yield select(selectUserLocation);
+function* fetchNoodlePlaces(location) {
+  const { latitude, longitude } = location.coords;
 
   if (latitude && longitude) {
     let url = placesUrl + '?' + 'lat=' + latitude + '&lng=' + longitude;
@@ -91,8 +91,10 @@ function* fetchNoodlePlaces() {
     const places = yield call(request, url);
 
     if (places.data) {
+      let numberOfPlaces = places.data.json.results.length;
       yield put(placesSuccess(places.data));
-      yield call(fetchDistancesFromUserToPlaces);
+      yield put(setStatusMessage('Sweet! Found ' + numberOfPlaces + ' Ramen places near you!'));
+      yield call(fetchDistancesFromUserToPlaces, places.data.json.results, location);
     } else {
       yield put(placesError(places.err));
     }
