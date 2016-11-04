@@ -39,27 +39,6 @@ export default function createRoutes(store) {
       },
     },
     {
-      path: '/map',
-      name: 'map',
-      getComponent(nextState, cb) {
-        const importModules = Promise.all([
-          System.import('containers/MapPage'),
-          System.import('containers/MapPage/reducer'),
-          System.import('containers/MapPage/sagas'),
-        ]);
-
-        const renderRoute = loadModule(cb);
-
-        importModules.then(([component, reducer, sagas]) => {
-          injectReducer('map', reducer.default);
-          injectSagas(sagas.default);
-          renderRoute(component);
-        });
-
-        importModules.catch(errorLoading);
-      },
-    },
-    {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {
