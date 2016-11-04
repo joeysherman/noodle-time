@@ -10,16 +10,11 @@
  */
 
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
 import RamenButton from '../../components/RamenButton/ramenButton';
 import styles from './styles.css';
 import Paper from 'material-ui/Paper';
 import AutoComplete from 'material-ui/AutoComplete';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
-
-import request from '../../utils/request';
 
 import {
 
@@ -47,19 +42,6 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
     return this.props.error;
   };
 
-  noodleTimeClickHandler = () => {
-    if (this.props.userLocation) return null;
-
-    return this.props.noodleTime;
-  };
-
-  determineHeaderMessage = () => {
-    let { userLocation, error, loading, autoCompleteDataSource } = this.props;
-    if (userLocation) {
-
-    }
-  };
-
   render() {
 
     let main;
@@ -78,7 +60,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
       main = (
         <div className={styles.ramen_wrapper}>
             <Paper zDepth={5} className={styles.ramen_paper}>
-              <RamenButton onClick={this.noodleTimeClickHandler()}></RamenButton>
+              <RamenButton onClick={this.props.noodleTime}></RamenButton>
               <h1 className={styles.ramen_message}>{statusMessage}</h1>
             </Paper>
         </div> )

@@ -10,6 +10,9 @@ const initialState = fromJS({
   loading: false,
   error: false,
   statusMessage: 'Click to begin!',
+  displayMode: 'Card',
+  places: null,
+  distances: null
 });
 
 /*
@@ -24,10 +27,6 @@ const initialState = fromJS({
 function homeReducer (state = initialState, action){
 
   switch (action.type) {
-    case constants.USER_LOCATION_REQUEST :
-      return state
-        .set('loading', 'Location')
-        .set('error', false);
 
     case constants.USER_LOCATION_SUCCESS :
       let { latitude, longitude } = action.payload.coords;
@@ -48,11 +47,6 @@ function homeReducer (state = initialState, action){
         .set('loading', false)
         .set('error', action.payload);
 
-    case constants.AUTOCOMPLETE_REQUEST :
-      return state
-        .set('loading', 'AutoComplete')
-        .set('error', false);
-
     case constants.AUTOCOMPLETE_ERROR :
       return state
         .set('loading', false)
@@ -70,11 +64,6 @@ function homeReducer (state = initialState, action){
       return state
         .set('loading', false)
         .set('autoComplete', predictions);
-
-    case constants.PLACES_REQUEST :
-      return state
-        .set('loading', 'Places')
-        .set('error', false);
 
     case constants.PLACES_SUCCESS :
 
