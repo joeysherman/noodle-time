@@ -9,7 +9,7 @@ import request from '../../utils/request';
 
 import {
   USER_LOCATION_REQUEST,
-
+  GOOGLE_MAPS_LOAD_REQUEST,
   AUTOCOMPLETE_REQUEST,
 } from './constants';
 
@@ -29,6 +29,10 @@ import {
   distanceMatrixError,
   distanceMatrixSuccess,
 
+  loadGoogleMapsPromise,
+  googleMapsLoadError,
+  googleMapsLoadSuccess,
+
   setStatusMessage,
 } from './actions';
 
@@ -45,6 +49,14 @@ const distanceMatrixUrl = 'http://localhost:8080/api/distance';
 
 export function* homePageSaga() {
   while (true) {
+    yield take(GOOGLE_MAPS_LOAD_REQUEST);
+    try {
+      yield call(loadGoogleMapsPromise);
+      yield put(googleMapsLoadSuccess());
+    } catch (error) {
+      yield put(googleMapsLoadError(error));
+    }
+
     yield take(USER_LOCATION_REQUEST);
     yield put(setStatusMessage('Hold tight...grabbing your location...'));
     const {location, err } = yield call(fetchUserLocationGeo);

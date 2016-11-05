@@ -3,6 +3,7 @@
  */
 
 import * as constants from './constants';
+import promisescript from 'promisescript';
 
 /* Status message */
 
@@ -118,6 +119,38 @@ export function distanceMatrixError(error) {
     type: constants.DISTANCE_MATRIX_ERROR,
     payload: error
   }
+}
+
+export function googleMapsLoadError(error) {
+  return {
+    type: constants.GOOGLE_MAPS_LOAD_ERROR,
+    payload: error,
+  }
+}
+
+export function googleMapsLoadSuccess() {
+  return {
+    type: constants.GOOGLE_MAPS_LOAD_SUCCESS,
+  }
+}
+
+export function googleMapsLoadRequest() {
+  return {
+    type: constants.GOOGLE_MAPS_LOAD_REQUEST,
+  }
+}
+
+/* Load Google maps api via promisescript */
+ const API_KEY = 'AIzaSyC0k6alaE-wq9k46ovNZNpY2ZNQgeRwwsY';
+
+const promiseScriptOptions = {
+  url: 'https://maps.googleapis.com/maps/api/js?key=' + API_KEY + '&libraries=places',
+  type: 'script',
+  exposed: 'google',
+};
+
+export function loadGoogleMapsPromise() {
+  return promisescript(promiseScriptOptions);
 }
 
 /*

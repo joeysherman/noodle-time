@@ -21,6 +21,7 @@ import {
 
   userLocationRequest,
   autoCompleteRequest,
+  googleMapsLoadRequest,
 
 } from './actions';
 
@@ -35,6 +36,9 @@ import {
 
 class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
+  componentWillMount() {
+    this.props.loadMaps();
+  }
 
   autoCompleteNeededForLocation = () => {
     return this.props.error;
@@ -103,6 +107,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     noodleTime: () => dispatch(userLocationRequest()),
+    loadMaps: () => dispatch(googleMapsLoadRequest()),
     dispatch,
     }
 };

@@ -7,6 +7,7 @@ import { fromJS } from 'immutable';
 import * as constants from './constants';
 
 const initialState = fromJS({
+  mapsLoaded: false,
   loading: false,
   error: false,
   statusMessage: 'Click to begin!',
@@ -105,6 +106,10 @@ function homeReducer (state = initialState, action){
     case constants.SET_STATUS_MESSAGE :
       return state
         .set('statusMessage', action.payload);
+
+    case constants.GOOGLE_MAPS_LOAD_SUCCESS :
+      return state
+        .set('mapsLoaded', true);
 
   }
 
