@@ -36,17 +36,6 @@ import {
   setStatusMessage,
 } from './actions';
 
-import {
-  selectUserLocation,
-  selectPlaces,
-} from './selectors';
-
-const autoCompleteUrl = 'http://localhost:8080/api/autocomplete';
-const placesUrl = 'http://localhost:8080/api/places';
-const placeDetailsUrl = 'http://localhost:8080/api/place';
-const geocodeUrl = 'http://localhost:8080/api/geocode';
-const distanceMatrixUrl = 'http://localhost:8080/api/distance';
-
 export function* homePageSaga() {
   while (true) {
     yield take(GOOGLE_MAPS_LOAD_REQUEST);
