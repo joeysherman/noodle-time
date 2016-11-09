@@ -18,11 +18,9 @@ import PlaceCard from '../../components/PlaceCard';
 import { connect } from 'react-redux';
 
 import {
-
   userLocationRequest,
   autoCompleteRequest,
   googleMapsLoadRequest,
-
 } from './actions';
 
 import {

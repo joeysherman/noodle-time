@@ -14,18 +14,24 @@ module.exports = (function yelp_routes() {
     var index = 0;
     var query = {};
 
-    for (i; i<keys.length; i++) {
-      switch (keys[i]) {
+    for (index; index<keys.length; index++) {
+      switch (keys[index]) {
         case 'limit' :
           query.limit = request.limit;
+          break;
+        case 'sort' :
+          query.sort = request.sort;
+          break;
       }
     }
 
+    query.cll = request.lat + ',' + request.lng;
+    console.log(query.cll);
+    query.term = 'ramen';
+
     req.app.locals.yelp.search({
       term: 'ramen',
-      ll: '',
-      limit: 10,
-      sort: 1,
+      ll: request.lat + ',' + request.lng,
     })
       .then((data) => { res.send(data)})
       .catch((err) => { res.send(err)});
