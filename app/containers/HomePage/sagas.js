@@ -36,6 +36,12 @@ import {
   setStatusMessage,
 } from './actions';
 
+const autoCompleteUrl = 'http://localhost:8080/api/autocomplete';
+const placesUrl = 'http://localhost:8080/api/noodles';
+const placeDetailsUrl = 'http://localhost:8080/api/place';
+const geocodeUrl = 'http://localhost:8080/api/geocode';
+const distanceMatrixUrl = 'http://localhost:8080/api/distance';
+
 export function* homePageSaga() {
   while (true) {
     yield take(GOOGLE_MAPS_LOAD_REQUEST);
@@ -51,7 +57,7 @@ export function* homePageSaga() {
     const {location, err } = yield call(fetchUserLocationGeo);
 
     if (location) {
-      yield put(setStatusMessage('Found you! Finding Ramen near you...'));
+      yield put(setStatusMessage('Location found! Finding Ramen near you...'));
       yield put(userLocationSuccess(location));
       yield call(fetchNoodlePlaces, location);
     } else {
@@ -92,10 +98,9 @@ function* fetchNoodlePlaces(location) {
     const places = yield call(request, url);
 
     if (places.data) {
-      let numberOfPlaces = places.data.json.results.length;
-      yield put(placesSuccess(places.data));
+      let numberOfPlaces = places.data.total;
+      yield put(placesSuccess(places.data.businesses));
       yield put(setStatusMessage('Sweet! Found ' + numberOfPlaces + ' Ramen places near you!'));
-      yield call(fetchDistancesFromUserToPlaces, places.data.json.results, location);
     } else {
       yield put(placesError(places.err));
     }

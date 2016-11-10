@@ -73,7 +73,7 @@ function homeReducer (state = initialState, action){
           map
             .set('loading', false)
             .set('error', false)
-            .set('places', action.payload.json.results);
+            .set('places', fromJS(action.payload));
         });
 
     case constants.PLACES_ERROR :

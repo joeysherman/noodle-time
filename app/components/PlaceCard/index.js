@@ -10,15 +10,16 @@ import FlatButton from 'material-ui/FlatButton';
 import styles from './styles.css';
 
 function PlaceCard(props) { // eslint-disable-line react/prefer-stateless-function
-  let { name, formatted_address } = props.place;
-  let { distance } = props;
-
+  let name = props.place.get('name');
+  let display_phone = props.place.get('display_phone');
+  let distance = props.place.get('distance');
+  
   return (
 
       <Card>
         <CardHeader
           title={name}
-          subtitle={formatted_address}
+          subtitle={display_phone}
         />
         <CardActions>
           <FlatButton label="Show on Map" />

@@ -45,7 +45,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
   shouldShowCard = () => {
     let { error, displayMode, places, distances } = this.props;
 
-    return (!error && places && distances);
+    return (!error && places);
   };
 
   render() {
@@ -63,13 +63,11 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
         /*onUpdateInput={(input) => { this.props.dispatch(autoCompleteRequest(input)) }}*/
       /> )
     } else if (this.shouldShowCard()) {
-      let { place_index } = this.props.distances[0];
-      let { text } = this.props.distances[0].distance;
-      let place = this.props.places[place_index];
+      let place = this.props.places.get(0);
 
       main = (
         <div className={styles.place_card_wrapper}>
-          <PlaceCard place={place} distance={text}/>
+          <PlaceCard place={place}/>
         </div>
       )
     } else {
@@ -96,7 +94,6 @@ const mapStateToProps = (state) => {
     error: selectError(state),
     loading: selectLoading(state),
     places: selectPlaces(state),
-    distances: selectDistances(state),
     autoCompleteDataSource: selectAutoCompleteData(state),
     statusMessage: selectStatusMessage(state),
   }

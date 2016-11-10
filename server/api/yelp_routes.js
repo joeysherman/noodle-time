@@ -32,14 +32,21 @@ module.exports = (function yelp_routes() {
     req.app.locals.yelp.search({
       term: 'ramen',
       ll: request.lat + ',' + request.lng,
+      sort: request.sort || 1,
     })
       .then((data) => { res.send(data)})
       .catch((err) => { res.send(err)});
   });
 
-/*  Router.get('/noodle', function(req, res) {
-    req.app.locals.yelp.business()
-  })*/
+  Router.get('/noodle', function(req, res) {
+    var id = req.query.id || null;
+
+    if (!id) return res.error('No business ID supplied');
+
+    req.app.locals.yelp.business(id)
+      .then((business) => res.send(business))
+      .catch((err) => res.error(err));
+  });
 
   return Router;
 
