@@ -36,6 +36,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
 
   componentWillMount() {
     this.props.loadMaps();
+    console.log(window.location.origin);
   }
 
   autoCompleteNeededForLocation = () => {

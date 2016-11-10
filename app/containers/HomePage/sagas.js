@@ -36,11 +36,11 @@ import {
   setStatusMessage,
 } from './actions';
 
-const autoCompleteUrl = 'http://localhost:8080/api/autocomplete';
-const placesUrl = 'http://localhost:8080/api/noodles';
-const placeDetailsUrl = 'http://localhost:8080/api/place';
-const geocodeUrl = 'http://localhost:8080/api/geocode';
-const distanceMatrixUrl = 'http://localhost:8080/api/distance';
+  var autoCompleteUrl   = '/api/autocomplete';
+  var placesUrl         = '/api/noodles';
+  var placeDetailsUrl   = '/api/place';
+  var geocodeUrl        = '/api/geocode';
+  var distanceMatrixUrl = '/api/distance';
 
 export function* homePageSaga() {
   while (true) {
