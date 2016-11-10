@@ -31,6 +31,7 @@ import {
   selectDistances,
   selectPlaces,
   selectAutoCompleteData,
+  selectDisplayMode,
 } from './selectors';
 
 class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -48,15 +49,15 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
   };
 
   shouldShowMap = () => {
-    let { error, displayMode, places, userLocation } = this.props;
+    let { displayMode } = this.props;
 
-    return (!error && displayMode == 'Map' && places && userLocation);
-  }
+    return displayMode == 'Map';
+  };
 
   shouldShowCard = () => {
     let { error, displayMode, places, distances } = this.props;
-
-    return (!error && places);
+    let mode = displayMode == "Card";
+    return (!error && places && mode);
   };
 
   render() {
@@ -83,7 +84,11 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
       )
     } else if (this.shouldShowMap()) {
 
-
+      main = (
+        <div>
+          <h1>Map holder</h1>
+        </div>
+      )
     } else {
       main = (
         <div className={styles.ramen_wrapper}>
@@ -108,6 +113,7 @@ const mapStateToProps = (state) => {
     error: selectError(state),
     loading: selectLoading(state),
     places: selectPlaces(state),
+    displayMode: selectDisplayMode(state),
     autoCompleteDataSource: selectAutoCompleteData(state),
     statusMessage: selectStatusMessage(state),
   }

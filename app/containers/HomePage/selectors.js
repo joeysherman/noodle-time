@@ -49,6 +49,11 @@ const selectDistances = createSelector(
 const selectStatusMessage = createSelector(
   selectHomeDomain,
   (home) => home.get('statusMessage'),
+);
+
+const selectDisplayMode = createSelector(
+  selectHomeDomain,
+  (home) => home.get('displayMode'),
 )
 
 export {
@@ -60,5 +65,6 @@ export {
   selectDistances,
   selectStatusMessage,
   selectPlaces,
+  selectDisplayMode,
 };
 
