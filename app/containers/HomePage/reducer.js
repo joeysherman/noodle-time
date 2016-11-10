@@ -111,6 +111,9 @@ function homeReducer (state = initialState, action){
       return state
         .set('mapsLoaded', true);
 
+    case constants.SET_DISPLAY_MODE :
+      return state
+        .set('displayMode', action.payload);
   }
 
   return state;

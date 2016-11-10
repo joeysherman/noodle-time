@@ -21,6 +21,7 @@ import {
   userLocationRequest,
   autoCompleteRequest,
   googleMapsLoadRequest,
+  setDisplayMode,
 } from './actions';
 
 import {
@@ -36,12 +37,21 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
 
   componentWillMount() {
     this.props.loadMaps();
-    console.log(window.location.origin);
   }
 
   autoCompleteNeededForLocation = () => {
     return this.props.error;
   };
+
+  setDisplayMode = (mode) => {
+    return this.props.setDisplayMode.bind(this, mode);
+  };
+
+  shouldShowMap = () => {
+    let { error, displayMode, places, userLocation } = this.props;
+
+    return (!error && displayMode == 'Map' && places && userLocation);
+  }
 
   shouldShowCard = () => {
     let { error, displayMode, places, distances } = this.props;
@@ -68,9 +78,12 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
 
       main = (
         <div className={styles.place_card_wrapper}>
-          <PlaceCard place={place}/>
+          <PlaceCard onClick={this.setDisplayMode('Map')} place={place}/>
         </div>
       )
+    } else if (this.shouldShowMap()) {
+
+
     } else {
       main = (
         <div className={styles.ramen_wrapper}>
@@ -104,6 +117,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     noodleTime: () => dispatch(userLocationRequest()),
     loadMaps: () => dispatch(googleMapsLoadRequest()),
+    setDisplayMode: (mode) => dispatch(setDisplayMode(mode)),
     dispatch,
     }
 };

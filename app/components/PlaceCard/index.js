@@ -22,7 +22,7 @@ function PlaceCard(props) { // eslint-disable-line react/prefer-stateless-functi
           subtitle={display_phone}
         />
         <CardActions>
-          <FlatButton label="Show on Map" />
+          <FlatButton onClick={props.onClick} label="Show on Map" />
           <FlatButton label="More Details" />
           <div className={styles.distance_wrapper}>
             <h3>{distance} away</h3>

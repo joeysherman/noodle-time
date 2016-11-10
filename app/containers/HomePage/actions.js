@@ -144,11 +144,18 @@ export function googlePlacesRequest() {
 
 }
 
+export function setDisplayMode(mode) {
+  return {
+    type: constants.SET_DISPLAY_MODE,
+    payload: mode
+  }
+}
+
 /* Load Google maps api via promisescript */
  const API_KEY = 'AIzaSyC0k6alaE-wq9k46ovNZNpY2ZNQgeRwwsY';
 
-const promiseScriptOptions = {
-  url: 'https://maps.googleapis.com/maps/api/js?google_key=' + API_KEY + '&libraries=places',
+var promiseScriptOptions = {
+  url: 'https://maps.googleapis.com/maps/api/js?v=3&key=' + API_KEY + '&libraries=places',
   type: 'script',
   exposed: 'google',
 };
