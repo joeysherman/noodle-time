@@ -10,20 +10,17 @@ import selectFooter from './selectors';
 import styles from './styles.css';
 
 import Paper from 'material-ui/Paper';
+
 import { BottomNavigationItem, BottomNavigation } from 'material-ui/BottomNavigation';
-import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
 
 export class Footer extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
+
     return (
-      <Paper zDepth={1}>
-        <BottomNavigation selectedIndex={0}>
-          <span>Crafted in San Diego by <a target="_blank" href="https://www.google.com">Joey</a></span>
-          {/*<BottomNavigationItem
-            label="Nearby"
-            icon={<IconLocationOn/>}
-          />*/}
-        </BottomNavigation>
+      <Paper zDepth={1} className={styles.footer}>
+
+          <p className={styles.footerAbout}>Crafted in SD by <strong>Joey</strong></p>
+          
       </Paper>
     );
   }

@@ -1,11 +1,26 @@
 .placeCard { /* stylelint-disable */
-  display: flex;
 }
 
-.distance_wrapper {
+.distanceWrapper {
   display: inline-block;
+  position: absolute;
+  box-sizing: border-box;
+  right: 3em;
+}
+
+.cardAvatar {
+  align-self: center;
 }
 
 .cardHeader {
   display: flex;
 }
+
+.cardRatingImg {
+  position: absolute;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 10px;
+  right: 10em;
+}
+
