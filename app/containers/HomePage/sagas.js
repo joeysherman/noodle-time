@@ -54,10 +54,12 @@ export function* homePageSaga() {
 
     yield take(USER_LOCATION_REQUEST);
     yield put(setStatusMessage('Hold tight...grabbing your location...'));
+    yield call(delay, 220);
     const {location, err } = yield call(fetchUserLocationGeo);
 
     if (location) {
       yield put(setStatusMessage('Location found! Finding Ramen near you...'));
+      yield call(delay, 150);
       yield put(userLocationSuccess(location));
       yield call(fetchNoodlePlaces, location);
     } else {
@@ -65,27 +67,6 @@ export function* homePageSaga() {
       yield put(setStatusMessage("Error, where are you?"));
       yield call(throttleAutocomplete);
     }
-  }
-}
-
-function* fetchDistancesFromUserToPlaces(places, location) {
-  const { latitude, longitude } = location.coords;
-
-  const places_locations = places.map((place) => {
-    return place.geometry.location;
-  });
-
-  const places_query = places_locations.map((item) => '&destlat=' + item.lat + '&destlng=' + item.lng ).join('');
-
-  const query = distanceMatrixUrl + '?lat=' + latitude
-    + '&lng=' + longitude + places_query;
-  yield put(setStatusMessage('Seeing which Ramen place is closest...'));
-  const distances = yield call(request, query);
-
-  if (distances.data) {
-    yield [put(setStatusMessage('Lets go!')), put(distanceMatrixSuccess(distances.data))];
-  } else {
-    yield put(distances.error);
   }
 }
 
@@ -99,8 +80,9 @@ function* fetchNoodlePlaces(location) {
 
     if (places.data) {
       let numberOfPlaces = places.data.total;
+      yield put(setStatusMessage('Found ' + numberOfPlaces + ' Ramen places near you!'));
+      yield call(delay, 1000);
       yield put(placesSuccess(places.data.businesses));
-      yield put(setStatusMessage('Sweet! Found ' + numberOfPlaces + ' Ramen places near you!'));
     } else {
       yield put(placesError(places.err));
     }
