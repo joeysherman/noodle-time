@@ -1,7 +1,11 @@
 .placeCard { /* stylelint-disable */
-
+  display: flex;
 }
 
 .distance_wrapper {
   display: inline-block;
+}
+
+.cardHeader {
+  display: flex;
 }

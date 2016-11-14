@@ -32,13 +32,16 @@ function PlaceCard(props) { // eslint-disable-line react/prefer-stateless-functi
         <CardHeader
           title={<h1>{name}</h1>}
           subtitle={<h3>{address}</h3>}
-          avatar={<Avatar src={avatar_url} className={styles.avatar}/>}
-        />
+          avatar={<Avatar src={avatar_url} className={styles.cardHeader}/>}>
+
+          <img src={rating_url} />
+        </CardHeader>
+
+
         <CardText
           children={<div className={styles.distance_wrapper}>
             <h3>{review_count}<span> Reviews</span></h3>
             <br></br>
-            <img src={rating_url} />
           </div>}>
         </CardText>
         <CardActions>
