@@ -16,6 +16,20 @@
   display: flex;
 }
 
+.verticalSpacer {
+  border-left:1px solid #38546d;
+  border-right:1px solid #16222c;
+  height: 36px;
+  display: block;
+  top:10px;
+}
+
+.cardActions {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .cardRatingImg {
   position: absolute;
   display: inline-block;

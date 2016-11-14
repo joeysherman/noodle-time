@@ -39,20 +39,17 @@ function PlaceCard(props) { // eslint-disable-line react/prefer-stateless-functi
           <img src={rating_url} className={styles.cardRatingImg}/>
           <div className={styles.distanceWrapper}>
             <h3>{review_count}<span> Reviews</span></h3>
-            <br></br>
           </div>
         </CardHeader>
 
 
         <CardText
-          children={<div className={styles.distanceWrapper}>
-            <h3>{review_count}<span> Reviews</span></h3>
-            <br></br>
-          </div>}
+          children={<h3>{review_count}<span> Reviews</span></h3>}
           expandable={true}>
         </CardText>
-        <CardActions>
+        <CardActions className={styles.cardActions}>
           <FlatButton onClick={props.onClick} label="Show on Map" icon={<Explore/>} />
+          <div className={styles.verticalSpacer}></div>
           <FlatButton label="Call" icon={<Call/>} />
         </CardActions>
       </Card>
