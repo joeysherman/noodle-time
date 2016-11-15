@@ -64,7 +64,6 @@ export function* homePageSaga() {
       yield call(fetchNoodlePlaces, location);
     } else {
       yield put(userLocationError(err));
-      yield put(setStatusMessage("Error, where are you?"));
       yield call(throttleAutocomplete);
     }
   }
@@ -90,7 +89,7 @@ function* fetchNoodlePlaces(location) {
 }
 
 function* fetchAutocomplete(action) {
-  var url = autoCompleteUrl + '?input=' + action.payload;
+  var url = autoCompleteUrl + '?input=' + action.payload.input;
 
   const predictions = yield call(request, url);
   

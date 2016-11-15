@@ -41,7 +41,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
   }
 
   autoCompleteNeededForLocation = () => {
-    return this.props.error;
+    return this.props.displayMode == 'AutoComplete';
   };
 
   setDisplayMode = (mode) => {
@@ -67,15 +67,16 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
     let { statusMessage } = this.props;
 
     if (this.autoCompleteNeededForLocation()){
-      main = ( <AutoComplete
+      main = ( <Paper className={styles.autoCompleteWrapper}><AutoComplete
         hintText="Search for your location"
         dataSource={this.props.autoCompleteDataSource || []}
         filter={AutoComplete.noFilter}
         openOnFocus={true}
-        /*onUpdateInput={(input) => { this.props.dispatch(autoCompleteRequest(input)) }}*/
-      /> )
+        onUpdateInput={(input) => { this.props.dispatch(autoCompleteRequest(input))}}
+        style={{ marginTop: '64px', marginBottom: '56px'}}
+      /></Paper> )
     } else if (this.shouldShowCard()) {
-      let place = this.props.places.get(0);
+      let place = this.props.places.get(0).toJS();
 
       main = (
         <div className={styles.place_card_wrapper}>
@@ -85,9 +86,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
     } else if (this.shouldShowMap()) {
 
       main = (
-        <div>
-          <h1>Map holder</h1>
-        </div>
+        <Map></Map>
       )
     } else {
       main = (

@@ -13,7 +13,8 @@ const initialState = fromJS({
   statusMessage: 'Click to begin!',
   displayMode: 'Card',
   places: null,
-  distances: null
+  distances: null,
+  autoComplete: null,
 });
 
 /*
@@ -45,8 +46,7 @@ function homeReducer (state = initialState, action){
 
     case constants.USER_LOCATION_ERROR :
       return state
-        .set('loading', false)
-        .set('error', action.payload);
+        .set('displayMode', 'AutoComplete');
 
     case constants.AUTOCOMPLETE_ERROR :
       return state
@@ -54,16 +54,14 @@ function homeReducer (state = initialState, action){
         .set('error', action.payload);
 
     case constants.AUTOCOMPLETE_SUCCESS :
-      let predictions;
+      let predictions = 'Blah';
       console.log(action.payload);
-      if (!action.payload) return state;
 
-      if (action.payload.predictions && typeof action.payload.predictions == 'Array'){
-        predictions = action.payload.predictions.map((item) => item.description );
+      if (action.payload.json.status == 'OK'){
+        predictions = action.payload.json.predictions.map((item) => item.description );
       }
 
       return state
-        .set('loading', false)
         .set('autoComplete', predictions);
 
     case constants.PLACES_SUCCESS :
