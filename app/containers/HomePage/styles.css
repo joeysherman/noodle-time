@@ -47,3 +47,13 @@
 .place_card_wrapper {
   margin: auto;
 }
+
+.autoCompleteWrapper {
+  margin: auto;
+  width: 50%;
+  height: auto;
+}
+
+.autoComplete {
+  width: 50%;
+}

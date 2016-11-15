@@ -68,12 +68,13 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
 
     if (this.autoCompleteNeededForLocation()){
       main = ( <Paper className={styles.autoCompleteWrapper}><AutoComplete
+        className={styles.autoComplete}
         hintText="Search for your location"
         dataSource={this.props.autoCompleteDataSource || []}
         filter={AutoComplete.noFilter}
         openOnFocus={true}
         onUpdateInput={(input) => { this.props.dispatch(autoCompleteRequest(input))}}
-        style={{ marginTop: '64px', marginBottom: '56px'}}
+        style={{ margin: 'auto'}}
       /></Paper> )
     } else if (this.shouldShowCard()) {
       let place = this.props.places.get(0).toJS();

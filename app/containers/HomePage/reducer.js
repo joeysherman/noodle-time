@@ -54,9 +54,8 @@ function homeReducer (state = initialState, action){
         .set('error', action.payload);
 
     case constants.AUTOCOMPLETE_SUCCESS :
-      let predictions = 'Blah';
-      console.log(action.payload);
-
+      let predictions = [];
+      
       if (action.payload.json.status == 'OK'){
         predictions = action.payload.json.predictions.map((item) => item.description );
       }
