@@ -26,7 +26,6 @@
   .ramen_paper {
     width: 90%
   }
-
 }
 
 .ramen_message {
@@ -46,6 +45,7 @@
 
 .place_card_wrapper {
   margin: auto;
+  display: flex;
 }
 
 .autoCompleteWrapper {
@@ -56,4 +56,31 @@
 
 .autoComplete {
   width: 50%;
+}
+
+.leftDecrement {
+  width: 50px;
+  height: auto;
+  background-color: #FF5722;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+}
+
+@media only screen and (max-device-width: 426px) {
+  .leftDecrement {
+    display: none;
+  }
+  .rightIncrement {
+    display: none;
+  }
+}
+
+.rightIncrement {
+  width: 50px;
+  height: auto;
+  background-color: #FF5722;
+  margin-left: 12px;
+  display: flex;
+  align-items: center;
 }

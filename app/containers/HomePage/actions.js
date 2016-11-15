@@ -151,6 +151,18 @@ export function setDisplayMode(mode) {
   }
 }
 
+export function incrementSelectedIndex() {
+  return {
+    type: constants.INCREMENT_SELECTED_INDEX,
+  }
+}
+
+export function decrementSelectedIndex() {
+  return {
+    type: constants.DECREMENT_SELECTED_INDEX,
+  }
+}
+
 /* Load Google maps api via promisescript */
  const API_KEY = 'AIzaSyC0k6alaE-wq9k46ovNZNpY2ZNQgeRwwsY';
 

@@ -17,6 +17,9 @@ import styles from './styles.css';
 // Material UI components
 import Paper from 'material-ui/Paper';
 import AutoComplete from 'material-ui/AutoComplete';
+import ChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
+import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
+import IconButton from 'material-ui/IconButton';
 // Self-made components
 import RamenButton from '../../components/RamenButton/ramenButton';
 import Map from '../../containers/Map';
@@ -28,6 +31,8 @@ import {
   autoCompleteRequest,
   googleMapsLoadRequest,
   setDisplayMode,
+  incrementSelectedIndex,
+  decrementSelectedIndex,
 } from './actions';
 
 // Selectors
@@ -39,6 +44,7 @@ import {
   selectPlaces,
   selectAutoCompleteData,
   selectDisplayMode,
+  selectIndex,
 } from './selectors';
 
 class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -59,6 +65,10 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
     let { displayMode } = this.props;
 
     return displayMode == 'Map';
+  };
+
+  handleClick = () => {
+    console.log('Clicked');
   };
 
   shouldShowCard = () => {
@@ -84,11 +94,22 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
         style={{ margin: 'auto'}}
       /></Paper> )
     } else if (this.shouldShowCard()) {
-      let place = this.props.places.get(0).toJS();
+      let { selectedIndex } = this.props;
+      let place = this.props.places.get(selectedIndex).toJS();
 
       main = (
         <div className={styles.place_card_wrapper}>
+          <div className={styles.leftDecrement}>
+            <IconButton onClick={this.props.decrementSelectedIndex}>
+              <ChevronLeft />
+            </IconButton>
+          </div>
           <PlaceCard onClick={this.setDisplayMode('Map')} place={place}/>
+          <div className={styles.rightIncrement}>
+            <IconButton onClick={this.props.incrementSelectedIndex}>
+              <ChevronRight />
+            </IconButton>
+          </div>
         </div>
       )
     } else if (this.shouldShowMap()) {
@@ -123,6 +144,7 @@ const mapStateToProps = (state) => {
     displayMode: selectDisplayMode(state),
     autoCompleteDataSource: selectAutoCompleteData(state),
     statusMessage: selectStatusMessage(state),
+    selectedIndex: selectIndex(state),
   }
 };
 
@@ -131,6 +153,8 @@ const mapDispatchToProps = (dispatch) => {
     noodleTime: () => dispatch(userLocationRequest()),
     loadMaps: () => dispatch(googleMapsLoadRequest()),
     setDisplayMode: (mode) => dispatch(setDisplayMode(mode)),
+    incrementSelectedIndex: () => dispatch(incrementSelectedIndex()),
+    decrementSelectedIndex: () => dispatch(decrementSelectedIndex()),
     dispatch,
     }
 };

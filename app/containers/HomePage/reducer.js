@@ -13,7 +13,7 @@ const initialState = fromJS({
   statusMessage: 'Click to begin!',
   displayMode: 'Card',
   places: null,
-  distances: null,
+  selectedIndex: 0,
   autoComplete: null,
 });
 
@@ -111,6 +111,23 @@ function homeReducer (state = initialState, action){
     case constants.SET_DISPLAY_MODE :
       return state
         .set('displayMode', action.payload);
+
+    case constants.DECREMENT_SELECTED_INDEX :
+      let length = state.get('places').size-1;
+
+      return state
+        .update('selectedIndex', (i) => {
+          if (i > 0) {
+            return --i;
+          }
+          return length;
+        });
+
+    case constants.INCREMENT_SELECTED_INDEX :
+
+      return state
+        .set('selectedIndex', 5);
+
   }
 
   return state;

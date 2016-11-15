@@ -20,6 +20,7 @@ import { applyRouterMiddleware, Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import configureStore from './store';
+import HomePage from 'containers/HomePage';
 
 // Import the CSS reset, which HtmlWebpackPlugin transfers to the build folder
 /*import 'sanitize.css/sanitize.css';*/
@@ -46,7 +47,11 @@ const history = syncHistoryWithStore(browserHistory, store, {
 import App from 'containers/App';
 import createRoutes from './routes';
 const rootRoute = {
+  path: '/',
   component: App,
+  indexRoute: {
+    component: HomePage,
+  },
   childRoutes: createRoutes(store),
 };
 
