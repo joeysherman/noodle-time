@@ -15,7 +15,7 @@ var token = 'xNF-zZ6wvkTAJumh6mjKsHUsJ_ifQ_Lo';
 var token_secret = 'l11-u6Vov1tXg0Wahq5xr9u8r28';
 
 var q          = require('q').Promise;
-var DEV_MODE   = process.env.NODE_ENV !== 'production';
+const DEV_MODE   = process.env.NODE_ENV !== 'production';
 
 module.exports = function addApiMiddleware(app) {
   var setting = DEV_MODE ? 'dev' : 'short';

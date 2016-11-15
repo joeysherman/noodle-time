@@ -9,14 +9,20 @@
  * the linting exception.
  */
 
+// Library dependencies
 import React from 'react';
-import RamenButton from '../../components/RamenButton/ramenButton';
+import { connect } from 'react-redux';
 import styles from './styles.css';
+
+// Material UI components
 import Paper from 'material-ui/Paper';
 import AutoComplete from 'material-ui/AutoComplete';
+// Self-made components
+import RamenButton from '../../components/RamenButton/ramenButton';
+import Map from '../../containers/Map';
 import PlaceCard from '../../components/PlaceCard';
-import { connect } from 'react-redux';
 
+// Actions
 import {
   userLocationRequest,
   autoCompleteRequest,
@@ -24,6 +30,7 @@ import {
   setDisplayMode,
 } from './actions';
 
+// Selectors
 import {
   selectStatusMessage,
   selectLoading,
