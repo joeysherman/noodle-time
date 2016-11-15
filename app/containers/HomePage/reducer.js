@@ -124,9 +124,15 @@ function homeReducer (state = initialState, action){
         });
 
     case constants.INCREMENT_SELECTED_INDEX :
+      let max = state.get('places').size-1;
 
       return state
-        .set('selectedIndex', 5);
+        .update('selectedIndex', (i) => {
+          if (i != max) {
+            return ++i;
+          }
+          return 0;
+        });
 
   }
 
