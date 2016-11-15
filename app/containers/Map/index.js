@@ -16,7 +16,7 @@ import {
 
 export class Map extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
-  componentDidMount() {
+/*  componentDidMount() {
     let { longitude, latitude } = this.props.userLocation;
     let userLocation = { lat: latitude, lng: longitude };
 
@@ -38,12 +38,12 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
       position: location,
     });
     window.mapMarkers.push(marker);
-  }
+  }*/
 
   render() {
     return (
       <div className={styles.mapWrapper}>
-        <div className={styles.map} id='map'></div>
+        <h1>Works!</h1>
       </div>
     );
   }

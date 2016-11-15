@@ -5,6 +5,8 @@
 import { getAsyncInjectors } from 'utils/asyncInjectors';
 import HomePage from 'containers/HomePage';
 
+import createChildRoutes from 'containers/HomePage/routes';
+
 const errorLoading = (err) => {
   console.error('Dynamic page loading failed', err); // eslint-disable-line no-console
 };
@@ -20,10 +22,10 @@ export default function createRoutes(store) {
   return [
     {
       path: '/',
-      name: 'home',
       indexRoute: {
         component: HomePage,
       },
+      childRoutes: createChildRoutes(store),
     },
     {
       path: '*',
