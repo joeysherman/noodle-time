@@ -26,6 +26,18 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
         zoom: 15,
       });
     }
+    this.createAndSetMarker(userLocation);
+  }
+
+  createAndSetMarker(location) {
+    if (!window.mapMarkers){
+      window.mapMarkers = [];
+    }
+    let marker = new window.google.maps.Marker({
+      map: window.map,
+      position: location,
+    });
+    window.mapMarkers.push(marker);
   }
 
   render() {
