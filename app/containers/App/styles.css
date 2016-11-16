@@ -8,5 +8,11 @@
   position: absolute;
   height: 100vh;
   width: 100vw;
-  background: linear-gradient(110deg, #F57F17, #FF5722);
+}
+
+.overlay {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.33);
 }
