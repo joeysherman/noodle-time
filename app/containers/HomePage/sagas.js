@@ -5,6 +5,7 @@
 
 import { take, actionChannel, put, fork, call, select } from 'redux-saga/effects';
 import { delay, buffers } from 'redux-saga';
+import { push } from 'react-router-redux';
 import request from '../../utils/request';
 
 import {
@@ -44,13 +45,6 @@ import {
 
 export function* homePageSaga() {
   while (true) {
-    yield take(GOOGLE_MAPS_LOAD_REQUEST);
-    try {
-      yield call(loadGoogleMapsPromise);
-      yield put(googleMapsLoadSuccess());
-    } catch (error) {
-      yield put(googleMapsLoadError(error));
-    }
 
     yield take(USER_LOCATION_REQUEST);
     yield put(setStatusMessage('Hold tight...grabbing your location...'));
@@ -58,10 +52,17 @@ export function* homePageSaga() {
     const {location, err } = yield call(fetchUserLocationGeo);
 
     if (location) {
+      let { latitude, longitude } = location.coords;
       yield put(setStatusMessage('Location found! Finding Ramen near you...'));
       yield call(delay, 150);
-      yield put(userLocationSuccess(location));
-      yield call(fetchNoodlePlaces, location);
+      yield put(push({
+        pathname: '/near',
+        query: {
+          lat: latitude,
+          lng: longitude,
+        }
+      }));
+
     } else {
       yield put(userLocationError(err));
       yield call(throttleAutocomplete);

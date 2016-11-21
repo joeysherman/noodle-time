@@ -16,8 +16,16 @@ export default function createRoutes(store) {
   // Create reusable async injectors using getAsyncInjectors factory
   const { injectReducer, injectSagas } = getAsyncInjectors(store); // eslint-disable-line no-unused-vars
 
-  return [
-    {
+  return [{
+
+    path: 'near',
+    getComponent(nextState, cb) {
+    System.import('containers/NotFoundPage')
+      .then(loadModule(cb))
+      .catch(errorLoading);
+    }
+  },
+  {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {

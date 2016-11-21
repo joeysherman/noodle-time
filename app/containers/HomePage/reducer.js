@@ -7,13 +7,9 @@ import { fromJS } from 'immutable';
 import * as constants from './constants';
 
 const initialState = fromJS({
-  mapsLoaded: false,
   loading: false,
   error: false,
   statusMessage: 'Click to begin!',
-  displayMode: 'Card',
-  places: null,
-  selectedIndex: 0,
   autoComplete: null,
 });
 
