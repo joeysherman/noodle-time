@@ -20,9 +20,21 @@ export default function createRoutes(store) {
 
     path: 'near',
     getComponent(nextState, cb) {
-    System.import('containers/NotFoundPage')
-      .then(loadModule(cb))
-      .catch(errorLoading);
+      const importModules = Promise.all([
+        System.import('containers/PlacesPage'),
+        System.import('containers/PlacesPage/reducer'),
+        System.import('containers/PlacesPage/sagas'),
+      ]);
+
+      const renderRoute = loadModule(cb);
+
+      importModules.then(([component, reducer, sagas]) => {
+        injectReducer('placesPage', reducer.default);
+        injectSagas(sagas.default);
+        renderRoute(component);
+      });
+
+      importModules.catch(errorLoading);
     }
   },
   {
