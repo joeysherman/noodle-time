@@ -6,16 +6,34 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import selectPlacesPage from './selectors';
 import { selectPlaces } from './selectors';
 import styles from './styles.css';
-import { createStructuredSelector } from 'reselect';
+import { placesRequest } from './actions';
 
 import CircularProgress from 'material-ui/CircularProgress';
 
 export class PlacesPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  componentDidMount() {
+    if (this.locationValid()) {
+      this.props.dispatch(placesRequest({
+        lat: this.props.lat,
+        lng: this.props.lng,
+      }));
+    }
+  }
+
+  locationValid = () => {
+    let lat = parseInt(this.props.lat),
+        lng = parseInt(this.props.lng);
+
+    if (!(Number.isInteger(lat) && Number.isInteger(lng)))
+      return false;
+
+    return (lat < 90 && lat > -90 && lng < 180 && lng > -180);
+  };
+
+
   render() {
-    console.log(this.props.places);
 
     return (
       <div className={styles.placesPage}>

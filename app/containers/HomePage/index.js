@@ -28,11 +28,6 @@ import PlaceCard from '../../components/PlaceCard';
 // Actions
 import {
   userLocationRequest,
-  autoCompleteRequest,
-  googleMapsLoadRequest,
-  setDisplayMode,
-  incrementSelectedIndex,
-  decrementSelectedIndex,
 } from './actions';
 
 // Selectors
@@ -40,11 +35,6 @@ import {
   selectStatusMessage,
   selectLoading,
   selectError,
-  selectDistances,
-  selectPlaces,
-  selectAutoCompleteData,
-  selectDisplayMode,
-  selectIndex,
 } from './selectors';
 
 class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -74,7 +64,6 @@ const mapStateToProps = (state) => {
   return {
     error: selectError(state),
     loading: selectLoading(state),
-    autoCompleteDataSource: selectAutoCompleteData(state),
     statusMessage: selectStatusMessage(state),
   }
 };

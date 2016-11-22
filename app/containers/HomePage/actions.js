@@ -16,13 +16,6 @@ export function setStatusMessage(message) {
 
 /* User Location */
 
-export function userLocationSuccess(userLocation) {
-  return {
-    type: constants.USER_LOCATION_SUCCESS,
-    payload: userLocation,
-  }
-}
-
 export function userLocationRequest() {
   return {
     type: constants.USER_LOCATION_REQUEST,
@@ -58,28 +51,6 @@ export function autoCompleteError(error) {
   return {
     type: constants.AUTOCOMPLETE_ERROR,
     payload: error,
-  }
-}
-
-/* Places */
-
-export function placesSuccess(places) {
-  return {
-    type : constants.PLACES_SUCCESS,
-    payload: places
-  }
-}
-
-export function placesError(error) {
-  return {
-    type: constants.PLACES_ERROR,
-    payload: error,
-  }
-}
-
-export function placesRequest() {
-  return {
-    type: constants.PLACES_REQUEST,
   }
 }
 

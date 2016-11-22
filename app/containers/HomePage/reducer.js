@@ -59,26 +59,6 @@ function homeReducer (state = initialState, action){
       return state
         .set('autoComplete', predictions);
 
-    case constants.PLACES_SUCCESS :
-
-      return state
-        .withMutations((map) => {
-          map
-            .set('loading', false)
-            .set('error', false)
-            .set('places', fromJS(action.payload));
-        });
-
-    case constants.PLACES_ERROR :
-      return state
-        .withMutations((map) => {
-          map
-            .set('loading', false)
-            .set('places', null)
-            .set('error', action.payload);
-
-        });
-
     case constants.DISTANCE_MATRIX_SUCCESS :
       let distances = action.payload.json.rows[0].elements;
       let distances_with_index = distances.map((item, i) => Object.assign(item, { place_index: i }));

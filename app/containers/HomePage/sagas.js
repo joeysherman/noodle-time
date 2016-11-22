@@ -3,45 +3,24 @@
  */
 
 
-import { take, actionChannel, put, fork, call, select } from 'redux-saga/effects';
+import { take, actionChannel, put, fork, call } from 'redux-saga/effects';
 import { delay, buffers } from 'redux-saga';
 import { push } from 'react-router-redux';
 import request from '../../utils/request';
 
 import {
   USER_LOCATION_REQUEST,
-  GOOGLE_MAPS_LOAD_REQUEST,
   AUTOCOMPLETE_REQUEST,
 } from './constants';
 
 import {
-  userLocationRequest,
   userLocationError,
-  userLocationSuccess,
   fetchUserLocationGeo,
-
-  autoCompleteRequest,
-  autoCompleteError,
-  autoCompleteSuccess,
-
-  placesSuccess,
-  placesError,
-
-  distanceMatrixError,
-  distanceMatrixSuccess,
-
-  loadGoogleMapsPromise,
-  googleMapsLoadError,
-  googleMapsLoadSuccess,
-
   setStatusMessage,
 } from './actions';
 
-  var autoCompleteUrl   = '/api/autocomplete';
-  var placesUrl         = '/api/noodles';
-  var placeDetailsUrl   = '/api/place';
-  var geocodeUrl        = '/api/geocode';
-  var distanceMatrixUrl = '/api/distance';
+  let autoCompleteUrl   = '/api/autocomplete';
+  let geocodeUrl        = '/api/geocode';
 
 export function* homePageSaga() {
   while (true) {
@@ -65,26 +44,6 @@ export function* homePageSaga() {
 
     } else {
       yield put(userLocationError(err));
-      yield call(throttleAutocomplete);
-    }
-  }
-}
-
-function* fetchNoodlePlaces(location) {
-  const { latitude, longitude } = location.coords;
-
-  if (latitude && longitude) {
-    let url = placesUrl + '?' + 'lat=' + latitude + '&lng=' + longitude;
-
-    const places = yield call(request, url);
-
-    if (places.data) {
-      let numberOfPlaces = places.data.total;
-      yield put(setStatusMessage('Found ' + numberOfPlaces + ' Ramen places near you!'));
-      yield call(delay, 1000);
-      yield put(placesSuccess(places.data.businesses));
-    } else {
-      yield put(placesError(places.err));
     }
   }
 }
