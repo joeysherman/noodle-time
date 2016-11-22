@@ -1,10 +1,9 @@
 
 .wrapper {
   display: flex;
+  flex-grow: 1;
   width: 100%;
   height: 100%;
-  margin-top: -64px;
-  margin-bottom: -56px;
 }
 
 .ramen_wrapper {

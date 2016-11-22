@@ -4,7 +4,9 @@ html, body {
   margin: 0;
 }
 
-.app {
+:global #app {
+  display: flex;
+  flex-direction: column;
   height: 100%;
   width: 100%;
 }

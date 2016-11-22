@@ -1,11 +1,10 @@
 .footer { /* stylelint-disable */
-  position: absolute;
+  position: relative;
   bottom: 0;
   width: 100%;
   height: 56px;
   background: rgb(0, 188, 212) !important;
   text-align: center;
-  margin: -56px auto 0 auto;
 }
 
 .footerAbout {
