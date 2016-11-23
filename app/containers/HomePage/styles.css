@@ -6,16 +6,6 @@
   height: 100%;
 }
 
-.ramen_wrapper {
-  margin: auto;
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  width: 40em;
-  height: 20em;
-  justify-content: center;
-  align-items: center;
-}
 
 @media only screen and (max-device-width: 425px) {
   .ramen_wrapper {
