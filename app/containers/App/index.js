@@ -27,7 +27,8 @@ export default class App extends React.Component { // eslint-disable-line react/
   render() {
     return (
       <MuiThemeProvider>
-          <div className={styles.container} style={{ background: 'url(' + ramenImage + ') no-repeat center/cover' }}>
+          <div className={styles.container}>
+            <div className={styles.image} style={{ background: 'url(' + ramenImage + ') no-repeat center/cover' }}></div>
             <div className={styles.overlay}></div>
           <AppBar
             title={<span>Noodle Time</span>}

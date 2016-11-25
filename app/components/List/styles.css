@@ -1,10 +1,21 @@
 .list { /* stylelint-disable */
-
+  width: 70%;
+  height: 90%;
+  background-color: transparent;
+  padding: 0px !important;
+  overflow-y: scroll;
 }
 
 .listWrapper {
-  width: 100%;
-  height: 100%;
   flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: scroll;
+  background-color: transparent !important;
+}
+
+.listItem {
+  background-color: whitesmoke !important;
 
 }

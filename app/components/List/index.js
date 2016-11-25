@@ -1,15 +1,7 @@
-/**
-*
-* List
-*
-*/
-
-
 import React, {Component, PropTypes} from 'react';
 import {List, ListItem, makeSelectable} from 'material-ui/List';
 import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
-import Subheader from 'material-ui/Subheader';
 import styles from './styles.css';
 
 
@@ -54,17 +46,17 @@ SelectableList = wrapState(SelectableList);
 const renderListItems = (props, index) => (
   <ListItem
     key={index}
-    value={props.index}
+    value={index}
     primaryText={props.name}
     leftAvatar={<Avatar src={props.image_url}/>}
     rightAvatar={<img src={props.rating_img_url}/>}
+    className={styles.listItem}
   />
 );
 
 const ListExampleSelectable = (props) => (
   <Paper className={styles.listWrapper}>
     <SelectableList defaultValue={1} className={styles.list}>
-      <Subheader>Selectable Contacts</Subheader>
       {props.places.map((item, i) => {
         return renderListItems(item, i+1);
       })}
