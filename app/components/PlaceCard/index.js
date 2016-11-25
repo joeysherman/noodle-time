@@ -29,7 +29,8 @@ function PlaceCard(props) { // eslint-disable-line react/prefer-stateless-functi
           title={<h3>{name}</h3>}
           subtitle={<h3>{display_address.join(' ')}</h3>}
           avatar={<Avatar src={image_url} className={styles.cardAvatar}/>}
-          className={styles.cardHeader}>
+          className={styles.cardHeader}
+          textStyle={{ paddingRight: '0px' }}>
           <div className={styles.ratingsWrapper}>
             <img src={rating_img_url_large} className={styles.cardRatingImg}/>
             <div className={styles.ratingTextWrapper}>
