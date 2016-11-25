@@ -1,11 +1,8 @@
 .placeCard { /* stylelint-disable */
 }
 
-.distanceWrapper {
-  display: inline-block;
-  position: absolute;
+.ratingTextWrapper {
   box-sizing: border-box;
-  right: 3em;
 }
 
 .cardAvatar {
@@ -14,6 +11,19 @@
 
 .cardHeader {
   display: flex;
+  flex-direction: row;
+}
+
+.reviewText {
+  margin: 0;
+  padding: 10px;
+}
+
+.ratingsWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-end;
 }
 
 .verticalSpacer {
@@ -31,8 +41,6 @@
 }
 
 .cardRatingImg {
-  position: absolute;
-  display: inline-block;
   box-sizing: border-box;
   padding: 10px;
   right: 10em;

@@ -30,18 +30,24 @@ function PlaceCard(props) { // eslint-disable-line react/prefer-stateless-functi
           subtitle={<h3>{display_address.join(' ')}</h3>}
           avatar={<Avatar src={image_url} className={styles.cardAvatar}/>}
           className={styles.cardHeader}>
-          
-          <img src={rating_img_url_large} className={styles.cardRatingImg}/>
-          <div className={styles.distanceWrapper}>
-            <h3>{review_count}<span> Reviews</span></h3>
+          <div className={styles.ratingsWrapper}>
+            <img src={rating_img_url_large} className={styles.cardRatingImg}/>
+            <div className={styles.ratingTextWrapper}>
+              <h3 className={styles.reviewText}>{review_count}<span> Reviews</span></h3>
+            </div>
           </div>
 
         </CardHeader>
 
         <CardActions className={styles.cardActions}>
-          <FlatButton onClick={props.onClick} label="Show on Map" icon={<Explore/>} />
+          <FlatButton
+            onClick={props.onClick}
+            label="Show on Map"
+            icon={<Explore/>}
+            backgroundColor=''
+          />
           <div className={styles.verticalSpacer}></div>
-          <FlatButton label="Call" icon={<Call/>} />
+          <FlatButton label={display_phone} icon={<Call/>} />
         </CardActions>
       </Card>
     );
