@@ -24,7 +24,7 @@ function PlaceCard(props) { // eslint-disable-line react/prefer-stateless-functi
 
   return (
 
-      <Card>
+      <Card className={styles.placeCardWrapper}>
         <CardHeader
           title={<h3>{name}</h3>}
           subtitle={<h3>{display_address.join(' ')}</h3>}

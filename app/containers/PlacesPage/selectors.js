@@ -24,8 +24,19 @@ const selectPlaces = createSelector(
   (substate) => substate.get('places'),
 );
 
+const selectPlaceByIndex = (index) => createSelector(
+  selectPlacesPageDomain,
+  (substate) => {
+    let places = substate.get('places');
+
+    if (places) return places.get(index).toJS();
+  }
+);
+
+
 export default selectPlacesPage;
 export {
   selectPlacesPageDomain,
   selectPlaces,
+  selectPlaceByIndex,
 };
