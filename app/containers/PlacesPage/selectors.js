@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 /**
  * Direct selector to the placesPage state domain
  */
-const selectPlacesPageDomain = (state) => state.get('placesPage');
+const selectPlacesPageDomain = (state) => state.get('places');
 
 /**
  * Other specific selectors

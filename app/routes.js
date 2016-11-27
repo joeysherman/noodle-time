@@ -29,7 +29,7 @@ export default function createRoutes(store) {
       const renderRoute = loadModule(cb);
 
       importModules.then(([component, reducer, sagas]) => {
-        injectReducer('placesPage', reducer.default);
+        injectReducer('places', reducer.default);
         injectSagas(sagas.default);
         renderRoute(component);
       });
@@ -49,7 +49,7 @@ export default function createRoutes(store) {
         const renderRoute = loadModule(cb);
 
         importModules.then(([component, reducer, sagas]) => {
-          injectReducer('detailView', reducer.default);
+          injectReducer('detail', reducer.default);
           injectSagas(sagas.default);
           renderRoute(component);
         });
@@ -62,14 +62,14 @@ export default function createRoutes(store) {
       getComponent(nextState, cb) {
         const importModules = Promise.all([
           System.import('containers/Map'),
-          System.import('containers/Map_old/reducer'),
-          System.import('containers/Map_old/sagas'),
+          System.import('containers/Map/reducer'),
+          System.import('containers/Map/sagas'),
         ]);
 
         const renderRoute = loadModule(cb);
 
         importModules.then(([component, reducer, sagas]) => {
-          injectReducer('placesPage', reducer.default);
+          injectReducer('Map', reducer.default);
           injectSagas(sagas.default);
           renderRoute(component);
         });
@@ -89,7 +89,7 @@ export default function createRoutes(store) {
         const renderRoute = loadModule(cb);
 
         importModules.then(([component, reducer, sagas]) => {
-          injectReducer('placesPage', reducer.default);
+          injectReducer('list', reducer.default);
           injectSagas(sagas.default);
           renderRoute(component);
         });

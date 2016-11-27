@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 /**
  * Direct selector to the detail state domain
  */
-const selectDetailDomain = (state) => state.get('detailView');
+const selectDetailDomain = (state) => state.get('detail');
 
 /**
  * Other specific selectors
