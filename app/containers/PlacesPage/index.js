@@ -46,10 +46,17 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
   };
 
   render() {
+    let mainContent = [];
+    let { children } = this.props;
 
+    if (children) {
+      mainContent = React.Children.toArray(this.props.children);
+    } else {
+      mainContent = <PlaceCard/>
+    }
     return (
       <div className={styles.placesPage}>
-        {React.Children.toArray(this.props.children)}
+        {}
       </div>
     );
   }
