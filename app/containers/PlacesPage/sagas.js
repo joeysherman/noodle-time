@@ -1,6 +1,8 @@
 import { take, call, put, select } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
 import request from '../../utils/request';
+import { push } from 'react-router-redux';
+
 import {
   placesSuccess,
   placesError,
@@ -29,6 +31,9 @@ function* fetchNoodlePlaces(location) {
     if (places.data) {
       yield call(delay, 1000);
       yield put(placesSuccess(places.data.businesses));
+      yield put(push({
+        pathname: '/near/detail'
+      }));
     } else {
       yield put(placesError(places.err));
     }

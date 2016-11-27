@@ -29,6 +29,14 @@ export function userLocationError(error) {
   }
 }
 
+export function userLocationSuccess(location) {
+  return {
+    type: constants.USER_LOCATION_SUCCESS,
+    payload: location
+  }
+}
+
+
 /* AutoComplete */
 
 export function autoCompleteRequest(input) {
@@ -54,85 +62,6 @@ export function autoCompleteError(error) {
   }
 }
 
-/* Place Details */
-
-export function placeDetailsSuccess(details) {
-  return {
-    type : constants.PLACE_DETAILS_SUCCESS,
-    payload: details
-  }
-}
-
-export function placeDetailsError(error) {
-  return {
-    type: constants.PLACE_DETAILS_ERROR,
-    payload: error,
-  }
-}
-
-export function placeDetailsRequest() {
-  return {
-    type: constants.PLACE_DETAILS_REQUEST,
-  }
-}
-
-/* Distance Matrix */
-
-export function distanceMatrixSuccess(distances) {
-  return {
-    type: constants.DISTANCE_MATRIX_SUCCESS,
-    payload: distances
-  }
-}
-
-export function distanceMatrixError(error) {
-  return {
-    type: constants.DISTANCE_MATRIX_ERROR,
-    payload: error
-  }
-}
-
-export function googleMapsLoadError(error) {
-  return {
-    type: constants.GOOGLE_MAPS_LOAD_ERROR,
-    payload: error,
-  }
-}
-
-export function googleMapsLoadSuccess() {
-  return {
-    type: constants.GOOGLE_MAPS_LOAD_SUCCESS,
-  }
-}
-
-export function googleMapsLoadRequest() {
-  return {
-    type: constants.GOOGLE_MAPS_LOAD_REQUEST,
-  }
-}
-
-export function googlePlacesRequest() {
-
-}
-
-export function setDisplayMode(mode) {
-  return {
-    type: constants.SET_DISPLAY_MODE,
-    payload: mode
-  }
-}
-
-export function incrementSelectedIndex() {
-  return {
-    type: constants.INCREMENT_SELECTED_INDEX,
-  }
-}
-
-export function decrementSelectedIndex() {
-  return {
-    type: constants.DECREMENT_SELECTED_INDEX,
-  }
-}
 
 /* Load Google maps api via promisescript */
  const API_KEY = 'AIzaSyC0k6alaE-wq9k46ovNZNpY2ZNQgeRwwsY';

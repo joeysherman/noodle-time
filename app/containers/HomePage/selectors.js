@@ -19,10 +19,10 @@ const selectLoading = createSelector(
 const selectUserLocation = createSelector(
   selectHomeDomain,
   (home) => {
-    if (home && home.has('userLocation')) {
-      return home.get('userLocation').toJS();
+    let location = home.get('userLocation');
+    if (location){
+      return location.toJS();
     }
-    return undefined;
   },
 );
 
@@ -36,29 +36,10 @@ const selectPlaces = createSelector(
   (home) => home.get('places'),
 );
 
-const selectIndex = createSelector(
-  selectHomeDomain,
-  (home) => home.get('selectedIndex')
-);
-
-const selectDistances = createSelector(
-  selectHomeDomain,
-  (home) => {
-    if (home) {
-      return home.get('distances');
-    }
-    return undefined;
-  }
-);
 
 const selectStatusMessage = createSelector(
   selectHomeDomain,
   (home) => home.get('statusMessage'),
-);
-
-const selectDisplayMode = createSelector(
-  selectHomeDomain,
-  (home) => home.get('displayMode'),
 );
 
 export {
@@ -67,10 +48,7 @@ export {
   selectLoading,
   selectUserLocation,
   selectAutoCompleteData,
-  selectDistances,
   selectStatusMessage,
   selectPlaces,
-  selectDisplayMode,
-  selectIndex,
 };
 

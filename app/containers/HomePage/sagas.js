@@ -15,6 +15,7 @@ import {
 
 import {
   userLocationError,
+  userLocationSuccess,
   fetchUserLocationGeo,
   setStatusMessage,
 } from './actions';
@@ -31,15 +32,11 @@ export function* homePageSaga() {
     const {location, err } = yield call(fetchUserLocationGeo);
 
     if (location) {
-      let { latitude, longitude } = location.coords;
       yield put(setStatusMessage('Location found! Finding Ramen near you...'));
+      yield put(userLocationSuccess(location));
       yield call(delay, 150);
       yield put(push({
         pathname: '/near',
-        query: {
-          lat: latitude,
-          lng: longitude,
-        }
       }));
 
     } else {

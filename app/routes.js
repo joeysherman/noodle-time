@@ -35,7 +35,68 @@ export default function createRoutes(store) {
       });
 
       importModules.catch(errorLoading);
-    }
+    },
+    childRoutes : [{
+
+      path: 'detail',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          System.import('containers/Detail'),
+          System.import('containers/Detail/reducer'),
+          System.import('containers/Detail/sagas'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([component, reducer, sagas]) => {
+          injectReducer('detailView', reducer.default);
+          injectSagas(sagas.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      }
+    }, {
+
+      path: 'map',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          System.import('containers/Map'),
+          System.import('containers/Map_old/reducer'),
+          System.import('containers/Map_old/sagas'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([component, reducer, sagas]) => {
+          injectReducer('placesPage', reducer.default);
+          injectSagas(sagas.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      }
+    }, {
+
+      path: 'list',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          System.import('containers/List'),
+          System.import('containers/List/reducer'),
+          System.import('containers/List/sagas'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([component, reducer, sagas]) => {
+          injectReducer('placesPage', reducer.default);
+          injectSagas(sagas.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      }
+    }],
   },
   {
       path: '*',

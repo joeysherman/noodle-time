@@ -51,6 +51,9 @@ const renderListItems = (props, index) => (
     leftAvatar={<Avatar src={props.image_url}/>}
     rightAvatar={<img src={props.rating_img_url}/>}
     className={styles.listItem}
+    style={{
+      marginTop: '10px'
+    }}
   />
 );
 

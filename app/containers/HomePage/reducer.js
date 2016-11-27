@@ -10,6 +10,11 @@ const initialState = fromJS({
   loading: false,
   error: false,
   statusMessage: 'Click to begin!',
+  userLocation: {
+    timestamp: null,
+    latitude: null,
+    longitude: null,
+  },
   autoComplete: null,
 });
 
@@ -59,56 +64,11 @@ function homeReducer (state = initialState, action){
       return state
         .set('autoComplete', predictions);
 
-    case constants.DISTANCE_MATRIX_SUCCESS :
-      let distances = action.payload.json.rows[0].elements;
-      let distances_with_index = distances.map((item, i) => Object.assign(item, { place_index: i }));
-
-      distances_with_index.sort((a, b) => a.distance.value - b.distance.value);
-
-      return state
-        .set('distances', distances_with_index);
-
-
-    case constants.DISTANCE_MATRIX_ERROR :
-      return state
-        .set('loading', false)
-        .set('error', action.payload);
-
     /* Status message reducer */
 
     case constants.SET_STATUS_MESSAGE :
       return state
         .set('statusMessage', action.payload);
-
-    case constants.GOOGLE_MAPS_LOAD_SUCCESS :
-      return state
-        .set('mapsLoaded', true);
-
-    case constants.SET_DISPLAY_MODE :
-      return state
-        .set('displayMode', action.payload);
-
-    case constants.DECREMENT_SELECTED_INDEX :
-      let length = state.get('places').size-1;
-
-      return state
-        .update('selectedIndex', (i) => {
-          if (i > 0) {
-            return --i;
-          }
-          return length;
-        });
-
-    case constants.INCREMENT_SELECTED_INDEX :
-      let max = state.get('places').size-1;
-
-      return state
-        .update('selectedIndex', (i) => {
-          if (i != max) {
-            return ++i;
-          }
-          return 0;
-        });
 
   }
 

@@ -33,6 +33,7 @@ import {
 // Selectors
 import {
   selectStatusMessage,
+  selectUserLocation,
   selectLoading,
   selectError,
 } from './selectors';
@@ -64,6 +65,7 @@ const mapStateToProps = (state) => {
   return {
     error: selectError(state),
     loading: selectLoading(state),
+    userLocation: selectUserLocation(state),
     statusMessage: selectStatusMessage(state),
   }
 };
