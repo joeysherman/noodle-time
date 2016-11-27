@@ -2,8 +2,16 @@
   width: 70%;
   height: 90%;
   background-color: transparent;
-  padding: 0px !important;
   overflow-y: scroll;
+  margin-top: 96px !important;
+  padding: 0 !important;
+}
+
+@media (max-width: 767px) {
+  .list {
+    width: 90%;
+    height: 90%;
+  }
 }
 
 .listWrapper {
