@@ -62,6 +62,13 @@ export function autoCompleteError(error) {
   }
 }
 
+export function autoCompleteItemSelected(place) {
+  return {
+    type: constants.AUTOCOMPLETE_ITEM_SELECTED,
+    payload: place,
+  }
+}
+
 
 /* Load Google maps api via promisescript */
  const API_KEY = 'AIzaSyC0k6alaE-wq9k46ovNZNpY2ZNQgeRwwsY';
@@ -99,8 +106,8 @@ export function fetchUserLocationGeo() {
       }, options);
     } else {
       resolve({
-        error: 'No Navigator',
-      })
+        error: { code: -1 },
+      });
     }
   });
 }

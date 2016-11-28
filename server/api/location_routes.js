@@ -20,17 +20,24 @@ module.exports = (function location_routes() {
 
   Router.get('/api/geocode', function (req, res, next) {
     var lat = req.query.lat,
-        lng = req.query.lng;
+        lng = req.query.lng,
+        id  = req.query.id,
+        request = {};
 
-    if (!lat || !lng) {
-      return res.status(400).send('No lat or lng parameters');
+    if (id){
+      request = {
+        place_id: id,
+      }
+    } else if (lat && lng) {
+      request = {
+        latlng: [lat, lng],
+      }
     }
-    req.app.locals.google.reverseGeocode({
-      latlng: [lat, lng],
-    }, function (err, location) {
+    req.app.locals.google.reverseGeocode(request, function (err, location) {
       res.send(location);
     });
   });
+
 
   /*
    *  AutoComplete API route

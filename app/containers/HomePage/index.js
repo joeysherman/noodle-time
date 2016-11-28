@@ -17,28 +17,32 @@ import styles from './styles.css';
 // Material UI components
 import Paper from 'material-ui/Paper';
 import AutoComplete from 'material-ui/AutoComplete';
-import ChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
-import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
-import IconButton from 'material-ui/IconButton';
+
 // Self-made components
 import RamenButton from '../../components/RamenButton/ramenButton';
-import Map from '../../containers/Map';
-import PlaceCard from '../../components/PlaceCard';
 
 // Actions
 import {
   userLocationRequest,
+  autoCompleteRequest,
 } from './actions';
 
 // Selectors
 import {
   selectStatusMessage,
   selectUserLocation,
+  selectAutoCompleteData,
   selectLoading,
   selectError,
 } from './selectors';
 
 class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+
+  shouldRenderAutoComplete = () => {
+    let {error} = this.props.userLocation;
+
+    return error;
+  };
 
   render() {
 
@@ -46,11 +50,31 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
 
     let { statusMessage } = this.props;
 
-    main = (
-      <div className={styles.ramen_wrapper}>
+    if (this.shouldRenderAutoComplete()) {
+      main = (
+        <Paper className={styles.autoCompleteWrapper}>
+          <AutoComplete
+            floatingLabelText='Find your location e.g. San Diego'
+            dataSource={this.props.autoCompleteDataSource || []}
+            filter={AutoComplete.noFilter}
+            openOnFocus={true}
+            fullWidth={true}
+            onUpdateInput={(input) => {
+              this.props.dispatch(autoCompleteRequest(input))
+            }}
+            onNewRequest={(text, index) => {
+              console.log('Selected: '+ text);
+              console.log('Index: ' + index);
+            }}
+          />
+        </Paper> );
+    } else {
+      main = (
+        <div className={styles.ramen_wrapper}>
           <RamenButton onClick={this.props.noodleTime}></RamenButton>
           <h1 className={styles.ramen_message}>{statusMessage}</h1>
-      </div> );
+        </div> );
+    }
 
     return (
       <div className={styles.wrapper}>
@@ -65,6 +89,7 @@ const mapStateToProps = (state) => {
   return {
     error: selectError(state),
     loading: selectLoading(state),
+    autoCompleteDataSource: selectAutoCompleteData(state),
     userLocation: selectUserLocation(state),
     statusMessage: selectStatusMessage(state),
   }

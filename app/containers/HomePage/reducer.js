@@ -46,8 +46,9 @@ function homeReducer (state = initialState, action){
         });
 
     case constants.USER_LOCATION_ERROR :
+
       return state
-        .set('displayMode', 'AutoComplete');
+        .set('userLocation', fromJS({ error: true }));
 
     case constants.AUTOCOMPLETE_ERROR :
       return state

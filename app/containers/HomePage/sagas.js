@@ -10,7 +10,10 @@ import request from '../../utils/request';
 
 import {
   USER_LOCATION_REQUEST,
+  USER_LOCATION_ERROR,
+  USER_LOCATION_SUCCESS,
   AUTOCOMPLETE_REQUEST,
+  AUTOCOMPLETE_ITEM_SELECTED,
 } from './constants';
 
 import {
@@ -18,35 +21,48 @@ import {
   userLocationSuccess,
   fetchUserLocationGeo,
   setStatusMessage,
+  autoCompleteSuccess,
+  autoCompleteError,
 } from './actions';
 
   let autoCompleteUrl   = '/api/autocomplete';
   let geocodeUrl        = '/api/geocode';
 
 export function* homePageSaga() {
-  while (true) {
+ while (yield take(USER_LOCATION_REQUEST)){
+   yield fork(fetchUserLocation);
 
-    yield take(USER_LOCATION_REQUEST);
-    yield put(setStatusMessage('Hold tight...grabbing your location...'));
-    yield call(delay, 220);
-    const {location, err } = yield call(fetchUserLocationGeo);
+   const action = yield take([USER_LOCATION_ERROR, USER_LOCATION_SUCCESS]);
 
-    if (location) {
-      yield put(setStatusMessage('Location found! Finding Ramen near you...'));
-      yield put(userLocationSuccess(location));
-      yield call(delay, 150);
-      yield put(push({
-        pathname: '/near',
-      }));
+   if (action.type === USER_LOCATION_SUCCESS) {
+     yield put(push('/near'));
+   } else {
+     const task = yield fork(throttleAutocomplete);
 
-    } else {
-      yield put(userLocationError(err));
-    }
+     yield take(AUTOCOMPLETE_ITEM_SELECTED);
+     // find coords for location via reverse geo-code
+     // put userlocationsuccess
+   }
+ }
+}
+
+function* fetchUserLocation() {
+
+  yield put(setStatusMessage('Grabbing your location...'));
+  yield call(delay, 250);
+  const {location, error } = yield call(fetchUserLocationGeo);
+
+  if (location) {
+    yield put(setStatusMessage('Location found!'));
+    yield call(delay, 250);
+    yield put(userLocationSuccess(location));
+  } else {
+    yield put(userLocationError(error));
   }
 }
 
 function* fetchAutocomplete(action) {
-  var url = autoCompleteUrl + '?input=' + action.payload.input;
+  let url = autoCompleteUrl + '?input=' + action.payload.input;
 
   const predictions = yield call(request, url);
   
