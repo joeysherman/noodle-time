@@ -12,6 +12,7 @@ import styles from './styles.css';
 import { placesRequest } from './actions';
 import PlaceCard from '../../components/PlaceCard';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ViewCarousel from 'material-ui/svg-icons/action/view-carousel';
 import ViewList from 'material-ui/svg-icons/action/view-list';
 
 import CircularProgress from 'material-ui/CircularProgress';
@@ -47,10 +48,28 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
   };
 
   renderActionButton = () => {
+    let { pathname } = this.props.location;
+    let path = '',
+        icon = '';
+
+    switch (pathname) {
+      case '/near/list' :
+        path = '/near';
+        icon = <ViewCarousel/>;
+        break;
+      case '/near' :
+        path = '/near/list';
+        icon = <ViewList/>;
+        break;
+    }
+
     return (
-      <FloatingActionButton className={styles.actionButton} onTouchTap={() => { this.props.dispatch(push('/near/list'))}}>
-        <ViewList/>
+      <FloatingActionButton
+        className={styles.actionButton}
+        onTouchTap={() => { this.props.dispatch(push(path))}}>
+        {icon}
       </FloatingActionButton>
+
     );
   };
 

@@ -1,6 +1,6 @@
 .list { /* stylelint-disable */
   width: 70%;
-  height: 90%;
+  height: 85%;
   background-color: transparent;
   overflow-y: scroll;
   margin-top: 96px !important;
@@ -10,7 +10,7 @@
 @media (max-width: 767px) {
   .list {
     width: 90%;
-    height: 90%;
+    height: 77%;
   }
 }
 
