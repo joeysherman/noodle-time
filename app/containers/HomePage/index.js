@@ -25,6 +25,7 @@ import RamenButton from '../../components/RamenButton/ramenButton';
 import {
   userLocationRequest,
   autoCompleteRequest,
+  autoCompleteItemSelected,
 } from './actions';
 
 // Selectors
@@ -54,17 +55,24 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
       main = (
         <Paper className={styles.autoCompleteWrapper}>
           <AutoComplete
-            floatingLabelText='Find your location e.g. San Diego'
+            floatingLabelText='Search for your location e.g. San Diego'
+            dataSourceConfig={{
+              text: 'text',
+              value: 'place_id',
+            }}
             dataSource={this.props.autoCompleteDataSource || []}
             filter={AutoComplete.noFilter}
             openOnFocus={true}
             fullWidth={true}
             onUpdateInput={(input) => {
+              if (input == '') return;
               this.props.dispatch(autoCompleteRequest(input))
             }}
             onNewRequest={(text, index) => {
-              console.log('Selected: '+ text);
-              console.log('Index: ' + index);
+              let { place_id } = text;
+              // handle case when index is -1 - user hits enter
+              if (index == -1) return;
+              this.props.dispatch(autoCompleteItemSelected(place_id))
             }}
           />
         </Paper> );

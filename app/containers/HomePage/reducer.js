@@ -59,7 +59,12 @@ function homeReducer (state = initialState, action){
       let predictions = [];
       
       if (action.payload.json.status == 'OK'){
-        predictions = action.payload.json.predictions.map((item) => item.description );
+        predictions = action.payload.json.predictions.map((item) => {
+          return {
+            text: item.description,
+            id: item.place_id,
+          };
+        });
       }
 
       return state

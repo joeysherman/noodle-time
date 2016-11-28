@@ -39,7 +39,7 @@ export function* homePageSaga() {
    } else {
      const task = yield fork(throttleAutocomplete);
 
-     yield take(AUTOCOMPLETE_ITEM_SELECTED);
+     const { payload } = yield take(AUTOCOMPLETE_ITEM_SELECTED);
      // find coords for location via reverse geo-code
      // put userlocationsuccess
    }

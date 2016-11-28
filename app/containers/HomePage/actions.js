@@ -62,10 +62,10 @@ export function autoCompleteError(error) {
   }
 }
 
-export function autoCompleteItemSelected(place) {
+export function autoCompleteItemSelected(place_id) {
   return {
     type: constants.AUTOCOMPLETE_ITEM_SELECTED,
-    payload: place,
+    payload: place_id,
   }
 }
 
