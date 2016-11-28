@@ -43,19 +43,20 @@ function wrapState(ComposedComponent) {
 
 SelectableList = wrapState(SelectableList);
 
-const renderListItems = (props, index) => (
-  <ListItem
-    key={index}
-    value={index}
-    primaryText={props.name}
-    leftAvatar={<Avatar src={props.image_url}/>}
-    rightAvatar={<img src={props.rating_img_url}/>}
-    className={styles.listItem}
-    style={{
-      marginTop: '10px'
-    }}
-  />
-);
+const renderListItems = (props, index) => {
+  let style = index > 1 ? { marginTop: '10px' } : {};
+  return (
+    <ListItem
+      key={index}
+      value={index}
+      primaryText={props.name}
+      leftAvatar={<Avatar src={props.image_url}/>}
+      rightAvatar={<img src={props.rating_img_url}/>}
+      className={styles.listItem}
+      style={style}
+    />
+  );
+};
 
 const ListExampleSelectable = (props) => (
   <Paper className={styles.listWrapper}>
