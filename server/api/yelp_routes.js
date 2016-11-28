@@ -38,7 +38,7 @@ module.exports = (function yelp_routes() {
       .catch((err) => { res.send(err)});
   });
 
-  Router.get('/noodle', function(req, res) {
+  Router.get('/api/noodle', function(req, res) {
     var id = req.query.id || null;
 
     if (!id) return res.error('No business ID supplied');
