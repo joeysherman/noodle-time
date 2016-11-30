@@ -62,7 +62,7 @@ function homeReducer (state = initialState, action){
         predictions = action.payload.json.predictions.map((item) => {
           return {
             text: item.description,
-            id: item.place_id,
+            place_id : item.place_id,
           };
         });
       }

@@ -39,9 +39,12 @@ export function* homePageSaga() {
    } else {
      const task = yield fork(throttleAutocomplete);
 
-     const { payload } = yield take(AUTOCOMPLETE_ITEM_SELECTED);
-     // find coords for location via reverse geo-code
-     // put userlocationsuccess
+     while(true) {
+       const {payload} = yield take(AUTOCOMPLETE_ITEM_SELECTED);
+       console.log(payload);
+       // find coords for location via reverse geo-code
+       // put userlocationsuccess
+     }
    }
  }
 }

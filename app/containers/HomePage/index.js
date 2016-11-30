@@ -55,13 +55,12 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
       main = (
         <Paper className={styles.autoCompleteWrapper}>
           <AutoComplete
-            floatingLabelText='Search for your location e.g. San Diego'
+            floatingLabelText='Search for your location..'
             dataSourceConfig={{
               text: 'text',
               value: 'place_id',
             }}
             dataSource={this.props.autoCompleteDataSource || []}
-            filter={AutoComplete.noFilter}
             openOnFocus={true}
             fullWidth={true}
             onUpdateInput={(input) => {
