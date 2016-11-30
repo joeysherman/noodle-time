@@ -52,15 +52,14 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
     let { statusMessage } = this.props;
 
     if (this.shouldRenderAutoComplete()) {
+      let { autoCompleteDataSource } = this.props;
+      let autoCompleteText = autoCompleteDataSource ? autoCompleteDataSource.map((i) => i.text) : [];
       main = (
         <Paper className={styles.autoCompleteWrapper}>
           <AutoComplete
             floatingLabelText='Search for your location..'
-            dataSourceConfig={{
-              text: 'text',
-              value: 'place_id',
-            }}
-            dataSource={this.props.autoCompleteDataSource || []}
+            filter={AutoComplete.noFilter}
+            dataSource={autoCompleteText || []}
             openOnFocus={true}
             fullWidth={true}
             onUpdateInput={(input) => {
@@ -68,10 +67,10 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
               this.props.dispatch(autoCompleteRequest(input))
             }}
             onNewRequest={(text, index) => {
-              let { place_id } = text;
               // handle case when index is -1 - user hits enter
               if (index == -1) return;
-              this.props.dispatch(autoCompleteItemSelected(place_id))
+
+              this.props.dispatch(autoCompleteItemSelected(autoCompleteDataSource[index].value))
             }}
           />
         </Paper> );

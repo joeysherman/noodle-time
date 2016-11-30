@@ -62,13 +62,14 @@ function homeReducer (state = initialState, action){
         predictions = action.payload.json.predictions.map((item) => {
           return {
             text: item.description,
-            place_id : item.place_id,
-          };
+            value: item.place_id,
+          }
         });
       }
 
       return state
         .set('autoComplete', predictions);
+    
 
     /* Status message reducer */
 
