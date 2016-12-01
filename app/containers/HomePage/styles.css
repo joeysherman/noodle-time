@@ -11,14 +11,13 @@
   display: flex;
   position: relative;
   flex-direction: column;
-  width: 60%;
-  height: 25%;
+  flex: 1;
   justify-content: center;
   align-items: center;
 }
 
 
-@media only screen and (max-device-width: 425px) {
+@media (max-width: 425px) {
   .ramen_wrapper {
     padding: 0;
     width: 100vw;
@@ -27,13 +26,22 @@
   .ramen_paper {
     width: 90%
   }
+
+  .autoCompleteWrapper {
+    width: 90%;
+  }
+}
+
+@media (min-width: 425px) {
+  .autoCompleteWrapper {
+    width: 60%;
+    max-width: 900px;
+  }
 }
 
 .ramen_message {
-  color: rgb(0, 188, 212);
+  color: whitesmoke;
 }
-
-
 
 .place_card_wrapper {
   margin: auto;
@@ -42,12 +50,8 @@
 
 .autoCompleteWrapper {
   margin: auto;
-  width: 50%;
+  padding: 0 15px;
   height: auto;
-}
-
-.autoComplete {
-  width: 50%;
 }
 
 .leftDecrement {
