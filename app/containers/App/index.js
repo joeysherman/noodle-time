@@ -32,7 +32,10 @@ export default class App extends React.Component { // eslint-disable-line react/
             <div className={styles.overlay}></div>
           <AppBar
             title={<span>Noodle Time</span>}
-            showMenuIconButton={false}/>
+            showMenuIconButton={false}
+            className={styles.appbar}
+          />
+
             {React.Children.toArray(this.props.children)}
           <Footer/>
         </div>
