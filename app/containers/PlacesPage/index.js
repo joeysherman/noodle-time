@@ -85,7 +85,7 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
       actionButton = this.renderActionButton();
       mainContent = (
         <div className={styles.placeCardWrapper}>
-          <PlaceCard place={place}/>
+          <PlaceCard place={place} onShowOnMapClick={() => { this.props.dispatch(push('/near/map'))}}/>
         </div>
       )
     } else {

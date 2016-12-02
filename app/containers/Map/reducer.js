@@ -6,15 +6,20 @@
 
 import { fromJS } from 'immutable';
 import {
-  DEFAULT_ACTION,
+  MAP_LOAD_SUCCESS,
+  MAP_LOAD_REQUEST,
 } from './constants';
 
-const initialState = fromJS({});
+const initialState = fromJS({
+  loaded: false,
+});
 
 function mapReducer(state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
+    case MAP_LOAD_SUCCESS:
+      return state
+        .set('loaded', true);
+
     default:
       return state;
   }
