@@ -6,7 +6,7 @@
   height: 100%;
 }
 
-.ramen_wrapper {
+.ramenWrapper {
   margin: auto;
   display: flex;
   position: relative;
@@ -18,7 +18,7 @@
 
 
 @media (max-width: 425px) {
-  .ramen_wrapper {
+  .ramenWrapper {
     padding: 0;
     width: 100vw;
   }
