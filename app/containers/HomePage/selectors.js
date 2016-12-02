@@ -25,9 +25,15 @@ const selectStatusMessage = createSelector(
   (home) => home.get('statusMessage'),
 );
 
+const selectHasGeo = createSelector(
+  selectUserSlice,
+  (slice) => slice.get('hasGeo'),
+);
+
 export {
   selectHomeDomain,
   selectUserLocation,
+  selectHasGeo,
   selectAutoCompleteData,
   selectStatusMessage,
 };

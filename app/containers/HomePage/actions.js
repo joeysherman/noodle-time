@@ -69,6 +69,15 @@ export function autoCompleteItemSelected(index) {
   }
 }
 
+// Action for user GPS
+
+export function userHasGeo(bool) {
+  return {
+    type: constants.USER_HAS_GEO,
+    payload: bool,
+  }
+}
+
 
 /* Load Google maps api via promisescript */
  const API_KEY = 'AIzaSyC0k6alaE-wq9k46ovNZNpY2ZNQgeRwwsY';

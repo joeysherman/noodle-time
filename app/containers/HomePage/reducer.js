@@ -8,11 +8,13 @@ import { combineReducers } from 'redux-immutable';
 import * as constants from './constants';
 
 const initialState = fromJS({
+  hasGeo: false,
   statusMessage: 'Click to begin!',
   userLocation: {
     latitude: null,
     longitude: null,
     timestamp: null,
+    address: null,
   },
 });
 
@@ -50,6 +52,10 @@ function homeReducer (state = initialState, action){
     case constants.SET_STATUS_MESSAGE :
       return state
         .set('statusMessage', action.payload);
+
+    case constants.USER_HAS_GEO :
+      return state
+        .set('hasGeo', action.payload);
   }
 
   return state;
