@@ -1,5 +1,6 @@
 .mapWrapper { /* stylelint-disable */
   flex: 1;
+  padding: 15px;
 }
 
 .map {

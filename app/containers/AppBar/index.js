@@ -6,6 +6,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import styles from './styles.css';
 import {
   selectUserLocation,
@@ -69,7 +70,7 @@ export class App_Bar extends React.Component { // eslint-disable-line react/pref
       <AppBar
         className={styles.appbar}
         title='Noodle Time'
-        onTitleTouchTap={this.handleTitleClick.bind(this)}
+        onTitleTouchTap={() => { this.props.dispatch(push('/'))}}
         iconElementLeft={menu}
         iconStyleLeft={{ marginLeft: 0 }}
       />
@@ -87,7 +88,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    noodleTime: () => dispatch(userLocationRequest()),
     dispatch,
   }
 };
