@@ -81,6 +81,7 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
     if (children) {
       mainContent = React.Children.toArray(this.props.children);
     } else if (place) {
+      actionButton = this.renderActionButton();
       mainContent = (
         <div className={styles.placeCardWrapper}>
           <PlaceCard place={place}/>
@@ -93,8 +94,6 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
         </div>
       )
     }
-
-    actionButton = this.renderActionButton();
 
     return (
       <div className={styles.placesPage}>
