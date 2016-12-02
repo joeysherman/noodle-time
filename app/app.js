@@ -56,6 +56,7 @@ const rootRoute = {
   childRoutes: createRoutes(store),
 };
 
+injectTapEventPlugin();
 
 ReactDOM.render(
   <Provider store={store}>
@@ -66,8 +67,6 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('app')
 );
-
-injectTapEventPlugin();
 
 /*
 // Install ServiceWorker and AppCache in the end since
