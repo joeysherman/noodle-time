@@ -1,3 +1,7 @@
 .appbar { /* stylelint-disable */
   text-align: center;
 }
+
+.menu {
+  position: absolute !important;
+}

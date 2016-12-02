@@ -52,6 +52,7 @@ export class App_Bar extends React.Component { // eslint-disable-line react/pref
         iconButtonElement={<IconButton>{icon}</IconButton>}
         anchorOrigin={{horizontal: 'middle', vertical: 'bottom'}}
         targetOrigin={{horizontal: 'left', vertical: 'top'}}
+        className={styles.menu}
       >
         <MenuItem primaryText="My Location:"/>
         <MenuItem primaryText="Use GPS - " />
@@ -70,6 +71,7 @@ export class App_Bar extends React.Component { // eslint-disable-line react/pref
         title='Noodle Time'
         onTitleTouchTap={this.handleTitleClick.bind(this)}
         iconElementLeft={menu}
+        iconStyleLeft={{ marginLeft: 0 }}
       />
     );
   }
