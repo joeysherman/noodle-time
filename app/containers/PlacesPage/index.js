@@ -79,6 +79,7 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
     let { children, place } = this.props;
 
     if (children) {
+      actionButton = this.renderActionButton();
       mainContent = React.Children.toArray(this.props.children);
     } else if (place) {
       actionButton = this.renderActionButton();

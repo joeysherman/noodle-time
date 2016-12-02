@@ -14,7 +14,7 @@
 import React from 'react';
 import styles from './styles.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
+import AppBar from '../AppBar';
 import Footer from '../Footer';
 import ramenImage from '../../assets/ramen-noodles-min.jpg';
 
@@ -30,12 +30,7 @@ export default class App extends React.Component { // eslint-disable-line react/
           <div className={styles.container}>
             <div className={styles.image} style={{ background: 'url(' + ramenImage + ') no-repeat center/cover' }}></div>
             <div className={styles.overlay}></div>
-          <AppBar
-            title={<span>Noodle Time</span>}
-            showMenuIconButton={false}
-            className={styles.appbar}
-          />
-
+            <AppBar/>
             {React.Children.toArray(this.props.children)}
           <Footer/>
         </div>

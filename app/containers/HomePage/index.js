@@ -93,8 +93,6 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
 const mapStateToProps = (state) => {
 
   return {
-    error: selectError(state),
-    loading: selectLoading(state),
     autoCompleteDataSource: selectAutoCompleteData(state),
     userLocation: selectUserLocation(state),
     statusMessage: selectStatusMessage(state),

@@ -5,47 +5,30 @@
 import { createSelector } from 'reselect';
 
 const selectHomeDomain = (state) => state.get('home');
-
-const selectError = createSelector(
-  selectHomeDomain,
-  (home) => home.get('error'),
-);
-
-const selectLoading = createSelector(
-  selectHomeDomain,
-  (home) => home.get('loading'),
-);
+const selectUserSlice = (state) => state.getIn(['home', 'user']);
+const selectAutocompleteSlice = (state) => state.getIn(['home', 'autocomplete']);
 
 const selectUserLocation = createSelector(
-  selectHomeDomain,
+  selectUserSlice,
   (home) => {
     return home.get('userLocation').toJS();
   },
 );
 
 const selectAutoCompleteData = createSelector(
-  selectHomeDomain,
-  (home) => home.get('autoComplete'),
+  selectAutocompleteSlice,
+  (slice) => slice.toJS(),
 );
-
-const selectPlaces = createSelector(
-  selectHomeDomain,
-  (home) => home.get('places'),
-);
-
 
 const selectStatusMessage = createSelector(
-  selectHomeDomain,
+  selectUserSlice,
   (home) => home.get('statusMessage'),
 );
 
 export {
   selectHomeDomain,
-  selectError,
-  selectLoading,
   selectUserLocation,
   selectAutoCompleteData,
   selectStatusMessage,
-  selectPlaces,
 };
 

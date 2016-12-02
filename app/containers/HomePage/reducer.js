@@ -2,20 +2,18 @@
  * Created by Joey on 9/22/2016.
  */
 
-import { fromJS } from 'immutable';
+import { fromJS, Map } from 'immutable';
+import { combineReducers } from 'redux-immutable';
 
 import * as constants from './constants';
 
 const initialState = fromJS({
-  loading: false,
-  error: false,
   statusMessage: 'Click to begin!',
   userLocation: {
-    timestamp: null,
     latitude: null,
     longitude: null,
+    timestamp: null,
   },
-  autoComplete: null,
 });
 
 /*
@@ -36,20 +34,36 @@ function homeReducer (state = initialState, action){
       let { timestamp } = action.payload;
 
       return state
-        .withMutations((map) => {
-          map
-            .set('loading', false)
-            .set('error', false)
-            .setIn(['userLocation', 'timestamp'], timestamp)
-            .setIn(['userLocation', 'latitude'], latitude)
-            .setIn(['userLocation', 'longitude'], longitude);
-        });
+        .set('userLocation', fromJS({
+          timestamp,
+          latitude,
+          longitude,
+        }));
 
     case constants.USER_LOCATION_ERROR :
 
       return state
         .set('userLocation', fromJS({ error: true }));
 
+    /* Status message reducer */
+
+    case constants.SET_STATUS_MESSAGE :
+      return state
+        .set('statusMessage', action.payload);
+  }
+
+  return state;
+}
+
+let autcompleteInitialState = {
+  loading: false,
+  error: false,
+  predictions: [],
+};
+
+function autocompleteReducer(state = fromJS(autcompleteInitialState), action) {
+
+  switch (action.type) {
     case constants.AUTOCOMPLETE_ERROR :
       return state
         .set('loading', false)
@@ -57,7 +71,7 @@ function homeReducer (state = initialState, action){
 
     case constants.AUTOCOMPLETE_SUCCESS :
       let predictions = [];
-      
+
       if (action.payload.json.status == 'OK'){
         predictions = action.payload.json.predictions.map((item) => {
           return {
@@ -66,20 +80,14 @@ function homeReducer (state = initialState, action){
           }
         });
       }
-
       return state
-        .set('autoComplete', predictions);
-    
-
-    /* Status message reducer */
-
-    case constants.SET_STATUS_MESSAGE :
-      return state
-        .set('statusMessage', action.payload);
-
+        .set('predictions', predictions);
   }
 
   return state;
 }
 
-export default homeReducer;
+export default combineReducers({
+  'user': homeReducer,
+  'autocomplete': autocompleteReducer,
+});
