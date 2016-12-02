@@ -23,7 +23,7 @@ import {
 
 export class PlacesPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   componentDidMount() {
-    console.log('mounted');
+
     if (this.locationValid()) {
       let { latitude, longitude } = this.props.userLocation;
 

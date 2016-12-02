@@ -53,7 +53,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
 
     if (this.shouldRenderAutoComplete()) {
       let { autoCompleteDataSource } = this.props;
-      let autoCompleteText = autoCompleteDataSource ? autoCompleteDataSource.map((i) => i.text) : [];
+      let autoCompleteText = autoCompleteDataSource.predictions ? autoCompleteDataSource.predictions.map((i) => i.text) : [];
       main = (
         <Paper className={styles.autoCompleteWrapper}>
           <AutoComplete
@@ -70,7 +70,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
               // handle case when index is -1 - user hits enter
               if (index == -1) return;
 
-              this.props.dispatch(autoCompleteItemSelected(autoCompleteDataSource[index].value))
+              this.props.dispatch(autoCompleteItemSelected(autoCompleteDataSource.predictions[index].value))
             }}
           />
         </Paper> );

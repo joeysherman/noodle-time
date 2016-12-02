@@ -41,9 +41,25 @@ export function* homePageSaga() {
 
      while(true) {
        const {payload} = yield take(AUTOCOMPLETE_ITEM_SELECTED);
-       console.log(payload);
        // find coords for location via reverse geo-code
        // put userlocationsuccess
+       const { data, error } = yield call(request, geocodeUrl + '?id=' + payload);
+
+       if (data) {
+         let { lat, lng } = data.json.results[0].geometry.location;
+         let payload = {
+           timestamp: Date.now(),
+           coords: {
+             latitude: lat,
+             longitude: lng,
+           }
+         };
+
+         yield put(userLocationSuccess(payload));
+         yield put(push('/near'));
+       } else {
+         yield put(userLocationError(error));
+       }
      }
    }
  }
