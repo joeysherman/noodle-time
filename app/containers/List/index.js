@@ -12,6 +12,19 @@ import styles from './styles.css';
 import SelectableList from '../../components/List';
 
 export class List extends React.Component { // eslint-disable-line react/prefer-stateless-function
+
+  componentWillMount() {
+    console.log('list will mount')
+  }
+
+  componentDidMount() {
+    console.log('list mounted')
+  }
+
+  componentWillReceiveProps() {
+    console.log('List will rec. props')
+  }
+
   render() {
     let main = (
       <h1>No places!</h1>

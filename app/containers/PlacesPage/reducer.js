@@ -32,6 +32,16 @@ function placesPageReducer(state = initialState, action) {
             .set('error', action.payload);
 
         });
+    case constants.PLACES_REQUEST :
+      return state
+        .withMutations((map) => {
+          map
+            .set('loading', true)
+            .set('places', null)
+            .set('error', null);
+
+        });
+    
     default:
       return state;
   }

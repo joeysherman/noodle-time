@@ -3,7 +3,7 @@
  */
 
 
-import { take, actionChannel, put, fork, call } from 'redux-saga/effects';
+import { take, actionChannel, put, fork, call, cancel } from 'redux-saga/effects';
 import { delay, buffers } from 'redux-saga';
 import { push } from 'react-router-redux';
 import request from '../../utils/request';
@@ -30,14 +30,15 @@ import {
 
 export function* homePageSaga() {
  while (yield take(USER_LOCATION_REQUEST)){
-   yield fork(fetchUserLocation);
+   const fetchUserTask = yield fork(fetchUserLocation);
 
    const action = yield take([USER_LOCATION_ERROR, USER_LOCATION_SUCCESS]);
-
+   
+   yield cancel(fetchUserTask);
    if (action.type === USER_LOCATION_SUCCESS) {
-     yield put(push('/near'));
+     yield put(push('/list'));
    } else {
-     const task = yield fork(throttleAutocomplete);
+     const autocompleteTask = yield fork(throttleAutocomplete);
 
      while(true) {
        const {payload} = yield take(AUTOCOMPLETE_ITEM_SELECTED);
@@ -54,9 +55,9 @@ export function* homePageSaga() {
              longitude: lng,
            }
          };
-
+         yield cancel(autocompleteTask);
          yield put(userLocationSuccess(payload));
-         yield put(push('/near'));
+         yield put(push('/list'));
        } else {
          yield put(userLocationError(error));
        }

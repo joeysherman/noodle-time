@@ -26,9 +26,3 @@ export function placesRequest(location) {
     payload: location,
   }
 }
-
-export function defaultAction() {
-  return {
-    type: DEFAULT_ACTION,
-  };
-}

@@ -7,6 +7,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styles from './styles.css';
+
 import CircularProgress from 'material-ui/CircularProgress';
 
 // State Selectors
@@ -24,20 +25,25 @@ import {
 
 export class Map extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
+  componentWillMount() {
+    console.log('Map will mount')
+  }
+  
   componentDidMount() {
+    console.log('Map mounted')
     this.props.dispatch(mapLoadRequest());
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    console.log(nextProps);
+    console.log('Map will rec. props');
     if (nextProps.loaded === true) {
-      console.log('inside')
+      console.log('nextprops mapsloaded is true')
       this.mountMap();
     }
   };
 
   mountMap = () => {
-    console.log('mounting')
+    console.log('Mounting the google map')
      let { longitude, latitude } = this.props.userLocation;
      let userLocation = { lat: latitude, lng: longitude };
 

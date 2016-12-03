@@ -17,8 +17,7 @@ export default function createRoutes(store) {
   const { injectReducer, injectSagas } = getAsyncInjectors(store); // eslint-disable-line no-unused-vars
 
   return [{
-
-    path: 'near',
+    
     getComponent(nextState, cb) {
       const importModules = Promise.all([
         System.import('containers/PlacesPage'),
@@ -37,26 +36,6 @@ export default function createRoutes(store) {
       importModules.catch(errorLoading);
     },
     childRoutes : [{
-
-      path: 'detail',
-      getComponent(nextState, cb) {
-        const importModules = Promise.all([
-          System.import('containers/Detail'),
-          System.import('containers/Detail/reducer'),
-          System.import('containers/Detail/sagas'),
-        ]);
-
-        const renderRoute = loadModule(cb);
-
-        importModules.then(([component, reducer, sagas]) => {
-          injectReducer('detail', reducer.default);
-          injectSagas(sagas.default);
-          renderRoute(component);
-        });
-
-        importModules.catch(errorLoading);
-      }
-    }, {
 
       path: 'map',
       getComponent(nextState, cb) {

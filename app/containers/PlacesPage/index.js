@@ -3,18 +3,20 @@
  * PlacesPage
  *
  */
-
+// Dependencies 
 import React from 'react';
 import { connect } from 'react-redux';
-import { selectPlaceByIndex } from './selectors';
 import { replace, push } from 'react-router-redux';
 import styles from './styles.css';
+
+// Redux imports
 import { placesRequest } from './actions';
 import PlaceCard from '../../components/PlaceCard';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ViewCarousel from 'material-ui/svg-icons/action/view-carousel';
-import ViewList from 'material-ui/svg-icons/action/view-list';
 
+// Material-ui imports
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ViewMap from 'material-ui/svg-icons/maps/map';
+import ViewList from 'material-ui/svg-icons/action/view-list';
 import CircularProgress from 'material-ui/CircularProgress';
 
 import {
@@ -23,10 +25,10 @@ import {
 
 export class PlacesPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   componentDidMount() {
-
+    console.log('places mounted')
     if (this.locationValid()) {
       let { latitude, longitude } = this.props.userLocation;
-
+      console.log('places requested')
       this.props.dispatch(placesRequest({
         lat: latitude,
         lng: longitude,
@@ -34,6 +36,14 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
     } else {
       this.props.dispatch(replace('/'));
     }
+  }
+
+  componentWillReceiveProps() {
+    console.log('places will rec. props')
+  }
+
+  componentWillMount() {
+    console.log('places will mount')
   }
 
   locationValid = () => {
@@ -53,12 +63,12 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
         icon = '';
 
     switch (pathname) {
-      case '/near/list' :
-        path = '/near';
-        icon = <ViewCarousel/>;
+      case '/list' :
+        path = '/map';
+        icon = <ViewMap/>;
         break;
-      case '/near' :
-        path = '/near/list';
+      case '/map' :
+        path = '/list';
         icon = <ViewList/>;
         break;
     }
@@ -76,18 +86,11 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
   render() {
     let mainContent = [],
         actionButton = [];
-    let { children, place } = this.props;
+    let { children } = this.props;
 
     if (children) {
       actionButton = this.renderActionButton();
       mainContent = React.Children.toArray(this.props.children);
-    } else if (place) {
-      actionButton = this.renderActionButton();
-      mainContent = (
-        <div className={styles.placeCardWrapper}>
-          <PlaceCard place={place} onShowOnMapClick={() => { this.props.dispatch(push('/near/map'))}}/>
-        </div>
-      )
     } else {
       mainContent = (
         <div className={styles.loadingWrapper}>
@@ -106,10 +109,8 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
 }
 
 const mapStateToProps = (state, ownProps) => {
-  let selectFirstPlace = selectPlaceByIndex(0);
   return {
     userLocation: selectUserLocation(state),
-    place: selectFirstPlace(state),
   };
 };
 
