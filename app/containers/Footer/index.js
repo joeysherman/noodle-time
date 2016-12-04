@@ -8,10 +8,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import selectFooter from './selectors';
 import styles from './styles.css';
+import YelpImg from './yelp-2c-outline.png';
 
+// Material-ui imports
 import Paper from 'material-ui/Paper';
 
-import { BottomNavigationItem, BottomNavigation } from 'material-ui/BottomNavigation';
 
 export class Footer extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -19,8 +20,9 @@ export class Footer extends React.Component { // eslint-disable-line react/prefe
     return (
       <Paper zDepth={1} className={styles.footer}>
 
-          <p className={styles.footerAbout}>Crafted in SD by <strong>Joey</strong></p>
-          
+        <p className={styles.footerAbout}>Crafted in SD by <strong>Joey</strong></p>
+        <span className={styles.poweredBy}>Powered By: </span>
+        <img className={styles.yelpImg} src={YelpImg}/>
       </Paper>
     );
   }
