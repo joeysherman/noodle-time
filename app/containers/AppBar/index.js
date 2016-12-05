@@ -56,7 +56,7 @@ export class App_Bar extends React.Component { // eslint-disable-line react/pref
         className={styles.menu}
       >
         <MenuItem primaryText="My Location:"/>
-        <MenuItem primaryText="Use GPS - " />
+        <MenuItem primaryText={ hasGeo ? 'GPS - ON' : 'GPS - OFF' }/>
         <Divider/>
         <MenuItem primaryText="Help"/>
       </IconMenu>

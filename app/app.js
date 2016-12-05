@@ -54,8 +54,21 @@ import createRoutes from './routes';
 const rootRoute = {
   path: '/',
   component: App,
+  onEnter: (nextState, replace) => {
+    console.log('onEnter in app!')
+    console.log(nextState)
+    if (nextState.location.state && nextState.location.state === 'No location'){
+      console.log('No location in app!')
+    }
+  },
   indexRoute: {
     component: HomePage,
+    onEnter: (nextState, replace) => {
+      console.log('onEnter in homepage')
+      if (nextState.location.state && nextState.location.state === 'No location'){
+        console.log('No location in homepage!')
+      }
+    },
   },
   childRoutes: createRoutes(store),
 };

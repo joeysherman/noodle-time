@@ -3,6 +3,7 @@
 // See http://blog.mxstbr.com/2016/01/react-apps-with-pages for more information
 // about the code splitting business
 import { getAsyncInjectors } from 'utils/asyncInjectors';
+import { selectUserLocation } from 'containers/HomePage/selectors';
 
 const errorLoading = (err) => {
   console.error('Dynamic page loading failed', err); // eslint-disable-line no-console
@@ -34,6 +35,19 @@ export default function createRoutes(store) {
       });
 
       importModules.catch(errorLoading);
+    },
+    onEnter: (nextState, replace) => {
+      const { latitude, longitude } = selectUserLocation(store.getState());
+
+      if (longitude && latitude) {
+        console.log('yes location');
+      } else {
+        console.log('no location');
+        return replace({
+          pathname: '/',
+          state: 'No location',
+        });
+      }
     },
     childRoutes : [{
 
