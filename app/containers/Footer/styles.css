@@ -18,16 +18,18 @@
 
 .yelpImg {
   display: inline-flex;
-  width: 100px;
-  height: 56px;
+  width: 82px;
+  top: 10px;
+  height: 100%;
   margin-right: 12px;
 }
 
 .poweredBy {
   display: inline-flex;
   align-self: center;
+  margin-top: 10px;
   margin-left: auto;
   color: white;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 400;
 }
