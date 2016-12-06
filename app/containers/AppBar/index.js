@@ -22,6 +22,10 @@ import IconButton from 'material-ui/IconButton';
 import Divider from 'material-ui/Divider';
 
 import MyLocation from 'material-ui/svg-icons/maps/my-location';
+import GpsOffIcon from 'material-ui/svg-icons/device/gps-off';
+import GpsFixedIcon from 'material-ui/svg-icons/device/gps-fixed';
+import GpsNotFixedIcon from 'material-ui/svg-icons/device/gps-not-fixed';
+import HelpIcon from 'material-ui/svg-icons/action/help';
 import LocationOn from 'material-ui/svg-icons/communication/location-on';
 import LocationOff from 'material-ui/svg-icons/communication/location-off';
 
@@ -42,7 +46,7 @@ export class App_Bar extends React.Component { // eslint-disable-line react/pref
 
   renderIconMenu = () => {
 
-    let { hasGeo } = this.props,
+    let { hasGeo, userLocation } = this.props,
         icon;
 
     hasGeo ? icon = <LocationOn/> : icon = <LocationOff/>;
@@ -55,10 +59,16 @@ export class App_Bar extends React.Component { // eslint-disable-line react/pref
         targetOrigin={{horizontal: 'left', vertical: 'top'}}
         className={styles.menu}
       >
-        <MenuItem primaryText="My Location:"/>
-        <MenuItem primaryText={ hasGeo ? 'GPS - ON' : 'GPS - OFF' }/>
+        <MenuItem
+          primaryText="Location - "
+
+        />
+        <MenuItem
+          primaryText={ hasGeo ? 'GPS found -' : 'GPS unavailable - ' }
+          rightIcon={ hasGeo ? <GpsFixedIcon color="#4CAF50"/> : <GpsOffIcon/> }
+        />
         <Divider/>
-        <MenuItem primaryText="Help"/>
+        <MenuItem primaryText="Help" rightIcon={<HelpIcon/>}/>
       </IconMenu>
     )
   };

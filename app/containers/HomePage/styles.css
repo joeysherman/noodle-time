@@ -33,7 +33,7 @@
   }
 }
 
-@media (min-width: 425px) {
+@media (min-width: 426px) {
   .autoCompleteWrapper {
     width: 60%;
     max-width: 900px;

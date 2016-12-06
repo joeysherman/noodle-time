@@ -80,7 +80,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
           className={styles.ramenWrapper}
           zDepth={3}>
           <RamenButton onClick={this.props.noodleTime}></RamenButton>
-          <h1 className={styles.ramen_message}>{statusMessage}</h1>
+          <h2 className={styles.ramen_message}>{statusMessage}</h2>
         </Paper> );
     }
 
