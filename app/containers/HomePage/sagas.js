@@ -68,7 +68,7 @@ export function* homePageSaga() {
 
 function* fetchUserLocation() {
 
-  yield put(setStatusMessage('Grabbing your location...'));
+  yield put(setStatusMessage('Fetching location..'));
   yield call(delay, 250);
   const {location, error } = yield call(fetchUserLocationGeo);
 
