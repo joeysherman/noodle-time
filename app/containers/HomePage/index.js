@@ -13,6 +13,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styles from './styles.css';
+import TransitionGroup from 'react-addons-transition-group';
 
 // Material UI components
 import Paper from 'material-ui/Paper';
@@ -77,7 +78,9 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
     } else {
       main = (
         <Paper className={styles.ramenWrapper}>
+          <TransitionGroup component="div">
           <RamenButton onClick={this.props.noodleTime}></RamenButton>
+          </TransitionGroup>
           <h1 className={styles.ramen_message}>{statusMessage}</h1>
         </Paper> );
     }

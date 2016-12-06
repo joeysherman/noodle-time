@@ -28,10 +28,7 @@ import HomePage from 'containers/HomePage';
 // Import Global css
 import './global.css';
 import 'animate.css';
-
-/*import 'gsap/src/minified/plugins/CSSPlugin.min';
-import 'gsap/src/minified/easing/EasePack.min';
-import 'gsap/src/minified/TweenLite.min';*/
+import 'gsap/src/minified/TweenMax.min';
 
 // Create redux store with history
 // this uses the singleton browserHistory provided by react-router
