@@ -7,7 +7,8 @@
     "url": "git://github.com/mxstbr/react-boilerplate.git"
   },
   "engines": {
-    "npm": ">=3"
+    "npm": ">=3",
+    "node": "5.11.1",
   },
   "author": "Max Stoiber",
   "license": "MIT",
