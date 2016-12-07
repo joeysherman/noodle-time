@@ -21,18 +21,18 @@ export function* defaultSaga() {
 }
 
 function* fetchNoodlePlaces(location) {
-  const { lat, lng } = location;
+  const { latitude, longitude } = location;
 
-  if (lat && lng) {
-    let url = placesUrl + '?' + 'lat=' + lat + '&lng=' + lng;
+  if (latitude && longitude) {
+    let url = placesUrl + '?' + 'lat=' + latitude + '&lng=' + longitude;
 
-    const places = yield call(request, url);
+    const { data, err } = yield call(request, url);
 
-    if (places.data) {
+    if (data) {
       yield call(delay, 1000);
-      yield put(placesSuccess(places.data.businesses));
+      yield put(placesSuccess(data.businesses));
     } else {
-      yield put(placesError(places.err));
+      yield put(placesError(err));
     }
   }
 }

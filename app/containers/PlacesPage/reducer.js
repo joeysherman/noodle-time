@@ -9,6 +9,8 @@ import * as constants from './constants';
 
 const initialState = fromJS({
   places: null,
+  loading: false,
+  error: false,
 });
 
 function placesPageReducer(state = initialState, action) {
