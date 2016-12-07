@@ -36,7 +36,7 @@ export default function createRoutes(store) {
 
       importModules.catch(errorLoading);
     },
-    onEnter: (nextState, replace) => {
+/*    onEnter: (nextState, replace) => {
       const { latitude, longitude } = selectUserLocation(store.getState());
 
       if (longitude && latitude) {
@@ -48,7 +48,7 @@ export default function createRoutes(store) {
           state: 'No location',
         });
       }
-    },
+    },*/
     childRoutes : [{
 
       path: 'map',

@@ -95,12 +95,12 @@ export function fetchUserLocationGeo() {
     if ("navigator" in window) {
       window.navigator.geolocation.getCurrentPosition(function(location) {
         resolve({ location });
-      }, function(error) {
-        resolve({ error });
+      }, function(err) {
+        resolve({ err });
       }, options);
     } else {
       resolve({
-        error: { code: -1 },
+        err: { code: -1 },
       });
     }
   });

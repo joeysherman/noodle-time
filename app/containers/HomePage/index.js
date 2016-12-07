@@ -39,6 +39,15 @@ import {
 
 class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
+  componentWillMount() {
+    console.log('Homepage will mount')
+  }
+
+  componentDidMount() {
+    console.log('Homepage did mounmt')
+  }
+
+
   shouldRenderAutoComplete = () => {
     let {error} = this.props.userLocation;
 

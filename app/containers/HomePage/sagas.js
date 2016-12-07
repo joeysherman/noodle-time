@@ -5,7 +5,6 @@
 
 import { take, actionChannel, put, fork, call, cancel } from 'redux-saga/effects';
 import { delay, buffers } from 'redux-saga';
-import { push } from 'react-router-redux';
 import request from '../../utils/request';
 
 import {
@@ -20,7 +19,6 @@ import {
   userLocationError,
   userLocationSuccess,
   fetchUserLocationGeo,
-  setStatusMessage,
   autoCompleteSuccess,
   autoCompleteError,
 } from './actions';
@@ -29,15 +27,14 @@ import {
   let geocodeUrl        = '/api/geocode';
 
 export function* homePageSaga() {
+
  while (yield take(USER_LOCATION_REQUEST)){
    const fetchUserTask = yield fork(fetchUserLocation);
 
    const action = yield take([USER_LOCATION_ERROR, USER_LOCATION_SUCCESS]);
    
    yield cancel(fetchUserTask);
-   if (action.type === USER_LOCATION_SUCCESS) {
-     yield put(push('/list'));
-   } else {
+   if (action.type === USER_LOCATION_ERROR) {
      const autocompleteTask = yield fork(throttleAutocomplete);
 
      while(true) {
@@ -48,6 +45,7 @@ export function* homePageSaga() {
 
        if (data) {
          let { lat, lng } = data.json.results[0].geometry.location;
+         console.log(data);
          let payload = {
            timestamp: Date.now(),
            coords: {
@@ -57,7 +55,6 @@ export function* homePageSaga() {
          };
          yield cancel(autocompleteTask);
          yield put(userLocationSuccess(payload));
-         yield put(push('/list'));
        } else {
          yield put(userLocationError(error));
        }
@@ -67,29 +64,24 @@ export function* homePageSaga() {
 }
 
 function* fetchUserLocation() {
-
-  yield put(setStatusMessage('Fetching location..'));
-  yield call(delay, 250);
-  const {location, error } = yield call(fetchUserLocationGeo);
+  const { location, err } = yield call(fetchUserLocationGeo);
 
   if (location) {
-    yield put(setStatusMessage('Location found!'));
-    yield call(delay, 250);
     yield put(userLocationSuccess(location));
   } else {
-    yield put(userLocationError(error));
+    yield put(userLocationError(err));
   }
 }
 
 function* fetchAutocomplete(action) {
   let url = autoCompleteUrl + '?input=' + action.payload.input;
 
-  const predictions = yield call(request, url);
+  const { data, err } = yield call(request, url);
   
-  if (predictions.data) {
-    yield put(autoCompleteSuccess(predictions.data));
+  if (data) {
+    yield put(autoCompleteSuccess(data));
   } else {
-    yield put(autoCompleteError(predictions.err));
+    yield put(autoCompleteError(err));
   }
 };
 
