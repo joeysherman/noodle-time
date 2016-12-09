@@ -20,18 +20,22 @@
 
 @media (max-width: 425px) {
   .ramenWrapper {
-    padding: 0;
-    width: 100vw;
+    width: 88%;
+  }
+
+  .ramenButton {
+    width: 110px;
+    top: -35px !important;
   }
 
   .ramen_paper {
     width: 90%
   }
 
-  .autoCompleteWrapper {
+  .autoCompleteWrapper  {
     width: 90%;
   }
-}
+ }
 
 @media (min-width: 426px) {
   .autoCompleteWrapper {
@@ -40,8 +44,16 @@
   }
 }
 
+.ramenButton {
+  position: absolute;
+  left:0;
+  top: -45px;
+
+}
+
 .ramen_message {
   color: rgb(0, 188, 212);
+  align-self: flex-end;
 }
 
 .place_card_wrapper {
