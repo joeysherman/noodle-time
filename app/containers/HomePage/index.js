@@ -52,7 +52,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
   }
 
   componentWillUnmount() {
-    this.props.noodleTime();
+    this.props.itsNoodleTime();
   }
 
 

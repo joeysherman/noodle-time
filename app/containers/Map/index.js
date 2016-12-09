@@ -39,6 +39,7 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
     if (nextProps.loaded === true) {
       console.log('nextprops mapsloaded is true')
       this.mountMap();
+      this.setDirections();
     }
   };
 
@@ -54,6 +55,90 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
        });
      }
      this.createAndSetMarker(userLocation);
+  };
+
+  checkDirectionsService = () => {
+    if (!window.directionService){
+      window.directionService = new window.google.maps.DirectionsService();
+      return true;
+    }
+    return false;
+  };
+
+  checkDirectionsStatus = (status) => {
+    switch (status){
+      case 'INVALID_REQUEST' :
+        break;
+      case 'MAX_WAYPOINTS_EXCEEDED' :
+        break;
+      case 'NOT_FOUND' :
+        break;
+      case 'OK' :
+        break;
+      case 'OVER_QUERY_LIMIT' :
+        break;
+      case 'REQUEST_DENIED' :
+        break;
+      case 'UNKNOWN_ERROR' :
+        break;
+      case 'ZERO_RESULTS' :
+        break;
+      default:
+        break;
+    }
+  };
+
+  getDirectionsRequest = () => {
+    let origin = {
+      lat: this.props.userLocation.latitude,
+      lng: this.props.userLocation.longitude,
+    };
+    let destination = {
+      lat: this.props.destination.location.coordinate.latitude,
+      lng: this.props.destination.location.coordinate.longitude,
+    };
+    let query = {
+      origin,
+      destination,
+      travelMode: 'DRIVING',
+    };
+
+    return query;
+
+  };
+
+  renderDirectionsOnMap = (directions) => {
+    window.renderer = new window.google.maps.DirectionsRenderer({
+      directions: directions,
+      map: window.map,
+    })
+  };
+
+  /*
+  * DirectionsResult -
+  * geocoded_waypoints: [DirectionsGeocodedWaypoint]
+  * routes: [DirectionsRoute]
+  *
+  * */
+  getDirections = () => {
+    if (this.checkDirectionsService()) {
+      let request = this.getDirectionsRequest();
+
+      window.directionService.route(request, (result, status) => {
+        if (result) {
+          console.log(result);
+          console.log(status);
+          this.renderDirectionsOnMap(result);
+          // check status
+          // renderDirections
+        }
+      });
+    }
+  };
+
+  setDirections = () => {
+    // DirectionsRenders.setDirections(result)
+    this.getDirections();
   };
 
 
@@ -79,7 +164,6 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
 
 const mapStateToProps = (state) => {
   return {
-    userLocation: selectUserLocation(state),
     loaded: selectMapsLoaded(state),
   }
 };

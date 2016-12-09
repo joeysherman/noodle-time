@@ -17,12 +17,10 @@ import { userLocationRequest } from '../HomePage/actions';
 import { selectPlaces } from './selectors';
 
 // Material-ui imports
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ViewMap from 'material-ui/svg-icons/maps/map';
-import ViewList from 'material-ui/svg-icons/action/view-list';
 
 // Component imports
 import LoadingIcon from '../../components/LoadingIcon';
+import Map from '../Map';
 
 import {
   selectUserLocation,
@@ -70,9 +68,9 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
         case 'list':
           return (
             <List places={this.props.places.toJS()}/>
-          )
+          );
         case 'map':
-          return <h1>Map</h1>
+          return <Map userLocation={this.props.userLocation} destination={this.props.places.get(0).toJS()}></Map>
         default :
           return (
             <div className={styles.placeCardWrapper}>
@@ -85,34 +83,6 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
         <LoadingIcon status="Loading..."/>
       )
     }
-  };
-
-  renderActionButton = () => {
-    if (!this.locationValid()) return;
-
-    let { pathname } = this.props.location;
-    let path = '',
-        icon = '';
-
-    switch (pathname) {
-      case '/list' :
-        path = '/map';
-        icon = <ViewMap/>;
-        break;
-      case '/map' :
-        path = '/list';
-        icon = <ViewList/>;
-        break;
-    }
-
-    return (
-      <FloatingActionButton
-        className={styles.actionButton}
-        onTouchTap={() => { this.props.dispatch(push(path))}}>
-        {icon}
-      </FloatingActionButton>
-
-    );
   };
 
   render() {
