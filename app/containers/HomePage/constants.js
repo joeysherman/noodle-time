@@ -15,5 +15,7 @@ export const USER_HAS_GEO = 'USER_HAS_GEO';
 
 export const SET_STATUS_MESSAGE = 'SET_STATUS_MESSAGE';
 
+export const NOODLE_TIME = 'NOODLE_TIME';
+
 
 

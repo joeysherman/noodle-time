@@ -30,8 +30,14 @@ const selectHasGeo = createSelector(
   (slice) => slice.get('hasGeo'),
 );
 
+const selectNoodleTime = createSelector(
+  selectUserSlice,
+  (slice) => slice.get('noodleTime'),
+);
+
 export {
   selectHomeDomain,
+  selectNoodleTime,
   selectUserLocation,
   selectHasGeo,
   selectAutoCompleteData,

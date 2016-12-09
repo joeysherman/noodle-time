@@ -13,6 +13,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styles from './styles.css';
+import { push } from 'react-router-redux';
 
 // Material UI components
 import Paper from 'material-ui/Paper';
@@ -24,18 +25,21 @@ import RamenButton from '../../components/RamenButton/ramenButton';
 // Actions
 import {
   userLocationRequest,
+  noodleTime,
   autoCompleteRequest,
   autoCompleteItemSelected,
 } from './actions';
 
 // Selectors
-import {
+import{
   selectStatusMessage,
   selectUserLocation,
   selectAutoCompleteData,
+  selectNoodleTime,
   selectLoading,
   selectError,
 } from './selectors';
+
 
 class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -45,6 +49,17 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
 
   componentDidMount() {
     console.log('Homepage did mounmt')
+  }
+
+  componentWillUnmount() {
+    this.props.noodleTime();
+  }
+
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (nextProps.noodleTime == true) {
+      this.props.push('/search');
+    }
   }
 
 
@@ -88,7 +103,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
         <Paper
           className={styles.ramenWrapper}
           zDepth={3}>
-          <RamenButton className={styles.ramenButton} onClick={this.props.noodleTime}></RamenButton>
+          <RamenButton className={styles.ramenButton} onClick={this.props.itsNoodleTime}></RamenButton>
           <h2 className={styles.ramen_message}>{statusMessage}</h2>
         </Paper> );
     }
@@ -106,13 +121,16 @@ const mapStateToProps = (state) => {
   return {
     autoCompleteDataSource: selectAutoCompleteData(state),
     userLocation: selectUserLocation(state),
+    noodleTime: selectNoodleTime(state),
     statusMessage: selectStatusMessage(state),
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    noodleTime: () => dispatch(userLocationRequest()),
+    itsNoodleTime: () => dispatch(noodleTime()),
+    fetchLocation: () => dispatch(userLocationRequest()),
+    push: (path) => dispatch(push(path)),
     dispatch,
     }
 };

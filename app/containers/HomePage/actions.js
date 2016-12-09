@@ -77,6 +77,12 @@ export function userHasGeo(bool) {
   }
 }
 
+export function noodleTime() {
+  return {
+    type: constants.NOODLE_TIME,
+  }
+}
+
 /*
 * Fetch user Location by navigator
 *

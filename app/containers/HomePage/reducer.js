@@ -9,6 +9,7 @@ import * as constants from './constants';
 
 const initialState = fromJS({
   hasGeo: false,
+  noodleTime: false,
   statusMessage: 'Click to begin!',
   userLocation: {
     latitude: null,
@@ -46,6 +47,11 @@ function homeReducer (state = initialState, action){
 
       return state
         .set('userLocation', fromJS({ error: true }));
+
+    // Toggle noodletime
+    case constants.NOODLE_TIME :
+      return state
+        .update('noodleTime', (value) => !value);
 
     /* Status message reducer */
 
