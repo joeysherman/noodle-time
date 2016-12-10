@@ -33,9 +33,15 @@ const selectPlaceByIndex = (index) => createSelector(
   }
 );
 
+const selectIndex = createSelector(
+  selectPlacesPageDomain,
+  (subState) => subState.get('index'),
+);
+
 
 export default selectPlacesPage;
 export {
+  selectIndex,
   selectPlacesPageDomain,
   selectPlaces,
   selectPlaceByIndex,

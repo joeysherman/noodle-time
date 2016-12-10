@@ -9,6 +9,7 @@ import * as constants from './constants';
 
 const initialState = fromJS({
   places: null,
+  index: 0,
   loading: false,
   error: false,
 });
@@ -43,6 +44,14 @@ function placesPageReducer(state = initialState, action) {
             .set('error', null);
 
         });
+
+    case constants.INCREMENT_INDEX :
+      return state
+        .update('index', (i) => i+1);
+
+    case constants.DECREMENT_INDEX :
+      return state
+        .update('index', (i) => i-1);
     
     default:
       return state;

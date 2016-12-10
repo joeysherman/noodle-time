@@ -26,3 +26,15 @@ export function placesRequest(location) {
     payload: location,
   }
 }
+
+export function decrementIndex() {
+  return {
+    type: constants.DECREMENT_INDEX,
+  }
+}
+
+export function incrementIndex() {
+  return {
+    type: constants.INCREMENT_INDEX,
+  }
+}

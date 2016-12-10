@@ -17,10 +17,23 @@ import { userLocationRequest } from '../HomePage/actions';
 import { selectPlaces } from './selectors';
 
 // Material-ui imports
+import RaisedButton from 'material-ui/RaisedButton';
+import NavBefore from 'material-ui/svg-icons/image/navigate-before';
+import NavNext from 'material-ui/svg-icons/image/navigate-next';
+
 
 // Component imports
 import LoadingIcon from '../../components/LoadingIcon';
 import Map from '../Map';
+
+import {
+  incrementIndex,
+  decrementIndex,
+} from './actions';
+
+import {
+  selectIndex,
+} from './selectors';
 
 import {
   selectUserLocation,
@@ -60,7 +73,38 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
     return (lat < 90 && lat > -90 && lng < 180 && lng > -180);
   };
 
+  // type :
+  // inc 1
+  // dex -1
+  renderNavButton = (type) => {
+    let { index } = this.props;
+    let { size } = this.props.places;
+
+    if (type === 1) {
+      if (index !== size-1) {
+        return (
+          <RaisedButton
+            backgroundColor="#a4c639"
+            icon={<NavNext/>}
+            onTouchTap={this.props.incIndex}
+          />
+        )
+      }
+    } else {
+      if (index > 0) {
+        return (
+          <RaisedButton
+            backgroundColor="#a4c639"
+            icon={<NavBefore/>}
+            onTouchTap={this.props.decIndex}
+          />
+        )
+      }
+    }
+  };
+
   renderMainContent = () => {
+    let { index } = this.props;
 
     if (this.locationValid() && this.props.places) {
       let { mode } = this.props.location.query;
@@ -74,7 +118,12 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
         default :
           return (
             <div className={styles.placeCardWrapper}>
-              <PlaceCard place={this.props.places.get(0).toJS()}/>
+              {this.renderNavButton(-1)}
+              <PlaceCard
+                place={this.props.places.get(index).toJS()}
+                showMapClick={this.props.goTo('/search?mode=map')}
+              />
+              {this.renderNavButton(1)}
             </div>
           )
       }
@@ -99,6 +148,7 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
 const mapStateToProps = (state, ownProps) => {
   return {
     userLocation: selectUserLocation(state),
+    index: selectIndex(state),
     places: selectPlaces(state),
   };
 };
@@ -107,6 +157,9 @@ function mapDispatchToProps(dispatch, ownProps) {
   return {
     fetchLocation: () => dispatch(userLocationRequest()),
     fetchPlaces: (location) => dispatch(placesRequest(location)),
+    goTo: (address) => ()=> dispatch(push(address)),
+    incIndex: () => dispatch(incrementIndex()),
+    decIndex: () => dispatch(decrementIndex()),
     dispatch,
   };
 }
