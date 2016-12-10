@@ -20,8 +20,8 @@ export default function createRoutes(store) {
   return [{
     path: 'search',
     getComponent(nextState, cb) {
-      console.log('getting component router')
-      console.log(nextState);
+/*      console.log('getting component router')
+      console.log(nextState);*/
       const importModules = Promise.all([
         System.import('containers/PlacesPage'),
         System.import('containers/PlacesPage/reducer'),

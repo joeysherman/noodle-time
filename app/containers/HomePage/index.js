@@ -57,8 +57,10 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
 
 
   componentWillReceiveProps(nextProps, nextContext) {
-    if (nextProps.noodleTime == true) {
+    if (nextProps.noodleTime == true && this.props.noodleTime == false) {
       this.props.push('/search');
+      console.log('homepage')
+      console.log(nextProps);
     }
   }
 
