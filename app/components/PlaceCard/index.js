@@ -42,7 +42,7 @@ function PlaceCard(props) { // eslint-disable-line react/prefer-stateless-functi
 
         <CardActions className={styles.cardActions}>
           <FlatButton
-            onClick={props.onShowOnMapClick}
+            onClick={props.showMapClick}
             label="Show on Map"
             icon={<Explore/>}
             backgroundColor=''

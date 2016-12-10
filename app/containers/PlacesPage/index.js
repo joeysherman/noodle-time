@@ -114,14 +114,19 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
             <List places={this.props.places.toJS()}/>
           );
         case 'map':
-          return <Map userLocation={this.props.userLocation} destination={this.props.places.get(0).toJS()}></Map>
+          return <Map userLocation={this.props.userLocation} destination={this.props.places.get(index).toJS()}></Map>
         default :
           return (
             <div className={styles.placeCardWrapper}>
               {this.renderNavButton(-1)}
               <PlaceCard
                 place={this.props.places.get(index).toJS()}
-                showMapClick={this.props.goTo('/search?mode=map')}
+                showMapClick={() => this.props.dispatch(push({
+                  pathname: '/search',
+                  query: {
+                    mode: 'map'
+                  },
+                }))}
               />
               {this.renderNavButton(1)}
             </div>
