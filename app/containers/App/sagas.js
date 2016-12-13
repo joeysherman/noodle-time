@@ -3,7 +3,7 @@
  */
 
 import { take, put, fork, call, cancel } from 'redux-saga/effects';
-import request from '../../utils/request';
+import { replace } from 'react-router-redux';
 
 import {
   USER_LOCATION_REQUEST,
@@ -20,11 +20,20 @@ import {
 export function* appSaga() {
 
   while (yield take(USER_LOCATION_REQUEST)){
+    console.log('fetching user location...')
     const fetchUserTask = yield fork(fetchUserLocation);
 
     const action = yield take([USER_LOCATION_ERROR, USER_LOCATION_SUCCESS]);
 
-    console.log(action);
+    if (action.type == USER_LOCATION_ERROR) {
+      console.log(action);
+      yield put(replace({
+        pathname: '/',
+        state: {
+          mode: 'autocomplete',
+        }
+      }));
+    }
     
     yield cancel(fetchUserTask);
   }

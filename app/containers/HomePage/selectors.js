@@ -10,7 +10,7 @@ const selectAutocompleteSlice = () => (state) => state.getIn(['home', 'autocompl
 
 const selectAutoCompleteData = () => createSelector(
   selectAutocompleteSlice(),
-  (slice) => slice.get('autoCompleteData').toJS(),
+  (slice) => slice.toJS(),
 );
 
 const selectStatusMessage = () => createSelector(

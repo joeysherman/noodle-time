@@ -46,27 +46,21 @@ import {
 
 class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
-  componentWillMount() {
-    console.log('Homepage will mount')
-  }
-
   componentDidMount() {
     console.log('Homepage did mount')
+    this.props.fetchLocation();
   }
   
   componentWillReceiveProps(nextProps, nextContext) {
     console.log('Homepage wrp')
     if (nextProps.noodleTime == true && this.props.noodleTime == false) {
-      console.log('Homepage props below:')
-      console.log(nextProps);
       this.props.push('/search');
     }
   }
 
-
   shouldRenderAutoComplete = () => {
     let { state } = this.props.location;
-    console.log(state);
+
     return state && state.mode === 'autocomplete';
   };
 
@@ -118,9 +112,8 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
 }
 
 const mapStateToProps = createStructuredSelector({
-
-    noodleTime: selectNoodleTime(),
-  
+  noodleTime: selectNoodleTime(),
+  autoCompleteDataSource: selectAutoCompleteData(),
 });
 
 const mapDispatchToProps = (dispatch) => {

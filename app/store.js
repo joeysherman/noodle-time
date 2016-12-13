@@ -8,6 +8,7 @@ import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
 import appSagas from 'containers/App/Sagas';
+import homePageSagas from 'containers/HomePage/sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 const devtools = window.devToolsExtension || (() => (noop) => noop);
@@ -37,6 +38,7 @@ export default function configureStore(initialState = {}, history) {
 
   // Run Default Sagas
   appSagas.map(store.runSaga);
+  homePageSagas.map(store.runSaga);
   
   // Make reducers hot reloadable, see http://mxs.is/googmo
   /* istanbul ignore next */
