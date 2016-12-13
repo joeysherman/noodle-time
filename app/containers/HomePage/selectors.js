@@ -17,7 +17,7 @@ const selectUserLocation = createSelector(
 
 const selectAutoCompleteData = createSelector(
   selectAutocompleteSlice,
-  (slice) => slice.toJS(),
+  (slice) => slice.get('autoCompleteData').toJS(),
 );
 
 const selectStatusMessage = createSelector(

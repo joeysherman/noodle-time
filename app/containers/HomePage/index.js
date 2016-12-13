@@ -48,15 +48,11 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
   }
 
   componentDidMount() {
-    console.log('Homepage did mounmt')
+    console.log('Homepage did mount')
   }
-
-  componentWillUnmount() {
-    this.props.itsNoodleTime();
-  }
-
-
+  
   componentWillReceiveProps(nextProps, nextContext) {
+    console.log('Homepage wrp')
     if (nextProps.noodleTime == true && this.props.noodleTime == false) {
       this.props.push('/search');
       console.log('homepage')
