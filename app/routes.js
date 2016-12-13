@@ -26,8 +26,6 @@ export default function createRoutes(store) {
         System.import('containers/PlacesPage'),
         System.import('containers/PlacesPage/reducer'),
         System.import('containers/PlacesPage/sagas'),
-        System.import('containers/Map/reducer'),
-        System.import('containers/Map/sagas'),
       ]);
 
       const renderRoute = loadModule(cb);
@@ -35,9 +33,6 @@ export default function createRoutes(store) {
       importModules.then(([component, reducer, sagas, mapReducer, mapSagas]) => {
         injectReducer('places', reducer.default);
         injectSagas(sagas.default);
-
-        injectReducer('map', mapReducer.default);
-        injectSagas(mapSagas.default);
 
         renderRoute(component);
       });

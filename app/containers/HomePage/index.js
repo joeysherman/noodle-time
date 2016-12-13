@@ -13,6 +13,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styles from './styles.css';
+import { createStructuredSelector } from 'reselect';
 import { push } from 'react-router-redux';
 
 // Material UI components
@@ -24,21 +25,23 @@ import RamenButton from '../../components/RamenButton/ramenButton';
 
 // Actions
 import {
-  userLocationRequest,
   noodleTime,
   autoCompleteRequest,
   autoCompleteItemSelected,
 } from './actions';
 
+import { userLocationRequest } from '../App/actions';
+
 // Selectors
 import{
   selectStatusMessage,
-  selectUserLocation,
   selectAutoCompleteData,
   selectNoodleTime,
-  selectLoading,
-  selectError,
 } from './selectors';
+
+import {
+  selectLocation
+} from '../App/selectors';
 
 
 class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -73,7 +76,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
 
     let { statusMessage } = this.props;
 
-    if (this.shouldRenderAutoComplete()) {
+    /*if (this.shouldRenderAutoComplete()) {
       let { autoCompleteDataSource } = this.props;
       let autoCompleteText = autoCompleteDataSource.predictions ? autoCompleteDataSource.predictions.map((i) => i.text) : [];
       main = (
@@ -104,7 +107,9 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
           <RamenButton className={styles.ramenButton} onClick={this.props.itsNoodleTime}></RamenButton>
           <h2 className={styles.ramen_message}>{statusMessage}</h2>
         </Paper> );
-    }
+    }*/
+    
+    main = <h1>HomePage</h1>;
 
     return (
       <div className={styles.wrapper}>
@@ -114,15 +119,11 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = createStructuredSelector({
 
-  return {
-    autoCompleteDataSource: selectAutoCompleteData(state),
-    userLocation: selectUserLocation(state),
-    noodleTime: selectNoodleTime(state),
-    statusMessage: selectStatusMessage(state),
-  }
-};
+    noodleTime: selectNoodleTime(),
+  
+});
 
 const mapDispatchToProps = (dispatch) => {
   return {

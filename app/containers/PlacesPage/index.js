@@ -7,13 +7,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { replace, push } from 'react-router-redux';
+import { createStructuredSelector } from 'reselect';
 import styles from './styles.css';
 
 // Redux imports
 import { placesRequest } from './actions';
 import PlaceCard from '../../components/PlaceCard';
 import List from '../../components/List';
-import { userLocationRequest } from '../HomePage/actions';
+import { userLocationRequest } from '../App/actions';
 import { selectPlaces } from './selectors';
 
 // Material-ui imports
@@ -36,8 +37,8 @@ import {
 } from './selectors';
 
 import {
-  selectUserLocation,
-} from '../HomePage/selectors';
+  selectLocation,
+} from '../App/selectors';
 
 export class PlacesPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -150,13 +151,11 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    userLocation: selectUserLocation(state),
-    index: selectIndex(state),
-    places: selectPlaces(state),
-  };
-};
+const mapStateToProps = createStructuredSelector({
+    userLocation: selectLocation(),
+    index: selectIndex(),
+    places: selectPlaces(),
+});
 
 function mapDispatchToProps(dispatch, ownProps) {
   return {

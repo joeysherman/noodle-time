@@ -8,15 +8,8 @@ import { combineReducers } from 'redux-immutable';
 import * as constants from './constants';
 
 const initialState = fromJS({
-  hasGeo: false,
   noodleTime: false,
   statusMessage: 'Click to begin!',
-  userLocation: {
-    latitude: null,
-    longitude: null,
-    timestamp: null,
-    address: null,
-  },
 });
 
 /*
@@ -31,37 +24,16 @@ const initialState = fromJS({
 function homeReducer (state = initialState, action){
 
   switch (action.type) {
-
-    case constants.USER_LOCATION_SUCCESS :
-      let { latitude, longitude } = action.payload.coords;
-      let { timestamp } = action.payload;
-
-      return state
-        .set('userLocation', fromJS({
-          timestamp,
-          latitude,
-          longitude,
-        }));
-
-    case constants.USER_LOCATION_ERROR :
-
-      return state
-        .set('userLocation', fromJS({ error: true }));
-
+    
     // Toggle noodletime
     case constants.NOODLE_TIME :
       return state
         .update('noodleTime', (value) => !value);
 
     /* Status message reducer */
-
     case constants.SET_STATUS_MESSAGE :
       return state
         .set('statusMessage', action.payload);
-
-    case constants.USER_HAS_GEO :
-      return state
-        .set('hasGeo', action.payload);
   }
 
   return state;
@@ -100,6 +72,6 @@ function autocompleteReducer(state = fromJS(autcompleteInitialState), action) {
 }
 
 export default combineReducers({
-  'user': homeReducer,
+  'home': homeReducer,
   'autocomplete': autocompleteReducer,
 });

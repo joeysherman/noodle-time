@@ -4,42 +4,28 @@
 
 import { createSelector } from 'reselect';
 
-const selectHomeDomain = (state) => state.get('home');
-const selectUserSlice = (state) => state.getIn(['home', 'user']);
-const selectAutocompleteSlice = (state) => state.getIn(['home', 'autocomplete']);
+const selectHomeDomain = () => (state) => state.get('home');
+const selectHomeSlice = () => (state) => state.getIn(['home', 'home']);
+const selectAutocompleteSlice = () => (state) => state.getIn(['home', 'autocomplete']);
 
-const selectUserLocation = createSelector(
-  selectUserSlice,
-  (home) => {
-    return home.get('userLocation').toJS();
-  },
-);
-
-const selectAutoCompleteData = createSelector(
-  selectAutocompleteSlice,
+const selectAutoCompleteData = () => createSelector(
+  selectAutocompleteSlice(),
   (slice) => slice.get('autoCompleteData').toJS(),
 );
 
-const selectStatusMessage = createSelector(
-  selectUserSlice,
+const selectStatusMessage = () => createSelector(
+  selectHomeSlice(),
   (home) => home.get('statusMessage'),
 );
 
-const selectHasGeo = createSelector(
-  selectUserSlice,
-  (slice) => slice.get('hasGeo'),
-);
-
-const selectNoodleTime = createSelector(
-  selectUserSlice,
+const selectNoodleTime = () => createSelector(
+  selectHomeSlice(),
   (slice) => slice.get('noodleTime'),
 );
 
 export {
   selectHomeDomain,
   selectNoodleTime,
-  selectUserLocation,
-  selectHasGeo,
   selectAutoCompleteData,
   selectStatusMessage,
 };

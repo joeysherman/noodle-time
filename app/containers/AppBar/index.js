@@ -7,13 +7,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import { createStructuredSelector } from 'reselect';
 import styles from './styles.css';
-import {
-  selectUserLocation,
-  selectHasGeo,
-} from '../HomePage/selectors';
 
-import { userHasGeo } from '../HomePage/actions';
+import {
+  selectLocation,
+  selectHasGeo,
+} from '../App/selectors';
+
+import { userHasGeo } from '../App/actions';
 
 import AppBar from 'material-ui/AppBar';
 import IconMenu from 'material-ui/IconMenu';
@@ -88,13 +90,12 @@ export class App_Bar extends React.Component { // eslint-disable-line react/pref
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = createStructuredSelector(
 
-  return {
-    userLocation: selectUserLocation(state),
-    hasGeo : selectHasGeo(state),
-  }
-};
+  {
+    hasGeo : selectHasGeo(),
+    userLocation: selectLocation(),
+  });
 
 const mapDispatchToProps = (dispatch) => {
   return {

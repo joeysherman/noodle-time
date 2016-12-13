@@ -5,7 +5,7 @@ import { createSelector } from 'reselect';
 /**
  * Direct selector to the App state domain
  */
-const selectAppDomain = (state) => state.get('appBar');
+const selectApp = () => (state) => state.get('app');
 
 /**
  * Other specific selectors
@@ -16,12 +16,25 @@ const selectAppDomain = (state) => state.get('appBar');
  * Default selector used by App
  */
 
-const selectApp = createSelector(
-  selectAppDomain,
+export const selectAppState = () => createSelector(
+  selectApp(),
   (substate) => substate.toJS()
 );
 
-const selectLocationState = () => {
+export const selectHasGeo = () => createSelector(
+  selectApp(),
+  (substate) => substate.get('hasGeo'),
+);
+
+export const selectLocation = () => createSelector(
+  selectApp(),
+  (substate) => {
+    return substate.get('location').toJS();
+  },
+);
+
+
+export const selectLocationState = () => {
   let prevRoutingState;
   let prevRoutingStateJS;
 
@@ -37,8 +50,4 @@ const selectLocationState = () => {
   };
 };
 
-export default selectAppDomain;
-export {
-  selectLocationState,
-  selectAppDomain
-};
+export default selectApp;
