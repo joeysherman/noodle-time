@@ -57,17 +57,17 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
   componentWillReceiveProps(nextProps, nextContext) {
     console.log('Homepage wrp')
     if (nextProps.noodleTime == true && this.props.noodleTime == false) {
-      this.props.push('/search');
-      console.log('homepage')
+      console.log('Homepage props below:')
       console.log(nextProps);
+      this.props.push('/search');
     }
   }
 
 
   shouldRenderAutoComplete = () => {
-    let {error} = this.props.userLocation;
-
-    return error;
+    let { state } = this.props.location;
+    console.log(state);
+    return state && state.mode === 'autocomplete';
   };
 
   render() {
@@ -76,7 +76,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
 
     let { statusMessage } = this.props;
 
-    /*if (this.shouldRenderAutoComplete()) {
+    if (this.shouldRenderAutoComplete()) {
       let { autoCompleteDataSource } = this.props;
       let autoCompleteText = autoCompleteDataSource.predictions ? autoCompleteDataSource.predictions.map((i) => i.text) : [];
       main = (
@@ -107,9 +107,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
           <RamenButton className={styles.ramenButton} onClick={this.props.itsNoodleTime}></RamenButton>
           <h2 className={styles.ramen_message}>{statusMessage}</h2>
         </Paper> );
-    }*/
-    
-    main = <h1>HomePage</h1>;
+    }
 
     return (
       <div className={styles.wrapper}>
