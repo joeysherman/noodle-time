@@ -44,13 +44,9 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
 
   componentDidUpdate(prevProps, prevState, prevContext) {
     if (!prevProps.userLocation.longitude && !prevProps.userLocation.latitude && this.locationValid()) {
-      console.log('fetching places');
-      let { latitude, longitude } = this.props.userLocation;
+      console.log('fetching places did update');
 
-      this.props.fetchPlaces({
-        latitude,
-        longitude,
-      });
+      this.fetchPlaces();
     }
   }
 
@@ -58,10 +54,19 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
     if (!this.locationValid()) {
       this.props.fetchLocation();
     } else if (!this.props.places) {
-      /*this.props.fetchPlaces();*/
       console.log('No places!')
+      this.fetchPlaces();
     }
   }
+
+  fetchPlaces = () => {
+    let { latitude, longitude } = this.props.userLocation;
+
+    this.props.fetchPlaces({
+      latitude,
+      longitude,
+    });
+  };
 
   locationValid = () => {
     let { longitude, latitude } = this.props.userLocation;
