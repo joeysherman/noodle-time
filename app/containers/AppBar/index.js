@@ -13,6 +13,8 @@ import styles from './styles.css';
 import {
   selectLocation,
   selectHasGeo,
+  selectAddress,
+  selectLoading,
 } from '../App/selectors';
 
 import { userHasGeo } from '../App/actions';
@@ -48,10 +50,19 @@ export class App_Bar extends React.Component { // eslint-disable-line react/pref
 
   renderIconMenu = () => {
 
-    let { hasGeo, userLocation } = this.props,
-        icon;
+    let { hasGeo, loading, address} = this.props;
+    let icon = '',
+        gpsText = '',
+        locationText = 'Searching...';
+
+    if (!loading && address){
+      locationText = address;
+    }
 
     hasGeo ? icon = <LocationOn/> : icon = <LocationOff/>;
+    gpsText = hasGeo ? 'GPS on' : 'GPS unavailable';
+
+
 
     return (
       <IconMenu
@@ -62,12 +73,12 @@ export class App_Bar extends React.Component { // eslint-disable-line react/pref
         className={styles.menu}
       >
         <MenuItem
-          primaryText="Location - "
-
+          primaryText={locationText}
+          leftIcon={icon}
         />
         <MenuItem
-          primaryText={ hasGeo ? 'GPS found -' : 'GPS unavailable - ' }
-          rightIcon={ hasGeo ? <GpsFixedIcon color="#4CAF50"/> : <GpsOffIcon/> }
+          primaryText={gpsText}
+          leftIcon={ hasGeo ? <GpsFixedIcon color="#4CAF50"/> : <GpsOffIcon/> }
         />
         <Divider/>
         <MenuItem primaryText="Help" rightIcon={<HelpIcon/>}/>
@@ -94,7 +105,9 @@ const mapStateToProps = createStructuredSelector(
 
   {
     hasGeo : selectHasGeo(),
+    loading: selectLoading(),
     userLocation: selectLocation(),
+    address: selectAddress(),
   });
 
 const mapDispatchToProps = (dispatch) => {

@@ -110,9 +110,9 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
   };
 
   renderMainContent = () => {
-    let { index } = this.props;
+    let { index, places } = this.props;
 
-    if (this.locationValid() && this.props.places) {
+    if (places) {
       let { mode } = this.props.location.query;
       switch(mode) {
         case 'list':

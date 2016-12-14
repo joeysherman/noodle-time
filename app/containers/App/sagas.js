@@ -24,6 +24,8 @@ export function* appSaga() {
 
     const action = yield take([USER_LOCATION_ERROR, USER_LOCATION_SUCCESS]);
 
+    yield cancel(fetchUserTask);
+
     if (action.type == USER_LOCATION_ERROR) {
       console.log(action);
       yield put(replace({
@@ -33,8 +35,6 @@ export function* appSaga() {
         }
       }));
     }
-    
-    yield cancel(fetchUserTask);
   }
 }
 

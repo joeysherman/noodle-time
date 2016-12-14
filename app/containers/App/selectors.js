@@ -38,6 +38,12 @@ export const selectLocation = () => createSelector(
   },
 );
 
+export const selectAddress = () => createSelector(
+  selectApp(),
+  (substate) => {
+    return substate.get('address');
+  },
+);
 
 export const selectLocationState = () => {
   let prevRoutingState;
