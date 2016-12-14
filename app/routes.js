@@ -40,6 +40,11 @@ export default function createRoutes(store) {
       importModules.catch(errorLoading);
     },
     onChange: (prevState, nextState, replace, callback) => {
+      console.log('prevState')
+      console.log(prevState)
+      console.log('nextState')
+      console.log(nextState)
+
       let { query } = nextState.location;
 
       if (query && query.mode == 'map') {

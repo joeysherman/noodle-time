@@ -26,13 +26,9 @@ import {
 
 export class Map extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
-  componentWillMount() {
-    console.log('Map will mount')
-  }
-  
   componentDidMount() {
     console.log('Map mounted')
-    this.props.dispatch(mapLoadRequest());
+    this.loadMapsIfNeeded();
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -41,6 +37,17 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
       console.log('nextprops mapsloaded is true')
       this.mountMap();
       this.setDirections();
+    }
+  };
+
+  loadMapsIfNeeded = () => {
+    let { loaded } = this.props;
+
+    if (loaded && window.google){
+      this.mountMap();
+      this.setDirections();
+    } else {
+      this.props.loadMaps();
     }
   };
 
@@ -55,15 +62,22 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
        zoom: 15,
        });
      }
-     this.createAndSetMarker(userLocation);
   };
 
   checkDirectionsService = () => {
     if (!window.directionService){
       window.directionService = new window.google.maps.DirectionsService();
-      return true;
     }
-    return false;
+    return true;
+  };
+
+  checkRendererService = () => {
+    if (!window.rendererService) {
+      window.rendererService = new window.google.maps.DirectionsRenderer({
+        map: window.map,
+      });
+    }
+    return true;
   };
 
   checkDirectionsStatus = (status) => {
@@ -109,10 +123,11 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
   };
 
   renderDirectionsOnMap = (directions) => {
-    window.renderer = new window.google.maps.DirectionsRenderer({
-      directions: directions,
-      map: window.map,
-    })
+    if (this.checkRendererService()){
+      console.log('setting directions')
+      window.rendererService.setDirections(directions)
+      window.rendererService.setMap(window.map)
+    }
   };
 
   /*
@@ -169,6 +184,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
+    loadMaps: () => dispatch(mapLoadRequest()),
     dispatch,
   };
 }
