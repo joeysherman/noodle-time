@@ -21,6 +21,11 @@ export const selectAppState = () => createSelector(
   (substate) => substate.toJS()
 );
 
+export const selectLoading = () => createSelector(
+  selectApp(),
+  (substate) => substate.get('loading')
+);
+
 export const selectHasGeo = () => createSelector(
   selectApp(),
   (substate) => substate.get('hasGeo'),

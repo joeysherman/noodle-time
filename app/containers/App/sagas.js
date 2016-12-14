@@ -20,7 +20,6 @@ import {
 export function* appSaga() {
 
   while (yield take(USER_LOCATION_REQUEST)){
-    console.log('fetching user location...')
     const fetchUserTask = yield fork(fetchUserLocation);
 
     const action = yield take([USER_LOCATION_ERROR, USER_LOCATION_SUCCESS]);

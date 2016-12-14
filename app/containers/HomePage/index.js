@@ -28,6 +28,7 @@ import {
   noodleTime,
   autoCompleteRequest,
   autoCompleteItemSelected,
+  setStatusMessage,
 } from './actions';
 
 import { userLocationRequest } from '../App/actions';
@@ -39,23 +40,23 @@ import{
   selectNoodleTime,
 } from './selectors';
 
-import {
-  selectLocation
-} from '../App/selectors';
-
 
 class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   componentDidMount() {
-    console.log('Homepage did mount')
     this.props.fetchLocation();
   }
   
   componentWillReceiveProps(nextProps, nextContext) {
     console.log('Homepage wrp')
-    if (nextProps.noodleTime == true && this.props.noodleTime == false) {
+    if (nextProps.noodleTime == true && !this.props.noodleTime) {
       this.props.push('/search');
     }
+  }
+
+  componentWillUnmount() {
+    this.props.itsNoodleTime();
+    this.props.setStatus('Click to begin!');
   }
 
   shouldRenderAutoComplete = () => {
@@ -68,7 +69,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
 
     let main;
 
-    let { statusMessage } = this.props;
+    let statusMessage = this.props.loadingLocation ? 'Fetching Location...' : 'Click to begin!';
 
     if (this.shouldRenderAutoComplete()) {
       let { autoCompleteDataSource } = this.props;
@@ -121,6 +122,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     itsNoodleTime: () => dispatch(noodleTime()),
     fetchLocation: () => dispatch(userLocationRequest()),
+    setStatus: (status) => dispatch(setStatusMessage(status)),
     push: (path) => dispatch(push(path)),
     dispatch,
     }
