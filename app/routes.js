@@ -3,7 +3,6 @@
 // See http://blog.mxstbr.com/2016/01/react-apps-with-pages for more information
 // about the code splitting business
 import { getAsyncInjectors } from 'utils/asyncInjectors';
-import { selectUserLocation } from 'containers/HomePage/selectors';
 
 const errorLoading = (err) => {
   console.error('Dynamic page loading failed', err); // eslint-disable-line no-console
@@ -16,6 +15,21 @@ const loadModule = (cb) => (componentModule) => {
 export default function createRoutes(store) {
   // Create reusable async injectors using getAsyncInjectors factory
   const { injectReducer, injectSagas } = getAsyncInjectors(store); // eslint-disable-line no-unused-vars
+
+  const injectMap = (cb) => {
+    const importModules = Promise.all([
+      System.import('containers/Map/reducer'),
+      System.import('containers/Map/sagas'),
+    ]);
+
+    importModules.then(([reducer, sagas]) => {
+      injectReducer('map', reducer.default);
+      injectSagas(sagas.default);
+      cb();
+    });
+
+    importModules.catch(errorLoading);
+  };
 
   return [{
     path: 'search',
@@ -40,43 +54,25 @@ export default function createRoutes(store) {
       importModules.catch(errorLoading);
     },
     onChange: (prevState, nextState, replace, callback) => {
-      console.log('prevState')
-      console.log(prevState)
-      console.log('nextState')
-      console.log(nextState)
-
       let { query } = nextState.location;
 
       if (query && query.mode == 'map') {
-        const importModules = Promise.all([
-          System.import('containers/Map/reducer'),
-          System.import('containers/Map/sagas'),
-        ]);
-
-        importModules.then(([reducer, sagas]) => {
-          injectReducer('map', reducer.default);
-          injectSagas(sagas.default);
-          callback();
-        });
-
-        importModules.catch(errorLoading);
-      } else {
-        callback();
+        return injectMap(callback);
       }
-    },
-    /*    onEnter: (nextState, replace) => {
-     const { latitude, longitude } = selectUserLocation(store.getState());
 
-     if (longitude && latitude) {
-     console.log('yes location');
-     } else {
-     console.log('no location');
-     return replace({
-     pathname: '/',
-     state: 'No location',
-     });
-     }
-     },*/
+      callback();
+
+    },
+    onEnter: (nextState, replace, callback) => {
+      let { query } = nextState.location;
+
+      if (query && query.mode == 'map') {
+        return injectMap(callback);
+      }
+
+      callback();
+
+     },
   },
   {
       path: '*',

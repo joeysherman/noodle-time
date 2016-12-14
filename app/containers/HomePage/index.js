@@ -112,6 +112,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
 }
 
 const mapStateToProps = createStructuredSelector({
+  statusMessage: selectStatusMessage(),
   noodleTime: selectNoodleTime(),
   autoCompleteDataSource: selectAutoCompleteData(),
 });

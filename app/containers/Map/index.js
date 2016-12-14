@@ -9,8 +9,6 @@ import { connect } from 'react-redux';
 import styles from './styles.css';
 import { createStructuredSelector } from 'reselect';
 
-import CircularProgress from 'material-ui/CircularProgress';
-
 // State Selectors
 import {
   selectUserLocation,
@@ -27,14 +25,11 @@ import {
 export class Map extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   componentDidMount() {
-    console.log('Map mounted')
     this.loadMapsIfNeeded();
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    console.log('Map will rec. props');
     if (nextProps.loaded === true) {
-      console.log('nextprops mapsloaded is true')
       this.mountMap();
       this.setDirections();
     }
@@ -52,7 +47,6 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
   };
 
   mountMap = () => {
-    console.log('Mounting the google map')
      let { longitude, latitude } = this.props.userLocation;
      let userLocation = { lat: latitude, lng: longitude };
 
@@ -124,9 +118,8 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
 
   renderDirectionsOnMap = (directions) => {
     if (this.checkRendererService()){
-      console.log('setting directions')
-      window.rendererService.setDirections(directions)
-      window.rendererService.setMap(window.map)
+      window.rendererService.setDirections(directions);
+      window.rendererService.setMap(window.map);
     }
   };
 
