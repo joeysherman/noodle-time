@@ -7,6 +7,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styles from './styles.css';
+import { createStructuredSelector } from 'reselect';
 
 import CircularProgress from 'material-ui/CircularProgress';
 
@@ -162,11 +163,9 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    loaded: selectMapsLoaded(state),
-  }
-};
+const mapStateToProps = createStructuredSelector({
+    loaded: selectMapsLoaded(),
+});
 
 function mapDispatchToProps(dispatch) {
   return {

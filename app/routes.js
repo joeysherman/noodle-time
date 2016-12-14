@@ -39,7 +39,26 @@ export default function createRoutes(store) {
 
       importModules.catch(errorLoading);
     },
+    onChange: (prevState, nextState, replace, callback) => {
+      let { query } = nextState.location;
 
+      if (query && query.mode == 'map') {
+        const importModules = Promise.all([
+          System.import('containers/Map/reducer'),
+          System.import('containers/Map/sagas'),
+        ]);
+
+        importModules.then(([reducer, sagas]) => {
+          injectReducer('map', reducer.default);
+          injectSagas(sagas.default);
+          callback();
+        });
+
+        importModules.catch(errorLoading);
+      } else {
+        callback();
+      }
+    },
     /*    onEnter: (nextState, replace) => {
      const { latitude, longitude } = selectUserLocation(store.getState());
 
