@@ -43,9 +43,8 @@ import {
 export class PlacesPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   componentDidUpdate(prevProps, prevState, prevContext) {
-    if (!prevProps.userLocation.longitude && !prevProps.userLocation.latitude && this.locationValid()) {
+    if (!prevProps.userLocation.geometry && !prevProps.userLocation.geometry && this.locationValid()) {
       console.log('fetching places did update');
-
       this.fetchPlaces();
     }
   }
@@ -60,23 +59,27 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
   }
 
   fetchPlaces = () => {
-    let { latitude, longitude } = this.props.userLocation;
+    let { geometry: { location: { lat, lng }}} = this.props.userLocation;
 
     this.props.fetchPlaces({
-      latitude,
-      longitude,
+      latitude: lat,
+      longitude: lng,
     });
   };
 
   locationValid = () => {
-    let { longitude, latitude } = this.props.userLocation;
-    let lat = parseInt(latitude),
-        lng = parseInt(longitude);
+    let { geometry } = this.props.userLocation;
 
-    if (!(Number.isInteger(lat) && Number.isInteger(lng)))
+    if (!geometry) return false;
+    let { location: { lat, lng }} = geometry;
+
+    let latitude = parseInt(lat),
+        longitude = parseInt(lng);
+
+    if (!(Number.isInteger(latitude) && Number.isInteger(longitude)))
       return false;
 
-    return (lat < 90 && lat > -90 && lng < 180 && lng > -180);
+    return (latitude < 90 && latitude > -90 && longitude < 180 && longitude > -180);
   };
 
   // type :
@@ -112,7 +115,7 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
   renderMainContent = () => {
     let { index, places } = this.props;
 
-    if (places) {
+    if (places && this.locationValid()) {
       let { mode } = this.props.location.query;
       switch(mode) {
         case 'list':

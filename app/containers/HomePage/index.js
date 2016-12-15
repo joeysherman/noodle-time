@@ -22,6 +22,7 @@ import AutoComplete from 'material-ui/AutoComplete';
 
 // Self-made components
 import RamenButton from '../../components/RamenButton/ramenButton';
+import CryEmojiSvg from '../../assets/cry_emoji.svg';
 
 // Actions
 import {
@@ -48,7 +49,6 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
   }
   
   componentWillReceiveProps(nextProps, nextContext) {
-    console.log('Homepage wrp')
     if (nextProps.noodleTime == true && !this.props.noodleTime) {
       this.props.push('/search');
     }
@@ -75,9 +75,11 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
       let { autoCompleteDataSource } = this.props;
       main = (
         <Paper className={styles.autoCompleteWrapper}>
+          <img className={styles.cryEmojiImage} src={CryEmojiSvg}/>
+          <h3 className={styles.autoCompleteHeader}>Couldn't find your location... Where are you?</h3>
           <AutoComplete
             floatingLabelText='Search for your location..'
-            filter={AutoComplete.noFilter}
+            filter={AutoComplete.fuzzyFilter}
             dataSourceConfig={{ text: 'description', value: 'place_id',}}
             dataSource={autoCompleteDataSource || []}
             openOnFocus={true}

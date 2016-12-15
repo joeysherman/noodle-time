@@ -5,12 +5,18 @@
 
 import { take, actionChannel, put, fork, call, cancel } from 'redux-saga/effects';
 import { delay, buffers } from 'redux-saga';
+import { push } from 'react-router-redux';
 import request from '../../utils/request';
 
 import {
   AUTOCOMPLETE_REQUEST,
   AUTOCOMPLETE_ITEM_SELECTED,
+  NOODLE_TIME,
 } from './constants';
+
+import {
+  USER_LOCATION_SUCCESS,
+} from '../App/constants';
 
 import {
   autoCompleteSuccess,
@@ -37,8 +43,10 @@ export function* homePageSaga() {
      // put userlocationsuccess
      
      yield put(geocodeRequest({ place_id }));
-
-     // wait for user to select "GO"! then cancel task and forward
+     yield take(USER_LOCATION_SUCCESS);
+     yield put(push({
+       pathname: '/search',
+     }));
    }
  }
 }

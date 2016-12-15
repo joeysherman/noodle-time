@@ -47,8 +47,8 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
   };
 
   mountMap = () => {
-     let { longitude, latitude } = this.props.userLocation;
-     let userLocation = { lat: latitude, lng: longitude };
+     let { geometry } = this.props.userLocation;
+     let userLocation = geometry.location;
 
      if (window.google) {
        window.map = new window.google.maps.Map(document.getElementById('map'), {
@@ -99,8 +99,8 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
 
   getDirectionsRequest = () => {
     let origin = {
-      lat: this.props.userLocation.latitude,
-      lng: this.props.userLocation.longitude,
+      lat: this.props.userLocation.geometry.location.lat,
+      lng: this.props.userLocation.geometry.location.lng,
     };
     let destination = {
       lat: this.props.destination.location.coordinate.latitude,

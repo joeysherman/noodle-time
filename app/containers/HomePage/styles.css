@@ -63,7 +63,7 @@
 
 .autoCompleteWrapper {
   margin: auto;
-  padding: 0 15px;
+  padding: 20px;
   height: auto;
 }
 
@@ -92,4 +92,20 @@
   margin-left: 12px;
   display: flex;
   align-items: center;
+}
+
+.autoComplete {
+  background-color: #FF5722;
+}
+
+.cryEmojiImage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100px;
+
+}
+
+.autoCompleteHeader {
+  text-align: center;
 }

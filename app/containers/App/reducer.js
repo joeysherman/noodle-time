@@ -26,7 +26,6 @@ function appReducer(state = initialState, action) {
         .set('loading', true);
 
     case constants.USER_LOCATION_SUCCESS :
-      console.log(action.payload);
       return state
         .set('loading', false)
         .set('location', fromJS(action.payload));
