@@ -19,8 +19,6 @@ export class Footer extends React.Component { // eslint-disable-line react/prefe
 
     return (
       <Paper zDepth={1} className={styles.footer}>
-
-        <p className={styles.footerAbout}>Crafted in SD by <strong>Joey</strong></p>
         <span className={styles.poweredBy}>Powered by</span>
         <img className={styles.yelpImg} src={YelpImg}/>
       </Paper>

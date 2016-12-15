@@ -7,6 +7,7 @@
 }
 
 .ramenWrapper {
+
   margin: auto;
   display: flex;
   position: relative;
@@ -32,8 +33,9 @@
     width: 90%
   }
 
-  .autoCompleteWrapper  {
+  .autoCompleteWrapper {
     width: 90%;
+    margin-top: 5%;
   }
  }
 
@@ -62,9 +64,12 @@
 }
 
 .autoCompleteWrapper {
-  margin: auto;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+  top: 0;
   padding: 20px;
-  height: auto;
 }
 
 .leftDecrement {

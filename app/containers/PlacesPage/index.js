@@ -127,7 +127,6 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
         default :
           return (
             <div className={styles.placeCardWrapper}>
-              {this.renderNavButton(-1)}
               <PlaceCard
                 place={this.props.places.get(index).toJS()}
                 showMapClick={() => this.props.dispatch(push({
@@ -137,7 +136,6 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
                   },
                 }))}
               />
-              {this.renderNavButton(1)}
             </div>
           )
       }
