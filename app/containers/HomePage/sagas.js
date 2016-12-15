@@ -20,6 +20,7 @@ import {
 import {
   userLocationError,
   userLocationSuccess,
+  geocodeRequest,
 } from '../App/actions';
 
   let autoCompleteUrl   = '/api/autocomplete';
@@ -31,26 +32,13 @@ export function* homePageSaga() {
    const autocompleteTask = yield fork(throttleAutocomplete);
 
    while(true) {
-     const {payload} = yield take(AUTOCOMPLETE_ITEM_SELECTED);
+     const {payload: { place_id }} = yield take(AUTOCOMPLETE_ITEM_SELECTED);
      // find coords for location via reverse geo-code
      // put userlocationsuccess
-     const { data, error } = yield call(request, geocodeUrl + '?id=' + payload);
+     
+     yield put(geocodeRequest({ place_id }));
 
-     if (data) {
-       let { lat, lng } = data.json.results[0].geometry.location;
-       console.log(data);
-       let payload = {
-         timestamp: Date.now(),
-         coords: {
-           latitude: lat,
-           longitude: lng,
-         }
-       };
-       yield cancel(autocompleteTask);
-       yield put(userLocationSuccess(payload));
-     } else {
-       yield put(userLocationError(error));
-     }
+     // wait for user to select "GO"! then cancel task and forward
    }
  }
 }

@@ -29,7 +29,6 @@ function* fetchNoodlePlaces(location) {
     const { data, err } = yield call(request, url);
 
     if (data) {
-      yield call(delay, 1000);
       yield put(placesSuccess(data.businesses));
     } else {
       yield put(placesError(err));

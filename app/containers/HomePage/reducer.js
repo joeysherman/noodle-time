@@ -42,7 +42,7 @@ function homeReducer (state = initialState, action){
 let autcompleteInitialState = {
   loading: false,
   error: false,
-  predictions: [],
+  predictions: false,
 };
 
 function autocompleteReducer(state = fromJS(autcompleteInitialState), action) {
@@ -57,15 +57,11 @@ function autocompleteReducer(state = fromJS(autcompleteInitialState), action) {
       let predictions = [];
 
       if (action.payload.json.status == 'OK'){
-        predictions = action.payload.json.predictions.map((item) => {
-          return {
-            text: item.description,
-            value: item.place_id,
-          }
-        });
+        predictions = action.payload.json.predictions;
       }
       return state
         .set('predictions', predictions);
+
   }
 
   return state;

@@ -28,10 +28,37 @@ export function userLocationError(error) {
   }
 }
 
+export function userAddressSuccess(address) {
+  return {
+    type: constants.USER_ADDRESS_SUCCESS,
+    payload: address
+  }
+}
+
+export function userAddressRequest() {
+  return {
+    type: constants.USER_ADDRESS_REQUEST,
+  }
+}
+
+export function userAddressError(error) {
+  return {
+    type: constants.USER_ADDRESS_ERROR,
+    payload: error
+  }
+}
+
 export function userLocationSuccess(location) {
   return {
     type: constants.USER_LOCATION_SUCCESS,
     payload: location
+  }
+}
+
+export function geocodeRequest(request) {
+  return {
+    type: constants.GEOCODE_REQUEST,
+    payload: request,
   }
 }
 

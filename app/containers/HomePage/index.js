@@ -73,13 +73,13 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
 
     if (this.shouldRenderAutoComplete()) {
       let { autoCompleteDataSource } = this.props;
-      let autoCompleteText = autoCompleteDataSource.predictions ? autoCompleteDataSource.predictions.map((i) => i.text) : [];
       main = (
         <Paper className={styles.autoCompleteWrapper}>
           <AutoComplete
             floatingLabelText='Search for your location..'
             filter={AutoComplete.noFilter}
-            dataSource={autoCompleteText || []}
+            dataSourceConfig={{ text: 'description', value: 'place_id',}}
+            dataSource={autoCompleteDataSource || []}
             openOnFocus={true}
             fullWidth={true}
             onUpdateInput={(input) => {
@@ -89,8 +89,8 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
             onNewRequest={(text, index) => {
               // handle case when index is -1 - user hits enter
               if (index == -1) return;
-
-              this.props.dispatch(autoCompleteItemSelected(autoCompleteDataSource.predictions[index].value))
+              
+              this.props.dispatch(autoCompleteItemSelected(text));
             }}
           />
         </Paper> );

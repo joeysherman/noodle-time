@@ -50,12 +50,15 @@ export class App_Bar extends React.Component { // eslint-disable-line react/pref
 
   renderIconMenu = () => {
 
-    let { hasGeo, loading, address} = this.props;
+    let { hasGeo, address } = this.props;
+
     let icon = '',
         gpsText = '',
+        addressLoading = (address == 'LOADING'),
+        addressError = (address == 'ERROR'),
         locationText = 'Searching...';
 
-    if (!loading && address){
+    if (!addressLoading && !addressError && address){
       locationText = address;
     }
 
@@ -105,8 +108,6 @@ const mapStateToProps = createStructuredSelector(
 
   {
     hasGeo : selectHasGeo(),
-    loading: selectLoading(),
-    userLocation: selectLocation(),
     address: selectAddress(),
   });
 

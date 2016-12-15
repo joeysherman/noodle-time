@@ -14,12 +14,8 @@ import * as constants from './constants';
 const initialState = fromJS({
   hasGeo: false,
   loading: false,
-  location: {
-    latitude: null,
-    longitude: null,
-    timestamp: null,
-  },
-  address: null,
+  error: false,
+  location: {},
 });
 
 function appReducer(state = initialState, action) {
@@ -30,16 +26,10 @@ function appReducer(state = initialState, action) {
         .set('loading', true);
 
     case constants.USER_LOCATION_SUCCESS :
-      let { latitude, longitude } = action.payload.coords;
-      let { timestamp } = action.payload;
-
+      console.log(action.payload);
       return state
         .set('loading', false)
-        .set('location', fromJS({
-          timestamp,
-          latitude,
-          longitude,
-        }));
+        .set('location', fromJS(action.payload));
 
     case constants.USER_LOCATION_ERROR :
       let { code } = action.payload;
@@ -65,6 +55,19 @@ function appReducer(state = initialState, action) {
           error: true,
           message: message,
         }));
+
+    case constants.USER_ADDRESS_REQUEST :
+      return state
+        .set('address', 'LOADING');
+        
+
+    case constants.USER_ADDRESS_SUCCESS :
+      return state
+        .set('address', action.payload);
+
+    case constants.USER_ADDRESS_ERROR :
+      return state
+        .set('address', 'ERROR');
 
     case constants.USER_HAS_GEO :
       return state
