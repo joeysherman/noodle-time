@@ -17,7 +17,7 @@ import {
   selectLoading,
 } from '../App/selectors';
 
-import { userHasGeo } from '../App/actions';
+import { userHasGeo, userLocationRequest } from '../App/actions';
 
 import AppBar from 'material-ui/AppBar';
 import IconMenu from 'material-ui/IconMenu';
@@ -25,10 +25,9 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import Divider from 'material-ui/Divider';
 
-import MyLocation from 'material-ui/svg-icons/maps/my-location';
 import GpsOffIcon from 'material-ui/svg-icons/device/gps-off';
 import GpsFixedIcon from 'material-ui/svg-icons/device/gps-fixed';
-import GpsNotFixedIcon from 'material-ui/svg-icons/device/gps-not-fixed';
+import NearMeIcon from 'material-ui/svg-icons/maps/near-me';
 import HelpIcon from 'material-ui/svg-icons/action/help';
 import LocationOn from 'material-ui/svg-icons/communication/location-on';
 import LocationOff from 'material-ui/svg-icons/communication/location-off';
@@ -50,41 +49,42 @@ export class App_Bar extends React.Component { // eslint-disable-line react/pref
 
   renderIconMenu = () => {
 
-    let { hasGeo, address } = this.props;
+    let { hasGeo, loading, userLocation: { formatted_address } } = this.props;
 
-    let icon = '',
+    let gpsIcon = '',
         gpsText = '',
-        addressLoading = (address == 'LOADING'),
-        addressError = (address == 'ERROR'),
-        locationText = 'Searching...';
+        locationIcon = '',
+        locationText = '';
 
-    if (!addressLoading && !addressError && address){
-      locationText = address;
-    }
+    locationIcon = formatted_address ? <NearMeIcon /> : <NearMeIcon />;
+    locationText = (formatted_address && !loading) ? formatted_address : 'Searching...';
 
-    hasGeo ? icon = <LocationOn/> : icon = <LocationOff/>;
-    gpsText = hasGeo ? 'GPS on' : 'GPS unavailable';
+    gpsIcon = hasGeo ? <LocationOn/> : <LocationOff/>;
+    gpsText = hasGeo ? 'GPS available' : 'GPS unavailable';
 
 
 
     return (
       <IconMenu
         useLayerForClickAway={true}
-        iconButtonElement={<IconButton>{icon}</IconButton>}
+        iconButtonElement={<IconButton>{gpsIcon}</IconButton>}
         anchorOrigin={{horizontal: 'middle', vertical: 'bottom'}}
         targetOrigin={{horizontal: 'left', vertical: 'top'}}
         className={styles.menu}
       >
         <MenuItem
           primaryText={locationText}
-          leftIcon={icon}
+          leftIcon={locationIcon}
+          onTouchTap={() => { this.props.dispatch(userLocationRequest())}}
         />
         <MenuItem
           primaryText={gpsText}
           leftIcon={ hasGeo ? <GpsFixedIcon color="#4CAF50"/> : <GpsOffIcon/> }
         />
         <Divider/>
-        <MenuItem primaryText="Help" rightIcon={<HelpIcon/>}/>
+        <MenuItem
+          primaryText="Help"
+          leftIcon={<HelpIcon/>}/>
       </IconMenu>
     )
   };
@@ -108,7 +108,8 @@ const mapStateToProps = createStructuredSelector(
 
   {
     hasGeo : selectHasGeo(),
-    address: selectAddress(),
+    userLocation: selectLocation(),
+    loading: selectLoading(),
   });
 
 const mapDispatchToProps = (dispatch) => {

@@ -44,21 +44,24 @@ export function* appSaga() {
 }
 
 function* geocodeSaga() {
-  const action = yield take(GEOCODE_REQUEST);
-  let { coords, place_id } = action.payload;
 
-  let url = place_id ?
+  while(true) {
+    const action = yield take(GEOCODE_REQUEST);
+
+    let {coords, place_id} = action.payload;
+
+    let url = place_id ?
     geocodeUrl + '?id=' + place_id :
     geocodeUrl + '?lat=' + coords.latitude + '&lng=' + coords.longitude;
 
-  const { data, error } = yield call(request, url);
-  if (data) {
-    if (data.json.status == "OK"){
-      let location = data.json.results[0];
-      yield put(userLocationSuccess(location));
+    const {data, error} = yield call(request, url);
+    if (data) {
+      if (data.json.status == "OK") {
+        let location = data.json.results[0];
+        yield put(userLocationSuccess(location));
+      }
     }
   }
-  
 }
 
 export default [
