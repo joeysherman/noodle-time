@@ -14,6 +14,15 @@
   font-weight: 400;
   font-size: 16px;
   position: absolute;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+@media screen and (max-width: 425px) {
+  .footerAbout {
+    left: 12px;
+    font-size: 12px;
+  }
 }
 
 .yelpImg {
