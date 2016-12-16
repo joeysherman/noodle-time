@@ -7,26 +7,19 @@
 }
 
 .ramenWrapper {
-
   margin: auto;
   display: flex;
   position: relative;
-  flex-direction: column;
+  height: 64px;
   width: 20em;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  padding: 0.67em;
 }
 
 
 @media (max-width: 425px) {
   .ramenWrapper {
     width: 88%;
-  }
-
-  .ramenButton {
-    width: 110px;
-    top: -35px !important;
   }
 
   .ramen_paper {
@@ -46,16 +39,8 @@
   }
 }
 
-.ramenButton {
-  position: absolute;
-  left:0;
-  top: -45px;
-
-}
-
 .ramen_message {
   color: rgb(0, 188, 212);
-  align-self: flex-end;
 }
 
 .place_card_wrapper {

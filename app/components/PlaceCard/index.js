@@ -22,6 +22,8 @@ function PlaceCard(props) { // eslint-disable-line react/prefer-stateless-functi
 
   let { display_address } = props.place.location;
 
+  let buttongs = [];
+
   return (
 
       <Card className={styles.placeCardWrapper}>
@@ -47,8 +49,8 @@ function PlaceCard(props) { // eslint-disable-line react/prefer-stateless-functi
             icon={<Explore/>}
             backgroundColor=''
           />
-          <div className={styles.verticalSpacer}></div>
-          <FlatButton label={display_phone} icon={<Call/>} />
+          { display_phone ? <div className={styles.verticalSpacer}></div> : null}
+          { display_phone ? <FlatButton label={display_phone} icon={<Call/>} /> : null }
         </CardActions>
       </Card>
     );
