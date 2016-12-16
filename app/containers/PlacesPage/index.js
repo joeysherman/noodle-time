@@ -21,7 +21,7 @@ import { selectPlaces } from './selectors';
 import RaisedButton from 'material-ui/RaisedButton';
 import NavBefore from 'material-ui/svg-icons/image/navigate-before';
 import NavNext from 'material-ui/svg-icons/image/navigate-next';
-
+import Paper from 'material-ui/Paper';
 
 // Component imports
 import LoadingIcon from '../../components/LoadingIcon';
@@ -41,6 +41,11 @@ import {
 } from '../App/selectors';
 
 export class PlacesPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+
+  constructor(props) {
+    super(props);
+ /*   this.renderFilterBar = r*/
+  }
 
   componentDidUpdate(prevProps, prevState, prevContext) {
     if (!prevProps.userLocation.geometry && !prevProps.userLocation.geometry && this.locationValid()) {
@@ -96,19 +101,22 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
             backgroundColor="#a4c639"
             icon={<NavNext/>}
             onTouchTap={this.props.incIndex}
+            className={styles.incIndexButton}
+            disabled={index == size-1}
           />
         )
       }
     } else {
-      if (index > 0) {
-        return (
-          <RaisedButton
-            backgroundColor="#a4c639"
-            icon={<NavBefore/>}
-            onTouchTap={this.props.decIndex}
-          />
-        )
-      }
+      return (
+        <RaisedButton
+          backgroundColor="#a4c639"
+          icon={<NavBefore/>}
+          onTouchTap={this.props.decIndex}
+          className={styles.decIndexButton}
+          disabled={index == 0}
+        />
+      )
+
     }
   };
 
@@ -127,6 +135,7 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
         default :
           return (
             <div className={styles.placeCardWrapper}>
+              {this.renderNavButton(-1)}
               <PlaceCard
                 place={this.props.places.get(index).toJS()}
                 showMapClick={() => this.props.dispatch(push({
@@ -136,6 +145,7 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
                   },
                 }))}
               />
+              {this.renderNavButton(1)}
             </div>
           )
       }
@@ -146,11 +156,26 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
     }
   };
 
+  renderFilterBar = () => {
+    if (this.props.places && this.locationValid()) {
+      let { size } = this.props.places;
+
+      return (
+        <Paper className={styles.filterBar}>
+          <h3>Found <strong>{size}</strong> noodle places near you!</h3>
+        </Paper>
+      )
+    }
+    return null;
+  };
+
   render() {
     let mainContent = this.renderMainContent();
+    let filterBar = this.renderFilterBar();
 
     return (
       <div className={styles.placesPage}>
+        {filterBar}
         {mainContent}
       </div>
     );

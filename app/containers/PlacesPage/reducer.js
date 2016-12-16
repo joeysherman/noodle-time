@@ -18,6 +18,7 @@ function placesPageReducer(state = initialState, action) {
   switch (action.type) {
 
     case constants.PLACES_SUCCESS :
+
       return state
         .withMutations((map) => {
           map
