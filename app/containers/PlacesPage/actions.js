@@ -27,14 +27,3 @@ export function placesRequest(location) {
   }
 }
 
-export function decrementIndex() {
-  return {
-    type: constants.DECREMENT_INDEX,
-  }
-}
-
-export function incrementIndex() {
-  return {
-    type: constants.INCREMENT_INDEX,
-  }
-}

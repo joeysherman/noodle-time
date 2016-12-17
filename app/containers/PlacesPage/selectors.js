@@ -33,10 +33,12 @@ const selectPlaceByIndex = (index) => createSelector(
   }
 );
 
-const selectIndex = () => createSelector(
-  selectPlacesPageDomain(),
-  (subState) => subState.get('index'),
-);
+const selectIndex = () => (state, props) => {
+    if (props && props.location.query && props.location.query.i) {
+      return props.location.query.i;
+    }
+    return 0;
+  };
 
 
 export default selectPlacesPage;

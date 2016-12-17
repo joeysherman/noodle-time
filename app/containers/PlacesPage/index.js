@@ -50,6 +50,7 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
   }
 
   componentDidUpdate(prevProps, prevState, prevContext) {
+    console.log('Places page did update')
     if (!prevProps.userLocation.geometry && !prevProps.userLocation.geometry && this.locationValid()) {
       console.log('fetching places did update');
       this.fetchPlaces();
@@ -57,6 +58,7 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
   }
 
   componentDidMount() {
+    console.log('Places page mounted')
     if (!this.locationValid()) {
       return this.props.fetchLocation();
     } else {
@@ -131,7 +133,10 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
       switch(mode) {
         case 'list':
           return (
-            <List places={this.props.places.toJS()}/>
+            <List
+              places={this.props.places.toJS()}
+              onTouchTap={this.props.goTo}
+            />
           );
         case 'map':
           return <Map userLocation={this.props.userLocation} destination={this.props.places.get(index).toJS()}></Map>
@@ -204,21 +209,28 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-    userLocation: selectLocation(),
-    index: selectIndex(),
-    places: selectPlaces(),
-});
+const makeMapStateToProps = () => {
+
+  const location = selectLocation(),
+        index = selectIndex(),
+        places = selectPlaces();
+  const mapStateToProps = (state, props) => {
+    return {
+      userLocation: location(state),
+      index: index(state, props),
+      places: places(state),
+    }
+  }
+  return mapStateToProps;
+};
 
 function mapDispatchToProps(dispatch, ownProps) {
   return {
     fetchLocation: () => dispatch(userLocationRequest()),
     fetchPlaces: (location) => dispatch(placesRequest(location)),
     goTo: (address) => ()=> dispatch(push(address)),
-    incIndex: () => dispatch(incrementIndex()),
-    decIndex: () => dispatch(decrementIndex()),
     dispatch,
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlacesPage);
+export default connect(makeMapStateToProps, mapDispatchToProps)(PlacesPage);
