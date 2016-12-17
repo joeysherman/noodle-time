@@ -96,27 +96,43 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
   // inc 1
   // dex -1
   renderNavButton = (type) => {
-    let { index } = this.props;
+    var { index } = this.props;
     let { size } = this.props.places;
 
     if (type === 1) {
       if (index !== size-1) {
+        var incIndex = (index+1);
+        console.log('next i')
+        console.log(incIndex)
         return (
           <RaisedButton
             backgroundColor="#a4c639"
             icon={<NavNext/>}
-            onTouchTap={this.props.incIndex}
+            onTouchTap={this.props.goTo({
+              pathname: '/search',
+              query: {
+                i: incIndex,
+              }
+            })}
             className={styles.incIndexButton}
             disabled={index == size-1}
           />
         )
       }
     } else {
+      var decIndex = (index-1);
+      console.log('next i')
+      console.log(decIndex)
       return (
         <RaisedButton
           backgroundColor="#a4c639"
           icon={<NavBefore/>}
-          onTouchTap={this.props.decIndex}
+          onTouchTap={this.props.goTo({
+            pathname: '/search',
+            query: {
+              i: decIndex,
+            }
+          })}
           className={styles.decIndexButton}
           disabled={index == 0}
         />
@@ -146,7 +162,7 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
               {this.renderNavButton(-1)}
               <PlaceCard
                 place={this.props.places.get(index).toJS()}
-                showMapClick={() => this.props.dispatch(push({
+                showMapClick={this.props.goTo(push({
                   pathname: '/search',
                   query: {
                     mode: 'map'
