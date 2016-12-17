@@ -22,6 +22,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import NavBefore from 'material-ui/svg-icons/image/navigate-before';
 import NavNext from 'material-ui/svg-icons/image/navigate-next';
 import Paper from 'material-ui/Paper';
+import IconButton from 'material-ui/IconButton';
+import ViewListIcon from 'material-ui/svg-icons/action/view-list';
+import MapIcon from 'material-ui/svg-icons/maps/map';
 
 // Component imports
 import LoadingIcon from '../../components/LoadingIcon';
@@ -44,7 +47,6 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
 
   constructor(props) {
     super(props);
- /*   this.renderFilterBar = r*/
   }
 
   componentDidUpdate(prevProps, prevState, prevContext) {
@@ -56,12 +58,13 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
 
   componentDidMount() {
     if (!this.locationValid()) {
-      this.props.fetchLocation();
-    } else if (!this.props.places) {
-      console.log('No places!')
+      return this.props.fetchLocation();
+    } else {
       this.fetchPlaces();
     }
   }
+
+
 
   fetchPlaces = () => {
     let { geometry: { location: { lat, lng }}} = this.props.userLocation;
@@ -162,7 +165,26 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
 
       return (
         <Paper className={styles.filterBar}>
-          <h3>Found <strong>{size}</strong> noodle places near you!</h3>
+          <IconButton
+            touch={true}
+            onTouchTap={this.props.goTo({
+            pathname: '/search',
+            query: {
+              mode: 'list'
+            }
+          })}>
+            <ViewListIcon/>
+          </IconButton>
+          <p>Found <strong>{size}</strong> noodle places near you!</p>
+          <IconButton
+            onTouchTap={this.props.goTo({
+            pathname: '/search',
+            query: {
+            mode: 'map'
+            }
+            })}>
+            <MapIcon/>
+          </IconButton>
         </Paper>
       )
     }

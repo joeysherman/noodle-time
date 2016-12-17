@@ -69,7 +69,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
 
     let main;
 
-    let statusMessage = this.props.loadingLocation ? 'Fetching Location...' : 'Click to begin!';
+    let { statusMessage } = this.props;
 
     if (this.shouldRenderAutoComplete()) {
       let { autoCompleteDataSource } = this.props;
