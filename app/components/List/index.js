@@ -43,7 +43,7 @@ function wrapState(ComposedComponent) {
 
 SelectableList = wrapState(SelectableList);
 
-const renderListItems = (props, index) => {
+const renderListItem = (props, index) => {
   let style = index > 1 ? { marginTop: '10px' } : {};
   return (
     <ListItem
@@ -54,18 +54,22 @@ const renderListItems = (props, index) => {
       rightAvatar={<img src={props.rating_img_url}/>}
       className={styles.listItem}
       style={style}
+      onTouchTap={props.onTouchTap}
     />
   );
 };
 
-const ListExampleSelectable = (props) => (
-  <Paper className={styles.listWrapper}>
-    <SelectableList defaultValue={1} className={styles.list}>
-      {props.places.map((item, i) => {
-        return renderListItems(item, i+1);
-      })}
-    </SelectableList>
-  </Paper>
-);
+const ListExampleSelectable = (props) => {
+  let { onTouchTap } = props;
+  return (
+    <Paper className={styles.listWrapper}>
+      <SelectableList defaultValue={1} className={styles.list}>
+        {props.places.map((item, i) => {
+          return renderListItem(item, i+1, onTouchTap);
+        })}
+      </SelectableList>
+    </Paper>
+  );
+}
 
 export default ListExampleSelectable;

@@ -30,6 +30,7 @@
 .filterBar {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   width: 80%;
   margin-bottom: 15px;
   margin-top: 25px;
@@ -58,6 +59,7 @@
   margin: auto;
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 @media screen and (max-width: 425px) {
