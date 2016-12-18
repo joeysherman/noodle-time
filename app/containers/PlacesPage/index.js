@@ -15,6 +15,11 @@ import { placesRequest } from './actions';
 import PlaceCard from '../../components/PlaceCard';
 import List from '../../components/List';
 import { userLocationRequest } from '../App/actions';
+import {
+  incPlacesIndex,
+  decPlacesIndex,
+  setPlacesIndex
+} from './actions';
 import { selectPlaces } from './selectors';
 
 // Material-ui imports
@@ -92,60 +97,12 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
     return (latitude < 90 && latitude > -90 && longitude < 180 && longitude > -180);
   };
 
-  // type :
-  // inc 1
-  // dex -1
-  renderNavButton = (type) => {
-    var { index } = this.props;
-    let { size } = this.props.places;
-
-    if (type === 1) {
-      if (index !== size-1) {
-        var incIndex = (index+1);
-        console.log('next i')
-        console.log(incIndex)
-        return (
-          <RaisedButton
-            backgroundColor="#a4c639"
-            icon={<NavNext/>}
-            onTouchTap={this.props.goTo({
-              pathname: '/search',
-              query: {
-                i: incIndex,
-              }
-            })}
-            className={styles.incIndexButton}
-            disabled={index == size-1}
-          />
-        )
-      }
-    } else {
-      var decIndex = (index-1);
-      console.log('next i')
-      console.log(decIndex)
-      return (
-        <RaisedButton
-          backgroundColor="#a4c639"
-          icon={<NavBefore/>}
-          onTouchTap={this.props.goTo({
-            pathname: '/search',
-            query: {
-              i: decIndex,
-            }
-          })}
-          className={styles.decIndexButton}
-          disabled={index == 0}
-        />
-      )
-
-    }
-  };
-
   renderMainContent = () => {
     let { index, places } = this.props;
 
     if (places && this.locationValid()) {
       let { mode } = this.props.location.query;
+      let { size } = places;
       switch(mode) {
         case 'list':
           return (
@@ -159,7 +116,13 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
         default :
           return (
             <div className={styles.placeCardWrapper}>
-              {this.renderNavButton(-1)}
+              <RaisedButton
+                backgroundColor="#a4c639"
+                icon={<NavBefore/>}
+                onTouchTap={this.props.decIndex}
+                className={styles.decIndexButton}
+                disabled={index == 0}
+              />
               <PlaceCard
                 place={this.props.places.get(index).toJS()}
                 showMapClick={this.props.goTo(push({
@@ -169,7 +132,13 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
                   },
                 }))}
               />
-              {this.renderNavButton(1)}
+              <RaisedButton
+                backgroundColor="#a4c639"
+                icon={<NavNext/>}
+                onTouchTap={this.props.incIndex}
+                className={styles.incIndexButton}
+                disabled={index == size-1}
+              />
             </div>
           )
       }
@@ -233,7 +202,7 @@ const makeMapStateToProps = () => {
   const mapStateToProps = (state, props) => {
     return {
       userLocation: location(state),
-      index: index(state, props),
+      index: index(state),
       places: places(state),
     }
   }
@@ -244,6 +213,8 @@ function mapDispatchToProps(dispatch, ownProps) {
   return {
     fetchLocation: () => dispatch(userLocationRequest()),
     fetchPlaces: (location) => dispatch(placesRequest(location)),
+    incIndex: () => dispatch(incPlacesIndex()),
+    decIndex: () => dispatch(decPlacesIndex()),
     goTo: (address) => ()=> dispatch(push(address)),
     dispatch,
   };

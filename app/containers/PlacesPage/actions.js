@@ -27,3 +27,21 @@ export function placesRequest(location) {
   }
 }
 
+export function incPlacesIndex() {
+  return {
+    type: constants.INC_SELECTED_INDEX,
+  }
+}
+
+export function decPlacesIndex() {
+  return {
+    type: constants.DEC_SELECTED_INDEX,
+  }
+}
+
+export function setPlacesIndex(index) {
+  return {
+    type: constants.SET_SELECTED_INDEX,
+    payload: index,
+  }
+}
