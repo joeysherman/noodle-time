@@ -126,12 +126,12 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
               />
               <PlaceCard
                 place={this.props.places.get(index).toJS()}
-                showMapClick={this.props.goTo(push({
+                showMapClick={this.props.goTo({
                   pathname: '/search',
                   query: {
                     mode: 'map'
                   },
-                }))}
+                })}
               />
               <RaisedButton
                 backgroundColor="#a4c639"
