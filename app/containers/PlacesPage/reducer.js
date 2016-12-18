@@ -8,6 +8,7 @@ import { fromJS } from 'immutable';
 import * as constants from './constants';
 
 const initialState = fromJS({
+  index: 0,
   places: null,
   loading: false,
   error: false,
@@ -44,6 +45,18 @@ function placesPageReducer(state = initialState, action) {
             .set('error', null);
 
         });
+
+    case constants.INC_SELECTED_INDEX :
+      return state
+        .update('index', (i) => i+1);
+
+    case constants.DEC_SELECTED_INDEX :
+      return state
+        .update('index', (i) => i-1);
+
+    case constants.SET_SELECTED_INDEX :
+      return state
+        .set('index', action.payload);
     
     default:
       return state;
