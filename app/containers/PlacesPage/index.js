@@ -24,6 +24,7 @@ import { selectPlaces } from './selectors';
 
 // Material-ui imports
 import RaisedButton from 'material-ui/RaisedButton';
+import Badge from 'material-ui/Badge';
 import NavBefore from 'material-ui/svg-icons/image/navigate-before';
 import NavNext from 'material-ui/svg-icons/image/navigate-next';
 import Paper from 'material-ui/Paper';
@@ -108,7 +109,7 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
           return (
             <List
               places={this.props.places.toJS()}
-              onTouchTap={this.props.goTo}
+              onTouchTap={this.props.setIndex}
             />
           );
         case 'map':
@@ -155,16 +156,22 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
 
       return (
         <Paper className={styles.filterBar}>
-          <IconButton
+          <Badge
+            badgeContent={size}
+            secondary={true}
+            badgeStyle={{top: 12, right: 12}}
+          >
+            <IconButton
             touch={true}
             onTouchTap={this.props.goTo({
-            pathname: '/search',
-            query: {
-              mode: 'list'
-            }
-          })}>
+              pathname: '/search',
+              query: {
+                mode: 'list'
+              }
+            })}>
             <ViewListIcon/>
           </IconButton>
+          </Badge>
           <p>Found <strong>{size}</strong> noodle places near you!</p>
           <IconButton
             onTouchTap={this.props.goTo({
@@ -215,6 +222,7 @@ function mapDispatchToProps(dispatch, ownProps) {
     fetchPlaces: (location) => dispatch(placesRequest(location)),
     incIndex: () => dispatch(incPlacesIndex()),
     decIndex: () => dispatch(decPlacesIndex()),
+    setIndex: (index) => dispatch(setPlacesIndex(index)),
     goTo: (address) => ()=> dispatch(push(address)),
     dispatch,
   };
