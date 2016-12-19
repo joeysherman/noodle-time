@@ -1,8 +1,8 @@
 .mapWrapper { /* stylelint-disable */
   display: flex;
-  flex: 1;
+  flex-grow: 1;
+  height: 100%;
   width: 95%;
-  
 }
 
 .map {
