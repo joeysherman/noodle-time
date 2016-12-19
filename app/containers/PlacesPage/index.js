@@ -159,7 +159,7 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
           <Badge
             badgeContent={size}
             secondary={true}
-            badgeStyle={{top: 12, right: 12}}
+            badgeStyle={{top: 15, right: 15}}
           >
             <IconButton
             touch={true}
