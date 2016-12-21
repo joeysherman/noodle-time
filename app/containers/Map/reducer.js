@@ -12,6 +12,7 @@ import {
 
 const initialState = fromJS({
   loaded: false,
+  viewIndex: -1,
 });
 
 function mapReducer(state = initialState, action) {

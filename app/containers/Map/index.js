@@ -11,11 +11,17 @@ import { createStructuredSelector } from 'reselect';
 
 // State Selectors
 import {
-  selectUserLocation,
-} from '../HomePage/selectors';
+  selectLocation,
+} from '../App/selectors';
 
 import {
-  selectMapsLoaded
+  selectPlaces,
+  selectPlaceByIndex,
+} from '../PlacesPage/selectors';
+
+import {
+  selectMapsLoaded,
+  selectViewIndex,
 } from './selectors';
 
 import {
@@ -29,9 +35,9 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    if (nextProps.loaded === true) {
+    if (!this.props.loaded && nextProps.loaded === true) {
+      console.log('mount map will rec props')
       this.mountMap();
-      this.setDirections();
     }
   };
 
@@ -40,7 +46,6 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
 
     if (loaded && window.google){
       this.mountMap();
-      this.setDirections();
     } else {
       this.props.loadMaps();
     }
@@ -56,6 +61,16 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
        zoom: 15,
        });
      }
+  };
+
+  placeAllPlacesOnMap = () => {
+    
+  };
+
+  extendMapBounds = (mapBounds, point) => {
+
+    return mapBounds.extend(point);
+
   };
 
   checkDirectionsService = () => {
@@ -151,7 +166,7 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
   };
 
 
-  createAndSetMarker(location) {
+  createAndSetMarker = (location) => {
     if (!window.mapMarkers){
       window.mapMarkers = [];
     }
@@ -160,7 +175,7 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
       position: location,
     });
     window.mapMarkers.push(marker);
-  }
+  };
 
   render() {
     return (
@@ -171,9 +186,20 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-    loaded: selectMapsLoaded(),
-});
+const makeMapStateToProps = () => {
+  return (state, props) => {
+    let viewIndex = selectViewIndex(),
+        loaded = selectMapsLoaded(),
+        userLocation = selectLocation(),
+        places = selectPlaces();
+    return {
+      loaded: loaded(state),
+      userLocation: userLocation(state),
+      selectViewIndex: viewIndex(state),
+      places: places(state),
+    };
+  }
+};
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -182,4 +208,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Map);
+export default connect(makeMapStateToProps(), mapDispatchToProps)(Map);
