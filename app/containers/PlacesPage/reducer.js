@@ -9,7 +9,7 @@ import * as constants from './constants';
 
 const initialState = fromJS({
   index: 0,
-  places: null,
+  places: [],
   loading: false,
   error: false,
 });

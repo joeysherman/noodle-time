@@ -14,6 +14,13 @@ const selectMapsLoaded = () => createSelector(
   (map) => map.get('loaded'),
 );
 
+
+const selectViewIndex = () => createSelector(
+  selectMapDomain(),
+  (map) => map.get('viewIndex'),
+);
+
+
 /**
  * Default selector used by Map
  */
@@ -25,6 +32,7 @@ const selectMap = () => createSelector(
 
 export default selectMap;
 export {
+  selectViewIndex,
   selectMapDomain,
   selectMapsLoaded,
 };

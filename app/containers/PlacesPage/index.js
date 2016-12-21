@@ -101,19 +101,19 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
   renderMainContent = () => {
     let { index, places } = this.props;
 
-    if (places && this.locationValid()) {
+    if (places.length && this.locationValid()) {
       let { mode } = this.props.location.query;
-      let { size } = places;
+      let size = places.length;
       switch(mode) {
         case 'list':
           return (
             <List
-              places={this.props.places.toJS()}
+              places={this.props.places}
               onTouchTap={this.props.setIndex}
             />
           );
         case 'map':
-          return <Map userLocation={this.props.userLocation} destination={this.props.places.get(index).toJS()}></Map>
+          return <Map/>;
         default :
           return (
             <div className={styles.placeCardWrapper}>
@@ -135,7 +135,7 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
               </div>
               
               <PlaceCard
-                place={this.props.places.get(index).toJS()}
+                place={this.props.places[index]}
                 showMapClick={this.props.goTo({
                   pathname: '/search',
                   query: {
@@ -155,7 +155,7 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
 
   renderFilterBar = () => {
     if (this.props.places && this.locationValid()) {
-      let { size } = this.props.places;
+      let size = this.props.places.length;
 
       return (
         <Paper className={styles.filterBar}>

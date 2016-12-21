@@ -21,7 +21,7 @@ const selectPlacesPage = () => createSelector(
 
 const selectPlaces = () => createSelector(
   selectPlacesPageDomain(),
-  (substate) => substate.get('places'),
+  (substate) => substate.get('places').toJS(),
 );
 
 const selectPlaceByIndex = (index) => createSelector(
