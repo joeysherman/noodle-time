@@ -117,13 +117,23 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
         default :
           return (
             <div className={styles.placeCardWrapper}>
-              <RaisedButton
-                backgroundColor="#a4c639"
-                icon={<NavBefore/>}
-                onTouchTap={this.props.decIndex}
-                className={styles.decIndexButton}
-                disabled={index == 0}
-              />
+              <div className={styles.navButtonsWrapper}>
+                <RaisedButton
+                  backgroundColor="#a4c639"
+                  icon={<NavBefore/>}
+                  onTouchTap={this.props.decIndex}
+                  className={styles.decIndexButton}
+                  disabled={index == 0}
+                />
+                <RaisedButton
+                  backgroundColor="#a4c639"
+                  icon={<NavNext/>}
+                  onTouchTap={this.props.incIndex}
+                  className={styles.incIndexButton}
+                  disabled={index == size-1}
+                />
+              </div>
+              
               <PlaceCard
                 place={this.props.places.get(index).toJS()}
                 showMapClick={this.props.goTo({
@@ -132,13 +142,6 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
                     mode: 'map'
                   },
                 })}
-              />
-              <RaisedButton
-                backgroundColor="#a4c639"
-                icon={<NavNext/>}
-                onTouchTap={this.props.incIndex}
-                className={styles.incIndexButton}
-                disabled={index == size-1}
               />
             </div>
           )

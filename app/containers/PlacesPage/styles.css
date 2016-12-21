@@ -36,6 +36,15 @@
   margin-top: 25px;
 }
 
+.navButtonsWrapper {
+  display: flex;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  justify-content: space-between;
+
+}
+
 .buttonReset {
   background-color: transparent !important;
   box-shadow: none !important;
@@ -59,22 +68,13 @@
   margin: auto;
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 @media screen and (max-width: 425px) {
-  .placeCardWrapper {
-    flex-direction: column-reverse;
-  }
 
-  .incIndexButton {
-    order: 1;
-
-  }
-
-  .decIndexButton {
-    order: 2;
-  }
 }
 
 .actionButton {
