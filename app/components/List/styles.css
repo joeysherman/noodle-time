@@ -6,6 +6,21 @@
   padding: 0 !important;
 }
 
+.list::-webkit-scrollbar {
+  width: 12px;
+}
+
+.list::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px orange;
+  border-radius: 10px;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: orange;
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,1);
+}
+
 @media (max-width: 767px) {
   .list {
     width: 90%;
