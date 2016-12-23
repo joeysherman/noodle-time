@@ -38,6 +38,7 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
     if (!this.props.loaded && nextProps.loaded === true) {
       console.log('mount map will rec props')
       this.mountMap();
+      this.placeAllPlacesOnMap();
     }
   };
 
@@ -63,14 +64,29 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
      }
   };
 
-  placeAllPlacesOnMap = () => {
-    
+  getMapBounds = () => {
+    return window.map.getMapBounds();
   };
 
-  extendMapBounds = (mapBounds, point) => {
+  getPlacesCoords = () => {
+    return this.props.places.map((item) => item.location.coordinate);
+  };
 
-    return mapBounds.extend(point);
+  placeAllPlacesOnMap = () => {
+    let { places } = this.props;
+    console.log('inside placeAll')
+    console.log(places.length)
+    if (places.length){
+      let lat = '',
+          lng = '';
 
+      places.map((item) => {
+        this.createAndSetMarker({
+          lat: item.location.coordinate.latitude,
+          lng: item.location.coordinate.longitude,
+        });
+      });
+    }
   };
 
   checkDirectionsService = () => {
