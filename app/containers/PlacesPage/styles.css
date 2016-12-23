@@ -67,14 +67,20 @@
 .placeCardWrapper {
   margin: auto;
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: center;
   position: relative;
 }
 
+.loadingIcon {
+  color: azure;
+}
+
 @media screen and (max-width: 425px) {
 
+  .placeCardWrapper {
+    flex-direction: column;
+  }
 }
 
 .actionButton {

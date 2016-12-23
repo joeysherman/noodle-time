@@ -32,7 +32,7 @@ function placesPageReducer(state = initialState, action) {
         .withMutations((map) => {
           map
             .set('loading', false)
-            .set('places', null)
+            .set('places', fromJS([]))
             .set('error', action.payload);
 
         });
@@ -41,7 +41,7 @@ function placesPageReducer(state = initialState, action) {
         .withMutations((map) => {
           map
             .set('loading', true)
-            .set('places', null)
+            .set('places', fromJS([]))
             .set('error', null);
 
         });
