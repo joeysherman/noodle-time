@@ -54,7 +54,7 @@ const renderListItem = (props, index, onTouchTap) => {
       rightAvatar={<img src={props.rating_img_url}/>}
       className={styles.listItem}
       style={style}
-      onTouchTap={onTouchTap}
+      onTouchTap={() => {onTouchTap(index-1)}}
     />
   );
 };
@@ -65,7 +65,7 @@ const ListExampleSelectable = (props) => {
     <Paper className={styles.listWrapper}>
       <SelectableList defaultValue={1} className={styles.list}>
         {props.places.map((item, i) => {
-          return renderListItem(item, i+1, onTouchTap.bind(null, i));
+          return renderListItem(item, i+1, onTouchTap);
         })}
       </SelectableList>
     </Paper>

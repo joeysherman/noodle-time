@@ -98,6 +98,11 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
     return (latitude < 90 && latitude > -90 && longitude < 180 && longitude > -180);
   };
 
+  handleListItemClick = (index) => {
+    this.props.setIndex(index);
+    this.props.goTo('/search')();
+  };
+
   renderMainContent = () => {
     let { index, places } = this.props;
 
@@ -109,7 +114,7 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
           return (
             <List
               places={this.props.places}
-              onTouchTap={this.props.setIndex}
+              onTouchTap={(index) => { this.handleListItemClick(index) }}
             />
           );
         case 'map':
@@ -148,7 +153,7 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
       }
     } else {
       return (
-        <LoadingIcon status="Loading..."/>
+        <LoadingIcon className={styles.loadingIcon} status="Searching..."/>
       )
     }
   };
