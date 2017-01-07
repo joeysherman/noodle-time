@@ -36,8 +36,8 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
 
   componentWillReceiveProps(nextProps, nextContext) {
     if (!this.props.loaded && nextProps.loaded === true) {
-      console.log('mount map will rec props')
       this.mountMap();
+      this.placeUserLocationOnMap();
       this.placeAllPlacesOnMap();
     }
   };
@@ -72,10 +72,21 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
     return this.props.places.map((item) => item.location.coordinate);
   };
 
+  placeUserLocationOnMap = () => {
+    let { geometry } = this.props.userLocation;
+    let userLocation = geometry.location;
+
+    let marker = new window.google.maps.Marker({
+      map: window.map,
+      position: userLocation,
+      label: 'Your location',
+      fillColor: 'blue',
+    });
+  };
+
   placeAllPlacesOnMap = () => {
     let { places } = this.props;
-    console.log('inside placeAll')
-    console.log(places.length)
+
     if (places.length){
       let lat = '',
           lng = '';
