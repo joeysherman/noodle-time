@@ -38,6 +38,9 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
     if (!this.props.loaded && nextProps.loaded === true) {
       this.mountMap();
       this.placeUserLocationOnMap();
+      this.listener = window.map.addListener('tilesloaded', () => {
+        this.extendMapBounds();
+      });
       this.placeAllPlacesOnMap();
     }
   };
@@ -65,11 +68,31 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
   };
 
   getMapBounds = () => {
-    return window.map.getMapBounds();
+    return window.map.getBounds();
   };
 
   getPlacesCoords = () => {
-    return this.props.places.map((item) => item.location.coordinate);
+    return this.props.places.map((item) => {
+
+      return {
+        lat: item.location.coordinate.latitude,
+        lng: item.location.coordinate.longitude,
+      };
+    });
+  };
+
+  extendMapBounds = () => {
+    let bounds = this.getMapBounds();
+    let placesCoords = this.getPlacesCoords();
+
+    placesCoords.forEach((item) => {
+      console.log(item);
+      bounds = bounds.extend(item);
+    });
+
+    window.map.fitBounds(bounds);
+    this.listener.remove();
+
   };
 
   placeUserLocationOnMap = () => {
@@ -80,7 +103,6 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
       map: window.map,
       position: userLocation,
       label: 'Your location',
-      fillColor: 'blue',
     });
   };
 
@@ -88,8 +110,6 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
     let { places } = this.props;
 
     if (places.length){
-      let lat = '',
-          lng = '';
 
       places.map((item) => {
         this.createAndSetMarker({
