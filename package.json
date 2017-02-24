@@ -8,7 +8,7 @@
   },
   "engines": {
     "npm": ">=3",
-    "node": "5.11.1"
+    "node": "6.10.0"
   },
   "author": "Max Stoiber",
   "license": "MIT",
@@ -20,7 +20,7 @@
     "npmcheckversion": "node ./internals/scripts/npmcheckversion.js",
     "preinstall": "npm run npmcheckversion",
     "build": "cross-env NODE_ENV=production webpack --config internals/webpack/webpack.prod.babel.js --color -p",
-    "build:clean": "npm run test:clean && rimraf ./build",
+    "build:clean": "rimraf ./build",
     "build:dll": "node ./internals/scripts/dependencies.js",
     "start": "cross-env NODE_ENV=development node server",
     "start:tunnel": "cross-env NODE_ENV=development ENABLE_TUNNEL=true node server",
