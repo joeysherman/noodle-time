@@ -72,6 +72,10 @@
   position: relative;
 }
 
+.loadingIconWrapper {
+
+}
+
 .loadingIcon {
   color: azure;
 }
