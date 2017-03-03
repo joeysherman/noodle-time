@@ -44,7 +44,7 @@ function wrapState(ComposedComponent) {
 SelectableList = wrapState(SelectableList);
 
 const renderListItem = (props, index, onTouchTap) => {
-  let style = index > 1 ? { marginTop: '10px' } : {};
+  let style = index > 1 ? { marginTop: '10px', padding: '0px 12px' } : { padding: '0px 12px' };
   return (
     <ListItem
       key={index}
