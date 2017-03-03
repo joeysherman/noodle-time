@@ -9,6 +9,10 @@ import { connect } from 'react-redux';
 import styles from './styles.css';
 import { createStructuredSelector } from 'reselect';
 
+import Card from '../../Components/PlaceCard';
+import Dialog from 'material-ui/Dialog';
+import Chip from 'material-ui/Chip'
+
 // State Selectors
 import {
   selectLocation,
@@ -29,6 +33,15 @@ import {
 } from './actions';
 
 export class Map extends React.Component { // eslint-disable-line react/prefer-stateless-function
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      dialogOpen: false,
+      detailIndex: 0,
+    }
+  }
 
   componentDidMount() {
     this.loadMapsIfNeeded();
@@ -106,16 +119,31 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
     });
   };
 
+  attachListenerToMarker = (marker, index) => {
+
+    marker.addListener('click', () => {
+      console.log('You clicked: ' + index)
+      this.setState({
+        dialogOpen: true,
+        detailIndex: index,
+      });
+    });
+  };
+
   placeAllPlacesOnMap = () => {
     let { places } = this.props;
 
     if (places.length){
+      var holder;
 
-      places.map((item) => {
-        this.createAndSetMarker({
+      places.map((item, i) => {
+        holder = this.createAndSetMarker({
           lat: item.location.coordinate.latitude,
           lng: item.location.coordinate.longitude,
         });
+
+        this.attachListenerToMarker(holder, i);
+
       });
     }
   };
@@ -220,14 +248,47 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
     let marker = new window.google.maps.Marker({
       map: window.map,
       position: location,
+      clickable: true,
     });
+
+    marker.addListener('click', function() {
+      console.log
+    });
+
     window.mapMarkers.push(marker);
+
+    return marker;
+  };
+
+  toggleDialog = () => {
+    let { dialogOpen } = this.state;
+
+    this.setState({
+      dialogOpen: !dialogOpen
+    });
   };
 
   render() {
+    let placeCard = false,
+      { detailIndex, dialogOpen } = this.state;
+
+    if (dialogOpen) {
+      placeCard =
+        <Dialog
+          title={ this.props.places[detailIndex].name }
+          modal={false}
+          open={dialogOpen}
+          onRequestClose={this.toggleDialog}
+        >
+
+          <img src={this.props.places[detailIndex].image_url }/>
+          <span>{ this.props.places[detailIndex].snippet_text }</span>
+        </Dialog>
+    }
     return (
       <div className={styles.mapWrapper}>
         <div className={styles.map} id='map'></div>
+        {placeCard}
       </div>
     );
   }
