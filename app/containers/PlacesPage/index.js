@@ -159,6 +159,9 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
   };
 
   renderFilterBar = () => {
+    let { mode } = this.props.location.query;
+    if (mode == 'map') return false;
+
     if (this.props.places.length && this.locationValid()) {
       let size = this.props.places.length;
 
