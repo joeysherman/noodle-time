@@ -98,13 +98,17 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
         </Paper> );
     } else {
       main = (
-        <Paper
-          onTouchTap={this.props.itsNoodleTime}
-          className={styles.ramenWrapper}
-          zDepth={3}>
-          <RamenButton />
-          <h2 className={styles.ramen_message}>{statusMessage}</h2>
-        </Paper> );
+      <div className={styles.heroWrapper}>
+        <h1>Find. Ramen. Now.</h1>
+      <Paper
+      onTouchTap={this.props.itsNoodleTime}
+      className={styles.ramenWrapper}
+      zDepth={3}>
+        <p>Noodletime connects you to Ramen locations near you</p>
+         <RamenButton />
+         <h2 className={styles.ramen_message}>{statusMessage}</h2>
+         </Paper>
+      </div>);
     }
 
     return (

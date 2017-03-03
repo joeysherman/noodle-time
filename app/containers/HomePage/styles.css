@@ -16,6 +16,29 @@
   align-items: center;
 }
 
+.heroWrapper {
+  height: 60%;
+  width: 100%;
+  text-align: center;
+}
+
+.heroWrapper > h1 {
+  color: antiquewhite;
+  font-size: 2.2em;
+  margin-top: 75px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0px;
+  font-weight: 400;
+  line-height: 64px;
+}
+
+.heroWrapper > p {
+  color: rgb(0, 188, 212);
+  font-weight: 300;
+
+}
 
 @media (max-width: 425px) {
   .ramenWrapper {
@@ -36,6 +59,10 @@
   .autoCompleteWrapper {
     width: 60%;
     max-width: 900px;
+  }
+
+  .heroWrapper > h1 {
+    font-size: 4em;
   }
 }
 
