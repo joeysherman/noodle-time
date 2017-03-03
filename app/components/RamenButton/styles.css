@@ -15,12 +15,6 @@
   margin-bottom: 64px;
 }
 
-@media (max-width: 425px) {
-  .ramenBowl {
-    width: 110px;
-  }
-}
-
 @keyframes pulse {
   0% {
     width: 50px;

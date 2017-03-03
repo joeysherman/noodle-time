@@ -18,6 +18,7 @@ import { push } from 'react-router-redux';
 
 // Material UI components
 import Paper from 'material-ui/Paper';
+import FlatButton from 'material-ui/FlatButton'
 import AutoComplete from 'material-ui/AutoComplete';
 
 // Self-made components
@@ -98,17 +99,17 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
         </Paper> );
     } else {
       main = (
-      <div className={styles.heroWrapper}>
-        <h1>Find. Ramen. Now.</h1>
-      <Paper
-      onTouchTap={this.props.itsNoodleTime}
-      className={styles.ramenWrapper}
-      zDepth={3}>
-        <p>Noodletime connects you to Ramen locations near you</p>
-         <RamenButton />
-         <h2 className={styles.ramen_message}>{statusMessage}</h2>
-         </Paper>
-      </div>);
+        <div className={styles.heroWrapper}>
+          <h1>Find. Ramen. Now.</h1>
+          <Paper
+            onTouchTap={this.props.itsNoodleTime}
+            className={styles.ramenWrapper}
+            zDepth={3}>
+            <FlatButton>Start</FlatButton>
+            <RamenButton />
+            <FlatButton>About</FlatButton>
+          </Paper>
+        </div>);
     }
 
     return (
