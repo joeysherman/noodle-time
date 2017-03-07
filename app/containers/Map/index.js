@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 import styles from './styles.css';
 import { createStructuredSelector } from 'reselect';
 
-import Card from '../../Components/PlaceCard';
 import Dialog from 'material-ui/Dialog';
 import Chip from 'material-ui/Chip'
 
