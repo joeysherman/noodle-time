@@ -22,7 +22,7 @@ function PlaceCard(props) { // eslint-disable-line react/prefer-stateless-functi
 
   let { display_address } = props.place.location;
 
-  let buttongs = [];
+  let buttons = [];
 
   return (
 

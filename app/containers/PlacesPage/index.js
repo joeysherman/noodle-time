@@ -153,7 +153,9 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
       }
     } else {
       return (
-        <LoadingIcon className={styles.loadingIcon} status="Searching..."/>
+        <Paper className={styles.loadingIconWrapper}>
+          <LoadingIcon className={styles.loadingIcon} status="Searching..."/>
+        </Paper>
       )
     }
   };

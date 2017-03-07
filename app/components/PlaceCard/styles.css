@@ -1,6 +1,7 @@
 .placeCardWrapper { /* stylelint-disable */
   width: 70%;
   max-width: 700px;
+  min-height: 420px;
   display: flex;
   flex-direction: column;
 }
@@ -19,12 +20,12 @@
   }
 
   .cardAvatar {
-    width: 60px !important;
-    height: 60px !important;
+    width: 90px !important;
+    height: 90px !important;
   }
 
   .ratingsWrapper {
-    flex-direction: row !important;
+    flex-direction: column !important;
   }
 }
 
@@ -34,6 +35,7 @@
 
 .cardAvatar {
   align-self: center;
+  margin-right: 0 !important;
 }
 
 .cardHeader {

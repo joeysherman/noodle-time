@@ -31,7 +31,6 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 80%;
   margin-bottom: 15px;
   margin-top: 25px;
 }
@@ -53,7 +52,10 @@
 }
 
 .buttonReset > button {
-  height: 80% !important;
+  height: 100px !important;
+  top: -50%;
+  z-index: 99;
+  border-radius: 25px;
 }
 
 .incIndexButton {
@@ -72,6 +74,10 @@
   position: relative;
 }
 
+.loadingIconWrapper {
+
+}
+
 .loadingIcon {
   color: azure;
 }
@@ -81,6 +87,12 @@
   .placeCardWrapper {
     flex-direction: column;
   }
+
+  .buttonReset > button {
+    margin: 5px !important;
+    border-radius: 15px !important;
+  }
+
 }
 
 .actionButton {
