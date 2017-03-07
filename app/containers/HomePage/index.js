@@ -100,7 +100,7 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
     } else {
       main = (
         <div className={styles.heroWrapper}>
-          <h1>Find. Ramen. Now.</h1>
+          <h1>Find Ramen. Now.</h1>
           <Paper
             onTouchTap={this.props.itsNoodleTime}
             className={styles.ramenWrapper}
