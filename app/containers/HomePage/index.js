@@ -105,9 +105,9 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
             onTouchTap={this.props.itsNoodleTime}
             className={styles.ramenWrapper}
             zDepth={3}>
-            <FlatButton>Start</FlatButton>
+            <FlatButton className={styles.startButton}>Start</FlatButton>
             <RamenButton />
-            <FlatButton>About</FlatButton>
+            <FlatButton className={styles.aboutButton}>About</FlatButton>
           </Paper>
         </div>);
     }

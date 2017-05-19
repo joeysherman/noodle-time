@@ -18,42 +18,48 @@ function PlaceCard(props) { // eslint-disable-line react/prefer-stateless-functi
         distance,
         image_url,
         rating_img_url_large,
-        review_count } = props.place;
+        review_count,
+        snippet_text,
+        snippet_image_url
+  } = props.place;
 
   let { display_address } = props.place.location;
 
-  let buttons = [];
-
   return (
 
-      <Card className={styles.placeCardWrapper}>
-        <CardHeader
-          title={<h3>{name}</h3>}
-          subtitle={<h3>{display_address.join(' ')}</h3>}
-          avatar={<Avatar src={image_url} className={styles.cardAvatar}/>}
-          className={styles.cardHeader}
-          textStyle={{ paddingRight: '0px' }}>
-          <div className={styles.ratingsWrapper}>
-            <img src={rating_img_url_large} className={styles.cardRatingImg}/>
-            <div className={styles.ratingTextWrapper}>
-              <h3 className={styles.reviewText}>{review_count}<span> Reviews</span></h3>
-            </div>
+    <Card className={styles.placeCardWrapper}>
+      <CardHeader
+        title={<h3>{name}</h3>}
+        subtitle={<h3>{display_address.join(' ')}</h3>}
+        avatar={<Avatar src={image_url} className={styles.cardAvatar}/>}
+        className={styles.cardHeader}
+        textStyle={{ paddingRight: '0px' }}>
+        <div className={styles.ratingsWrapper}>
+          <img src={rating_img_url_large} className={styles.cardRatingImg}/>
+          <div className={styles.ratingTextWrapper}>
+            <h3 className={styles.reviewText}>{review_count}<span> Reviews</span></h3>
           </div>
+        </div>
 
-        </CardHeader>
+      </CardHeader>
+      <div>
+        <img className={styles.reviewImage} src={snippet_image_url}/>
+        <p className={styles.reviewText}>{snippet_text}</p>
+      </div>
+      <CardActions className={styles.cardActions}>
+        <FlatButton
+          onClick={props.showMapClick}
+          label="Show on Map"
+          icon={<Explore/>}
+          backgroundColor=''
+        />
+        { display_phone ? <div className={styles.verticalSpacer}></div> : null}
+        { display_phone ? <FlatButton label={display_phone} icon={<Call/>} /> : null }
+      </CardActions>
+    </Card>
+  );
 
-        <CardActions className={styles.cardActions}>
-          <FlatButton
-            onClick={props.showMapClick}
-            label="Show on Map"
-            icon={<Explore/>}
-            backgroundColor=''
-          />
-          { display_phone ? <div className={styles.verticalSpacer}></div> : null}
-          { display_phone ? <FlatButton label={display_phone} icon={<Call/>} /> : null }
-        </CardActions>
-      </Card>
-    );
+  let buttons = [];
 }
 
 export default PlaceCard;

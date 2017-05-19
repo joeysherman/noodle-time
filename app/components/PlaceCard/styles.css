@@ -64,6 +64,13 @@
   top:10px;
 }
 
+.reviewImage {
+  display: inline-block;
+  float: left;
+  margin: 10px;
+  border-radius: 10px;
+}
+
 .cardActions {
   display: flex;
   flex-direction: row;
