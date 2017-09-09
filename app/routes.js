@@ -16,26 +16,29 @@ export default function createRoutes(store) {
   // Create reusable async injectors using getAsyncInjectors factory
   const { injectReducer, injectSagas } = getAsyncInjectors(store); // eslint-disable-line no-unused-vars
 
-  const injectMap = (cb) => {
-    const importModules = Promise.all([
-      System.import('containers/Map/reducer'),
-      System.import('containers/Map/sagas'),
-    ]);
-
-    importModules.then(([reducer, sagas]) => {
-      injectReducer('map', reducer.default);
-      injectSagas(sagas.default);
-      cb();
-    });
-
-    importModules.catch(errorLoading);
-  };
-
   return [{
     path: 'search',
     getComponent(nextState, cb) {
-/*      console.log('getting component router')
-      console.log(nextState);*/
+      console.log('getting component router')
+      console.log(nextState);
+      const importModules = Promise.all([
+        System.import('components/RamenButton/ramenButton'),
+      ]);
+
+      const renderRoute = loadModule(cb);
+
+      importModules.then(([component]) => {
+        renderRoute(component);
+      });
+
+      importModules.catch(errorLoading);
+    },
+  }];
+/*  return [{
+    path: 'search',
+    getComponent(nextState, cb) {
+/!*      console.log('getting component router')
+      console.log(nextState);*!/
       const importModules = Promise.all([
         System.import('containers/PlacesPage'),
         System.import('containers/PlacesPage/reducer'),
@@ -83,5 +86,5 @@ export default function createRoutes(store) {
           .catch(errorLoading);
       },
     },
-  ];
+  ];*/
 }

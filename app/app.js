@@ -18,16 +18,17 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { applyRouterMiddleware, Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import configureStore from './store';
-import HomePage from 'containers/HomePage';
 
 // Import the CSS reset, which HtmlWebpackPlugin transfers to the build folder
 /*import 'sanitize.css/sanitize.css';*/
 
 // Import Global css
 import './global.css';
-import 'animate.css';
+
+// Import Materialize-Css
+import 'materialize-css/dist/css/materialize.min.css';
+import 'materialize-css/dist/js/materialize.min';
 
 /*import 'gsap/src/minified/plugins/CSSPlugin.min';
 import 'gsap/src/minified/easing/EasePack.min';
@@ -54,13 +55,8 @@ import createRoutes from './routes';
 const rootRoute = {
   path: '/',
   component: App,
-  indexRoute: {
-    component: HomePage,
-  },
   childRoutes: createRoutes(store),
 };
-
-injectTapEventPlugin();
 
 ReactDOM.render(
   <Provider store={store}>
