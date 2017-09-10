@@ -16,11 +16,6 @@ import styles from './styles.css';
 import { createStructuredSelector } from 'reselect';
 import { push } from 'react-router-redux';
 
-// Material UI components
-import Paper from 'material-ui/Paper';
-import FlatButton from 'material-ui/FlatButton'
-import AutoComplete from 'material-ui/AutoComplete';
-
 // Self-made components
 import RamenButton from '../../components/RamenButton/ramenButton';
 import CryEmojiSvg from '../../assets/cry_emoji.svg';
@@ -46,75 +41,21 @@ import{
 class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   componentDidMount() {
-    this.props.fetchLocation();
   }
   
   componentWillReceiveProps(nextProps, nextContext) {
-    if (nextProps.noodleTime == true && !this.props.noodleTime) {
-      this.props.push('/search');
-    }
   }
 
   componentWillUnmount() {
-    this.props.itsNoodleTime();
-    this.props.setStatus('Click to begin!');
   }
-
-  shouldRenderAutoComplete = () => {
-    let { state } = this.props.location;
-
-    return state && state.mode === 'autocomplete';
-  };
 
   render() {
 
-    let main;
-
-    let { statusMessage } = this.props;
-
-    if (this.shouldRenderAutoComplete()) {
-      let { autoCompleteDataSource } = this.props;
-      main = (
-        <Paper className={styles.autoCompleteWrapper}>
-          <img className={styles.cryEmojiImage} src={CryEmojiSvg}/>
-          <h3 className={styles.autoCompleteHeader}>Couldn't find your location... Where are you?</h3>
-          <AutoComplete
-            floatingLabelText='Search for your location..'
-            filter={AutoComplete.fuzzyFilter}
-            dataSourceConfig={{ text: 'description', value: 'place_id',}}
-            dataSource={autoCompleteDataSource || []}
-            openOnFocus={true}
-            fullWidth={true}
-            onUpdateInput={(input) => {
-              if (input == '') return;
-              this.props.dispatch(autoCompleteRequest(input))
-            }}
-            onNewRequest={(text, index) => {
-              // handle case when index is -1 - user hits enter
-              if (index == -1) return;
-              
-              this.props.dispatch(autoCompleteItemSelected(text));
-            }}
-          />
-        </Paper> );
-    } else {
-      main = (
-        <div className={styles.heroWrapper}>
-          <h1>Find Ramen. Now.</h1>
-          <Paper
-            onTouchTap={this.props.itsNoodleTime}
-            className={styles.ramenWrapper}
-            zDepth={3}>
-            <FlatButton className={styles.startButton}>Start</FlatButton>
-            <RamenButton />
-            <FlatButton className={styles.aboutButton}>About</FlatButton>
-          </Paper>
-        </div>);
-    }
-
     return (
-      <div className={styles.wrapper}>
-        {main}
+      <div className="row">
+        <div className="col s12 center">
+          <button onClick={() => this.props.push('/search')}>Find Ramen Now</button>
+        </div>
       </div>
     );
   }

@@ -34,7 +34,7 @@ import MapIcon from 'material-ui/svg-icons/maps/map';
 
 // Component imports
 import LoadingIcon from '../../components/LoadingIcon';
-import Map from '../Map';
+import Map from '../Map_cont';
 
 import {
   incrementIndex,

@@ -12,8 +12,9 @@
  */
 
 import React from 'react';
+import Navbar from '../../components/Navbar';
+import Homepage from '../HomePage';
 import styles from './styles.css';
-import Navbar from '../../components/Navbar/index';
 
 export default class App extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -22,11 +23,14 @@ export default class App extends React.Component { // eslint-disable-line react/
   };
 
   render() {
+    const body = this.props.children || <Homepage/>;
+
     return (
+
       <div>
         <Navbar/>
         <div className="container">
-          {React.Children.toArray(this.props.children)}
+          {body}
         </div>
       </div>
     );
