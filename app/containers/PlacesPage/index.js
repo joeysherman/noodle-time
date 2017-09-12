@@ -12,8 +12,6 @@ import styles from './styles.css';
 
 // Redux imports
 import { placesRequest } from './actions';
-import PlaceCard from '../../components/PlaceCard';
-import List from '../../components/List';
 import { userLocationRequest } from '../App/actions';
 import {
   incPlacesIndex,
@@ -22,19 +20,7 @@ import {
 } from './actions';
 import { selectPlaces } from './selectors';
 
-// Material-ui imports
-import RaisedButton from 'material-ui/RaisedButton';
-import Badge from 'material-ui/Badge';
-import NavBefore from 'material-ui/svg-icons/image/navigate-before';
-import NavNext from 'material-ui/svg-icons/image/navigate-next';
-import Paper from 'material-ui/Paper';
-import IconButton from 'material-ui/IconButton';
-import ViewListIcon from 'material-ui/svg-icons/action/view-list';
-import MapIcon from 'material-ui/svg-icons/maps/map';
-
 // Component imports
-import LoadingIcon from '../../components/LoadingIcon';
-import Map from '../Map_cont';
 
 import {
   incrementIndex,
@@ -103,95 +89,11 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
     this.props.goTo('/search')();
   };
 
-  renderMainContent = () => {
-    let { index, places } = this.props;
-
-    if (places.length && this.locationValid()) {
-      let { mode } = this.props.location.query;
-      let size = places.length;
-      switch(mode) {
-        case 'list':
-          return (
-            <List
-              places={this.props.places}
-              onTouchTap={(index) => { this.handleListItemClick(index) }}
-            />
-          );
-        case 'map':
-          return <Map/>;
-        default :
-          return (
-            <div className="container">
-              <PlaceCard
-                place={this.props.places[index]}
-                showMapClick={this.props.goTo({
-                  pathname: '/search',
-                  query: {
-                    mode: 'map'
-                  },
-                })}
-              />
-            </div>
-          )
-      }
-    } else {
-      return (
-        <Paper className={styles.loadingIconWrapper}>
-          <LoadingIcon className={styles.loadingIcon} status="Searching..."/>
-        </Paper>
-      )
-    }
-  };
-
-  renderFilterBar = () => {
-    let { mode } = this.props.location.query;
-    if (mode == 'map') return false;
-
-    if (this.props.places.length && this.locationValid()) {
-      let size = this.props.places.length;
-
-      return (
-        <Paper className={styles.filterBar}>
-          <Badge
-            badgeContent={size}
-            secondary={true}
-            badgeStyle={{top: 15, right: 15}}
-          >
-            <IconButton
-            touch={true}
-            onTouchTap={this.props.goTo({
-              pathname: '/search',
-              query: {
-                mode: 'list'
-              }
-            })}>
-            <ViewListIcon/>
-          </IconButton>
-          </Badge>
-          <p>Found <strong>{size}</strong> noodle places near you!</p>
-          <IconButton
-            onTouchTap={this.props.goTo({
-            pathname: '/search',
-            query: {
-            mode: 'map'
-            }
-            })}>
-            <MapIcon/>
-          </IconButton>
-        </Paper>
-      )
-    }
-    return null;
-  };
-
   render() {
-    let mainContent = this.renderMainContent();
-    let filterBar = this.renderFilterBar();
-
+    let count = <h1>Found {this.props.places.length} ramen places nearby...</h1>;
     return (
       <div className={styles.placesPage}>
-        {filterBar}
-        {mainContent}
+        {count}
       </div>
     );
   }

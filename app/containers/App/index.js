@@ -12,7 +12,8 @@
  */
 
 import React from 'react';
-import Navbar from '../../components/Navbar';
+import { push } from 'react-router-redux';
+import Navbar from '../Navbar';
 import Homepage from '../HomePage';
 import styles from './styles.css';
 

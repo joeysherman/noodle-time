@@ -9,9 +9,6 @@ import { connect } from 'react-redux';
 import styles from './styles.css';
 import { createStructuredSelector } from 'reselect';
 
-import Dialog from 'material-ui/Dialog';
-import Chip from 'material-ui/Chip'
-
 // State Selectors
 import {
   selectLocation,
@@ -271,23 +268,9 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
     let placeCard = false,
       { detailIndex, dialogOpen } = this.state;
 
-    if (dialogOpen) {
-      placeCard =
-        <Dialog
-          title={ this.props.places[detailIndex].name }
-          modal={false}
-          open={dialogOpen}
-          onRequestClose={this.toggleDialog}
-        >
-
-          <img src={this.props.places[detailIndex].image_url }/>
-          <span>{ this.props.places[detailIndex].snippet_text }</span>
-        </Dialog>
-    }
     return (
       <div className={styles.mapWrapper}>
         <div className={styles.map} id='map'></div>
-        {placeCard}
       </div>
     );
   }
