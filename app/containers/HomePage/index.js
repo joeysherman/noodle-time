@@ -41,6 +41,7 @@ import{
 class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   componentDidMount() {
+    this.props.fetchLocation();
   }
   
   componentWillReceiveProps(nextProps, nextContext) {
@@ -64,7 +65,6 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
 const mapStateToProps = createStructuredSelector({
   statusMessage: selectStatusMessage(),
   noodleTime: selectNoodleTime(),
-  autoCompleteDataSource: selectAutoCompleteData(),
 });
 
 const mapDispatchToProps = (dispatch) => {

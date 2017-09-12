@@ -39,35 +39,4 @@ function homeReducer (state = initialState, action){
   return state;
 }
 
-let autcompleteInitialState = {
-  loading: false,
-  error: false,
-  predictions: false,
-};
-
-function autocompleteReducer(state = fromJS(autcompleteInitialState), action) {
-
-  switch (action.type) {
-    case constants.AUTOCOMPLETE_ERROR :
-      return state
-        .set('loading', false)
-        .set('error', action.payload);
-
-    case constants.AUTOCOMPLETE_SUCCESS :
-      let predictions = [];
-
-      if (action.payload.json.status == 'OK'){
-        predictions = action.payload.json.predictions;
-      }
-      return state
-        .set('predictions', predictions);
-
-  }
-
-  return state;
-}
-
-export default combineReducers({
-  'home': homeReducer,
-  'autocomplete': autocompleteReducer,
-});
+export default homeReducer;

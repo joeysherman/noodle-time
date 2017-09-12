@@ -5,28 +5,20 @@
 import { createSelector } from 'reselect';
 
 const selectHomeDomain = () => (state) => state.get('home');
-const selectHomeSlice = () => (state) => state.getIn(['home', 'home']);
-const selectAutocompleteSlice = () => (state) => state.getIn(['home', 'autocomplete']);
-
-const selectAutoCompleteData = () => createSelector(
-  selectAutocompleteSlice(),
-  (slice) => slice.get('predictions'),
-);
 
 const selectStatusMessage = () => createSelector(
-  selectHomeSlice(),
+  selectHomeDomain(),
   (home) => home.get('statusMessage'),
 );
 
 const selectNoodleTime = () => createSelector(
-  selectHomeSlice(),
-  (slice) => slice.get('noodleTime'),
+  selectHomeDomain(),
+  (home) => home.get('noodleTime'),
 );
 
 export {
   selectHomeDomain,
   selectNoodleTime,
-  selectAutoCompleteData,
   selectStatusMessage,
 };
 

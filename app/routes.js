@@ -9,8 +9,8 @@ const errorLoading = (err) => {
 };
 
 const loadModule = (cb) => (componentModule) => {
-  cb(null, componentModule.default);
-};
+  cb(null, componentModule.default)
+}
 
 export default function createRoutes(store) {
   // Create reusable async injectors using getAsyncInjectors factory
@@ -22,12 +22,16 @@ export default function createRoutes(store) {
       console.log('getting component router')
       console.log(nextState);
       const importModules = Promise.all([
-        System.import('components/RamenButton/ramenButton'),
+        System.import('containers/SearchPage'),
+        System.import('containers/SearchPage/reducer'),
+        System.import('containers/SearchPage/sagas'),
       ]);
 
       const renderRoute = loadModule(cb);
 
-      importModules.then(([component]) => {
+      importModules.then(([component, reducer, sagas]) => {
+        injectReducer('searchPage', reducer.default);
+        injectSagas(sagas.default);
         renderRoute(component);
       });
 
