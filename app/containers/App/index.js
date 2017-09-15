@@ -13,7 +13,6 @@
 
 import React from 'react';
 import { push } from 'react-router-redux';
-import Navbar from '../Navbar';
 import Homepage from '../HomePage';
 import styles from './styles.css';
 
@@ -29,10 +28,7 @@ export default class App extends React.Component { // eslint-disable-line react/
     return (
 
       <div>
-        <Navbar/>
-        <div className="container">
           {body}
-        </div>
       </div>
     );
   }

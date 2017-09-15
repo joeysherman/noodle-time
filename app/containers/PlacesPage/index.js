@@ -21,6 +21,9 @@ import {
 import { selectPlaces } from './selectors';
 
 // Component imports
+import Map from '../Map';
+
+import Card from '../../components/Card';
 
 import {
   incrementIndex,
@@ -89,11 +92,25 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
     this.props.goTo('/search')();
   };
 
+  renderCards() {
+    return this.props.places.map((data, i) => <div className="col s6 m4 l3"><Card key={i} place={data}/></div>);
+  }
+
   render() {
     let count = <h1>Found {this.props.places.length} ramen places nearby...</h1>;
+    let placeCards = this.renderCards();
     return (
-      <div className={styles.placesPage}>
-        {count}
+      <div>
+        <div className="row">
+          <div className="col s12 m6 l4">
+            <Map/>
+          </div>
+          <div className="col s12 m6 l8">
+            <div className="row">
+              {placeCards}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

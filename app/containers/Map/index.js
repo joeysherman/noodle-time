@@ -44,13 +44,15 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    if (!this.props.loaded && nextProps.loaded === true) {
-      this.mountMap();
-      this.placeUserLocationOnMap();
-      this.listener = window.map.addListener('tilesloaded', () => {
-        this.extendMapBounds();
-      });
-      this.placeAllPlacesOnMap();
+    if (nextProps.userLocation.geometry !== undefined) {
+      if (nextProps.loaded) {
+        this.mountMap();
+        this.placeUserLocationOnMap();
+        this.listener = window.map.addListener('tilesloaded', () => {
+          this.extendMapBounds();
+        });
+        this.placeAllPlacesOnMap();
+      }
     }
   };
 
