@@ -39,29 +39,18 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
     }
   }
 
+  componentDidUpdate(prevProps, prevState, prevContext) {
+    if (this.props.userLocation.geometry && !prevProps.userLocation.geometry) {
+      this.mountMap();
+    }
+  }
+
   componentDidMount() {
     this.loadMapsIfNeeded();
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
-    if (nextProps.userLocation.geometry !== undefined) {
-      if (nextProps.loaded) {
-        this.mountMap();
-        this.placeUserLocationOnMap();
-        this.listener = window.map.addListener('tilesloaded', () => {
-          this.extendMapBounds();
-        });
-        this.placeAllPlacesOnMap();
-      }
-    }
-  };
-
   loadMapsIfNeeded = () => {
-    let { loaded } = this.props;
-
-    if (loaded && window.google){
-      this.mountMap();
-    } else {
+    if (!this.props.loaded) {
       this.props.loadMaps();
     }
   };

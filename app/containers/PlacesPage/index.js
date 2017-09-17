@@ -22,7 +22,7 @@ import { selectPlaces } from './selectors';
 
 // Component imports
 import Map from '../Map';
-
+import Loader from '../../components/LoadingSpinner';
 import Card from '../../components/Card';
 
 import {
@@ -44,24 +44,25 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
     super(props);
   }
 
-  componentDidUpdate(prevProps, prevState, prevContext) {
-    console.log('Places page did update')
-    if (!prevProps.userLocation.geometry && !prevProps.userLocation.geometry && this.locationValid()) {
-      console.log('fetching places did update');
-      this.fetchPlaces();
-    }
-  }
-
-  componentDidMount() {
-    console.log('Places page mounted')
-    if (!this.locationValid()) {
-      return this.props.fetchLocation();
+  componentWillMount() {
+    // has location
+    // -- request places
+    // doesn't have location
+    // -- request location
+    // location but no places
+    // no location and no places
+    if (!this.props.userLocation.geometry) {
+      this.props.fetchLocation();
     } else {
-      this.fetchPlaces();
+      this.props.fetchPlaces();
     }
   }
 
-
+  componentDidUpdate(prevProps, prevState, prevContext) {
+    if (!prevProps.userLocation.geometry && this.props.userLocation.geometry) {
+      this.fetchPlaces();
+    }
+  }
 
   fetchPlaces = () => {
     let { geometry: { location: { lat, lng }}} = this.props.userLocation;
@@ -87,25 +88,21 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
     return (latitude < 90 && latitude > -90 && longitude < 180 && longitude > -180);
   };
 
-  handleListItemClick = (index) => {
-    this.props.setIndex(index);
-    this.props.goTo('/search')();
-  };
-
   renderCards() {
-    return this.props.places.map((data, i) => <div className="col s6 m4 l3"><Card key={i} place={data}/></div>);
+    return this.props.places.length ?
+      this.props.places.map((data, i) => <div className="col s12 m6 l4" key={i}><Card place={data}/></div>) :
+      <div className="col s12 center"><Loader active={true}/></div>;
   }
 
   render() {
-    let count = <h1>Found {this.props.places.length} ramen places nearby...</h1>;
     let placeCards = this.renderCards();
     return (
       <div>
         <div className="row">
-          <div className="col s12 m6 l4">
+          <div className="col s12 m4">
             <Map/>
           </div>
-          <div className="col s12 m6 l8">
+          <div className="col s12 m8">
             <div className="row">
               {placeCards}
             </div>

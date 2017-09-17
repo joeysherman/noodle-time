@@ -23,7 +23,8 @@ function appReducer(state = initialState, action) {
 
     case constants.USER_LOCATION_REQUEST :
       return state
-        .set('loading', true);
+        .set('loading', true)
+        .set('location', fromJS({}));
 
     case constants.USER_LOCATION_SUCCESS :
       return state
@@ -54,19 +55,6 @@ function appReducer(state = initialState, action) {
           error: true,
           message: message,
         }));
-
-    case constants.USER_ADDRESS_REQUEST :
-      return state
-        .set('address', 'LOADING');
-        
-
-    case constants.USER_ADDRESS_SUCCESS :
-      return state
-        .set('address', action.payload);
-
-    case constants.USER_ADDRESS_ERROR :
-      return state
-        .set('address', 'ERROR');
 
     case constants.USER_HAS_GEO :
       return state

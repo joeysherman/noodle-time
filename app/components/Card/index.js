@@ -10,7 +10,6 @@ import React from 'react';
 
 function Card(props) {
   const { name, image_url, snippet_text } = props.place;
-
   return (
     <div className="card">
       <div className="card-image">
@@ -19,7 +18,8 @@ function Card(props) {
           <a className="btn-floating halfway-fab waves-effect waves-light red"><i className="material-icons">add</i></a>
       </div>
       <div className="card-content">
-        <p>{snippet_text}</p>
+        <p>{snippet_text && snippet_text.slice(0, 50)}</p>
+        <a>Read More</a>
       </div>
     </div>
   );
