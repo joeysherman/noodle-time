@@ -42,6 +42,10 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
   componentDidUpdate(prevProps, prevState, prevContext) {
     if (this.props.userLocation.geometry && !prevProps.userLocation.geometry) {
       this.mountMap();
+      this.placeUserLocationOnMap();
+    }
+    if (this.props.places.length && prevProps.places.length) {
+      this.placeAllPlacesOnMap();
     }
   }
 
@@ -102,7 +106,6 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
     let marker = new window.google.maps.Marker({
       map: window.map,
       position: userLocation,
-      label: 'Your location',
     });
   };
 
@@ -121,7 +124,7 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
     let { places } = this.props;
 
     if (places.length){
-      var holder;
+      let holder;
 
       places.map((item, i) => {
         holder = this.createAndSetMarker({
