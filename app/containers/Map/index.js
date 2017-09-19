@@ -27,6 +27,7 @@ import {
 import {
   mapLoadRequest,
 } from './actions';
+import {setPlacesIndex} from "../PlacesPage/actions";
 
 export class Map extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -107,7 +108,8 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
   attachListenerToMarker = (marker, index) => {
 
     marker.addListener('click', () => {
-      console.log('You clicked: ' + index)
+      console.log('You clicked: ' + index);
+      this.props.setPlaceIndex(index);
     });
   };
 
@@ -278,6 +280,7 @@ const makeMapStateToProps = () => {
 function mapDispatchToProps(dispatch) {
   return {
     loadMaps: () => dispatch(mapLoadRequest()),
+    setPlaceIndex: (index) => dispatch(setPlacesIndex(index)),
     dispatch,
   };
 }

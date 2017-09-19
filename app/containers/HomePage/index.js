@@ -43,10 +43,12 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
   render() {
 
     return (
+      <div className="section">
       <div className="row">
         <div className="col s12 center">
           <button onClick={() => this.props.push('/search')}>Find Ramen Now</button>
         </div>
+      </div>
       </div>
     );
   }

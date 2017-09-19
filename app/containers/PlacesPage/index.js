@@ -55,7 +55,7 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
     if (!this.props.userLocation.geometry) {
       this.props.fetchLocation();
     } else {
-      this.props.fetchPlaces();
+      this.fetchPlaces();
     }
   }
 
@@ -89,6 +89,15 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
     return (latitude < 90 && latitude > -90 && longitude < 180 && longitude > -180);
   };
 
+  renderCard() {
+    const { index } = this.props;
+    const place = this.props.places[index];
+    if (this.props.places.length) {
+      console.log('rendering single card')
+      return <div className="col s12 l6"><Card place={place}/></div>
+    }
+  }
+
   renderCards() {
     return this.props.places.length ?
       this.props.places.map((data, i) => <div className="col s12 l6" key={i}><Card place={data}/></div>) : false;
@@ -108,7 +117,7 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
           </div>
           <div className="col s12 m7">
             <div className="row">
-              {this.renderCards()}
+              {this.props.index === false ? this.renderCards() : this.renderCard()}
             </div>
           </div>
         </div>
