@@ -91,7 +91,7 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
 
   renderCards() {
     return this.props.places.length ?
-      this.props.places.map((data, i) => <div className="col s12 m6 l4" key={i}><Card place={data}/></div>) : false;
+      this.props.places.map((data, i) => <div className="col s12 l6" key={i}><Card place={data}/></div>) : false;
   }
 
   renderContent() {
@@ -103,10 +103,10 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
     } else {
       return (
         <div className="row">
-          <div className="col s12 m4">
+          <div className="col s12 m7 l8">
             <Map/>
           </div>
-          <div className="col s12 m8">
+          <div className="col s12 m5 l4">
             <div className="row">
               {this.renderCards()}
             </div>

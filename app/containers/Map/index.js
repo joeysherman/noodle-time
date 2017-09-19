@@ -32,19 +32,15 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      dialogOpen: false,
-      detailIndex: 0,
-    }
   }
 
   componentDidUpdate(prevProps, prevState, prevContext) {
-    if (this.props.userLocation.geometry && this.props.loaded) {
+    console.log('Map cdu')
+    if (!prevProps.loaded && this.props.loaded) {
       this.mountMap();
       this.placeUserLocationOnMap();
     }
-    if (this.props.places.length) {
+    if (!prevProps.places.length && this.props.places.length) {
       this.extendMapBounds();
       this.placeAllPlacesOnMap();
     }
@@ -112,10 +108,6 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
 
     marker.addListener('click', () => {
       console.log('You clicked: ' + index)
-      this.setState({
-        dialogOpen: true,
-        detailIndex: index,
-      });
     });
   };
 
