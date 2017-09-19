@@ -1,7 +1,6 @@
 import React from 'react';
 
 const loadingSpinner = function(props) {
-  const { active } = props;
 
   return (
     <div className="preloader-wrapper active">

@@ -40,16 +40,18 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
   }
 
   componentDidUpdate(prevProps, prevState, prevContext) {
-    if (this.props.userLocation.geometry && !prevProps.userLocation.geometry) {
+    if (this.props.userLocation.geometry && this.props.loaded) {
       this.mountMap();
       this.placeUserLocationOnMap();
     }
-    if (this.props.places.length && prevProps.places.length) {
+    if (this.props.places.length) {
+      this.extendMapBounds();
       this.placeAllPlacesOnMap();
     }
   }
 
   componentDidMount() {
+    console.log('cdm map')
     this.loadMapsIfNeeded();
   }
 
@@ -90,13 +92,10 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
     let placesCoords = this.getPlacesCoords();
 
     placesCoords.forEach((item) => {
-      console.log(item);
       bounds = bounds.extend(item);
     });
 
     window.map.fitBounds(bounds);
-    this.listener.remove();
-
   };
 
   placeUserLocationOnMap = () => {

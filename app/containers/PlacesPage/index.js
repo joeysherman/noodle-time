@@ -18,6 +18,7 @@ import {
   decPlacesIndex,
   setPlacesIndex
 } from './actions';
+import { selectLoading } from '../App/selectors';
 import { selectPlaces } from './selectors';
 
 // Component imports
@@ -90,24 +91,36 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
 
   renderCards() {
     return this.props.places.length ?
-      this.props.places.map((data, i) => <div className="col s12 m6 l4" key={i}><Card place={data}/></div>) :
-      <div className="col s12 center"><Loader active={true}/></div>;
+      this.props.places.map((data, i) => <div className="col s12 m6 l4" key={i}><Card place={data}/></div>) : false;
   }
 
-  render() {
-    let placeCards = this.renderCards();
-    return (
-      <div>
+  renderContent() {
+    if (this.props.loadingLocation || !this.props.userLocation.geometry) {
+      console.log('Loading spinner for location')
+      return (
+        <Loader/>
+      )
+    } else {
+      return (
         <div className="row">
           <div className="col s12 m4">
             <Map/>
           </div>
           <div className="col s12 m8">
             <div className="row">
-              {placeCards}
+              {this.renderCards()}
             </div>
           </div>
         </div>
+      )
+    }
+  }
+
+  render() {
+    let main = this.renderContent();
+    return (
+      <div>
+        {main}
       </div>
     );
   }
@@ -117,9 +130,12 @@ const makeMapStateToProps = () => {
 
   const location = selectLocation(),
         index = selectIndex(),
-        places = selectPlaces();
+        places = selectPlaces(),
+        loading = selectLoading();
+
   const mapStateToProps = (state, props) => {
     return {
+      loadingLocation: loading(state),
       userLocation: location(state),
       index: index(state),
       places: places(state),
