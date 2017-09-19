@@ -14,6 +14,7 @@
 import React from 'react';
 import { push } from 'react-router-redux';
 import Homepage from '../HomePage';
+import Navbar from '../../components/Navbar';
 import styles from './styles.css';
 
 export default class App extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -26,9 +27,11 @@ export default class App extends React.Component { // eslint-disable-line react/
     const body = this.props.children || <Homepage/>;
 
     return (
-
       <div>
+        <Navbar/>
+      <div className="container">
           {body}
+      </div>
       </div>
     );
   }

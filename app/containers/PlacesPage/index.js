@@ -103,10 +103,10 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
     } else {
       return (
         <div className="row">
-          <div className="col s12 m7 l8">
+          <div className="col s12 m5">
             <Map/>
           </div>
-          <div className="col s12 m5 l4">
+          <div className="col s12 m7">
             <div className="row">
               {this.renderCards()}
             </div>

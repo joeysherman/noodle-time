@@ -250,8 +250,7 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
   };
 
   render() {
-    let placeCard = false,
-      { detailIndex, dialogOpen } = this.state;
+    let placeCard = false;
 
     return (
       <div className={styles.mapWrapper}>
