@@ -25,6 +25,8 @@ import { selectPlaces } from './selectors';
 import Map from '../Map';
 import Loader from '../../components/LoadingSpinner';
 import Card from '../../components/Card';
+import ListWrapper from '../../components/ListWrapper';
+import ListItem from '../../components/ListItem';
 
 import {
   incrementIndex,
@@ -98,6 +100,16 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
     }
   }
 
+  renderList() {
+    const listItems = this.props.places.map((place) => <ListItem place={place}/>);
+
+    return (
+      <ListWrapper>
+        {listItems}
+      </ListWrapper>
+    )
+  }
+
   renderCards() {
     return this.props.places.length ?
       this.props.places.map((data, i) => <div className="col s12 l6" key={i}><Card place={data}/></div>) : false;
@@ -117,7 +129,7 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
           </div>
           <div className="col s12 m7">
             <div className="row">
-              {this.props.index === false ? this.renderCards() : this.renderCard()}
+              {this.props.index === false ? this.renderList() : this.renderCard()}
             </div>
           </div>
         </div>

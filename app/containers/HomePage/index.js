@@ -25,18 +25,9 @@ import {
   noodleTime,
   autoCompleteRequest,
   autoCompleteItemSelected,
-  setStatusMessage,
 } from './actions';
 
 import { userLocationRequest } from '../App/actions';
-
-// Selectors
-import{
-  selectStatusMessage,
-  selectAutoCompleteData,
-  selectNoodleTime,
-} from './selectors';
-
 
 class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -54,21 +45,14 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-  statusMessage: selectStatusMessage(),
-  noodleTime: selectNoodleTime(),
-});
-
 const mapDispatchToProps = (dispatch) => {
   return {
-    itsNoodleTime: () => dispatch(noodleTime()),
-    fetchLocation: () => dispatch(userLocationRequest()),
-    setStatus: (status) => dispatch(setStatusMessage(status)),
-    push: (path) => dispatch(push(path)),
-    dispatch,
+      fetchLocation: () => dispatch(userLocationRequest()),
+      push: (path) => dispatch(push(path)),
+      dispatch,
     }
 };
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(false, mapDispatchToProps)(HomePage);
