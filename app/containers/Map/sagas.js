@@ -28,17 +28,18 @@ export function* defaultSaga() {
   yield take(MAP_LOAD_REQUEST);
   try {
     yield call(loadGoogleMapsPromise);
-    const location = yield select(selectLocation());
-
-    mountMap(location);
+    yield put({ type: 'MOUNT_MAP'});
   } catch (error) {
     console.log('error loading maps');
     console.log(error)
   }
 }
 
-function mountMap(user) {
-  let userLocation = user.geometry.location;
+function* mountMap() {
+  yield take('MOUNT_MAP');
+  console.log('mounting map saga');
+  const user = yield select(selectLocation());
+  const userLocation = user.geometry.location;
 
   if (window.google) {
     googleMap = new window.google.maps.Map(document.getElementById('map'), {
@@ -46,39 +47,49 @@ function mountMap(user) {
       zoom: 15,
     });
   }
+  yield call(locationsWatcher);
 }
 
-function extendMapBounds() {
-  let bounds = this.getMapBounds();
-  let placesCoords = this.getPlacesCoords();
+function* locationsWatcher() {
+  const { payload } = yield take('PLACES_SUCCESS');
 
-  placesCoords.forEach((item) => {
-    bounds = bounds.extend(item);
+  // check if payload !== array || length == 0
+  console.log('locWat ' + payload.length);
+  const placeCoords = getPlaceCoords(payload);
+  placeAllPlacesOnMap(placeCoords);
+  extendMapBounds(placeCoords);
+}
+
+function getPlaceCoords(places) {
+  return places.map((item) => {
+    return {
+      lat: item.location.coordinate.latitude,
+      lng: item.location.coordinate.longitude,
+    };
+  });
+}
+
+function extendMapBounds(arrOfCoords) {
+  let bounds = googleMap.getBounds();
+
+  arrOfCoords.forEach((coords) => {
+    bounds = bounds.extend(coords);
   });
 
-  window.map.fitBounds(bounds);
-};
+  googleMap.fitBounds(bounds);
+}
 
-function placeAllPlacesOnMap() {
-  let { places } = this.props;
+function placeAllPlacesOnMap(arrOfCoords) {
 
-  if (places.length){
-    let holder;
-
-    places.map((item, i) => {
-      holder = this.createAndSetMarker({
-        coords: {
-          lat: item.location.coordinate.latitude,
-          lng: item.location.coordinate.longitude,
-        },
-        label: i.toString(),
-      });
-
-      this.attachListenerToMarker(holder, i);
-
+  arrOfCoords.map((coords, i) => {
+    new window.google.maps.Marker({
+      map: googleMap,
+      position: coords,
+      label: i.toString(),
+      clickable: true,
     });
-  }
-};
+  });
+}
 
 function placeUserLocationOnMap() {
   let { geometry } = this.props.userLocation;
@@ -109,4 +120,5 @@ return marker;*/
 // All sagas to be loaded
 export default [
   defaultSaga,
+  mountMap,
 ];

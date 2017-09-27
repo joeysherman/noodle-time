@@ -54,16 +54,6 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
     return window.map.getBounds();
   };
 
-  getPlacesCoords = () => {
-    return this.props.places.map((item) => {
-
-      return {
-        lat: item.location.coordinate.latitude,
-        lng: item.location.coordinate.longitude,
-      };
-    });
-  };
-
   attachListenerToMarker = (marker, index) => {
 
     marker.addListener('click', () => {
