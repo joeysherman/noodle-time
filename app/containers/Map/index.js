@@ -37,37 +37,17 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
 
   componentDidUpdate(prevProps, prevState, prevContext) {
     console.log('Map cdu')
-    if (!prevProps.loaded && this.props.loaded) {
-      this.mountMap();
-      this.placeUserLocationOnMap();
-    }
-    if (!prevProps.places.length && this.props.places.length) {
-      this.extendMapBounds();
-      this.placeAllPlacesOnMap();
-    }
   }
 
   componentDidMount() {
     console.log('cdm map')
-    this.loadMapsIfNeeded();
+    this.props.loadMaps();
   }
 
   loadMapsIfNeeded = () => {
     if (!this.props.loaded) {
       this.props.loadMaps();
     }
-  };
-
-  mountMap = () => {
-     let { geometry } = this.props.userLocation;
-     let userLocation = geometry.location;
-
-     if (window.google) {
-       window.map = new window.google.maps.Map(document.getElementById('map'), {
-       center: userLocation,
-       zoom: 15,
-       });
-     }
   };
 
   getMapBounds = () => {
@@ -84,54 +64,12 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
     });
   };
 
-  extendMapBounds = () => {
-    let bounds = this.getMapBounds();
-    let placesCoords = this.getPlacesCoords();
-
-    placesCoords.forEach((item) => {
-      bounds = bounds.extend(item);
-    });
-
-    window.map.fitBounds(bounds);
-  };
-
-  placeUserLocationOnMap = () => {
-    let { geometry } = this.props.userLocation;
-    let userLocation = geometry.location;
-
-    let marker = new window.google.maps.Marker({
-      map: window.map,
-      position: userLocation,
-    });
-  };
-
   attachListenerToMarker = (marker, index) => {
 
     marker.addListener('click', () => {
       console.log('You clicked: ' + index);
       this.props.setPlaceIndex(index);
     });
-  };
-
-  placeAllPlacesOnMap = () => {
-    let { places } = this.props;
-
-    if (places.length){
-      let holder;
-
-      places.map((item, i) => {
-        holder = this.createAndSetMarker({
-          coords: {
-            lat: item.location.coordinate.latitude,
-            lng: item.location.coordinate.longitude,
-          },
-          label: i.toString(),
-        });
-
-        this.attachListenerToMarker(holder, i);
-
-      });
-    }
   };
 
   checkDirectionsService = () => {
@@ -224,27 +162,6 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
   setDirections = () => {
     // DirectionsRenders.setDirections(result)
     this.getDirections();
-  };
-
-
-  createAndSetMarker = (data) => {
-    if (!window.mapMarkers){
-      window.mapMarkers = [];
-    }
-    let marker = new window.google.maps.Marker({
-      map: window.map,
-      position: data.coords,
-      clickable: true,
-      label: data.label,
-    });
-
-    marker.addListener('click', function() {
-      console.log
-    });
-
-    window.mapMarkers.push(marker);
-
-    return marker;
   };
 
   toggleDialog = () => {
