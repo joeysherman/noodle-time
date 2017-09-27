@@ -121,8 +121,11 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
 
       places.map((item, i) => {
         holder = this.createAndSetMarker({
-          lat: item.location.coordinate.latitude,
-          lng: item.location.coordinate.longitude,
+          coords: {
+            lat: item.location.coordinate.latitude,
+            lng: item.location.coordinate.longitude,
+          },
+          label: i.toString(),
         });
 
         this.attachListenerToMarker(holder, i);
@@ -224,14 +227,15 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
   };
 
 
-  createAndSetMarker = (location) => {
+  createAndSetMarker = (data) => {
     if (!window.mapMarkers){
       window.mapMarkers = [];
     }
     let marker = new window.google.maps.Marker({
       map: window.map,
-      position: location,
+      position: data.coords,
       clickable: true,
+      label: data.label,
     });
 
     marker.addListener('click', function() {
