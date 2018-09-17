@@ -5,32 +5,22 @@
 var Router = require('express').Router();
 var morgan = require('morgan');
 var google = require('@google/maps');
-var yelp = require('yelp');
+var yelp = require('yelp-fusion');
 
 var google_key = 'AIzaSyBgSwZr52IjbFkMZsvubb1HmrZtc5NcKbQ';
 
-var consumer_key = 'BjwzfCo-0punSOMGe9DY7g';
-var consumer_secret = 'MOJhoX2vKG-e3WUeKIxZRBjJ-ME';
-var token = 'xNF-zZ6wvkTAJumh6mjKsHUsJ_ifQ_Lo';
-var token_secret = 'l11-u6Vov1tXg0Wahq5xr9u8r28';
+var yelp_key = 'tfaLrmkgPxhzvB0JhOVSz4NabdK1MN_dkJK6ug61RKCohpuimDTL-KZLVa6gjJPauUE7P44kY0EHrDG65lL2c-iEbS--qhRa9v9lwoT4KjUoK-YgjEyGye10cTacW3Yx';
 
-var q          = require('q').Promise;
 const DEV_MODE   = process.env.NODE_ENV !== 'production';
 
 module.exports = function addApiMiddleware(app) {
   var setting = DEV_MODE ? 'dev' : 'short';
 
   app.locals.google = google.createClient({
-    key: google_key,
-    Promise: q,
+    key: google_key
   });
 
-  app.locals.yelp = new yelp({
-    consumer_key: consumer_key,
-    consumer_secret: consumer_secret,
-    token: token,
-    token_secret: token_secret,
-  });
+  app.locals.yelp = yelp.client(yelp_key);
 
   Router.get('/api/*', function(req, res, next){
     res.set({

@@ -2,8 +2,6 @@
  * Created by Joey on 11/6/2016.
  */
 
-var yelp = require('yelp');
-
 var Router = require('express').Router();
 
 module.exports = (function yelp_routes() {
@@ -14,24 +12,10 @@ module.exports = (function yelp_routes() {
     var index = 0;
     var query = {};
 
-    for (index; index<keys.length; index++) {
-      switch (keys[index]) {
-        case 'limit' :
-          query.limit = request.limit;
-          break;
-        case 'sort' :
-          query.sort = request.sort;
-          break;
-      }
-    }
-
-    query.cll = request.lat + ',' + request.lng;
-    console.log(query.cll);
-    query.term = 'ramen';
-
     req.app.locals.yelp.search({
       term: 'ramen',
-      ll: request.lat + ',' + request.lng,
+      latitude: request.lat,
+      longitude: request.lng,
       sort: request.sort || 1,
     })
       .then((data) => { res.send(data)})

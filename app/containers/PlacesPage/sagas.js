@@ -29,10 +29,10 @@ function* fetchNoodlePlaces(location) {
     const { data, err } = yield call(request, url);
 
     if (data) {
-      if (data.statusCode) {
+      if (err) {
         yield put(placesError(data.data));
       } else {
-        yield put(placesSuccess(data.businesses));
+        yield put(placesSuccess(data.jsonBody.businesses));
       }
     } else {
       yield put(placesError(err));
