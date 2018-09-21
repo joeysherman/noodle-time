@@ -73,14 +73,15 @@ export function fetchUserLocationGeo() {
   return new Promise((resolve, reject) => {
     let options = {
       enableHighAccuracy: true,
-      timeout: 1000,
-      maximumAge: 10
+      timeout: 30000
     };
 
     if ("navigator" in window) {
       window.navigator.geolocation.getCurrentPosition(function(location) {
+        console.log('we have location!')
         resolve({ location });
       }, function(err) {
+        console.log('Error code ' + err.code + ' - ' + err.message);
         resolve({ err });
       }, options);
     } else {

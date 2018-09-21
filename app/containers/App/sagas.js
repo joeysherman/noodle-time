@@ -27,17 +27,15 @@ let geocodeUrl        = '/api/geocode';
 export function* appSaga() {
 
   while (yield take(USER_LOCATION_REQUEST)){
-    const { location, error } = yield call(fetchUserLocationGeo);
+    const { location, err } = yield call(fetchUserLocationGeo);
     
-    if (location) {
-      yield put(geocodeRequest(location));
+    if (err) {
+      yield put(userLocationError(err))
     } else {
-      console.log('replacing to autocomplete')
-      yield put(replace({
-        pathname: '/',
-        state: {
-          mode: 'autocomplete',
-        }
+      yield put (userLocationSuccess({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        timestamp: location.timestamp,
       }));
     }
   }

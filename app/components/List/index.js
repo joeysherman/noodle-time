@@ -1,75 +1,21 @@
-import React, {Component, PropTypes} from 'react';
-import {List, ListItem, makeSelectable} from 'material-ui/List';
-import Paper from 'material-ui/Paper';
-import Avatar from 'material-ui/Avatar';
+/**
+*
+* List
+*
+*/
+
+import React from 'react';
+
 import styles from './styles.css';
 
-
-let SelectableList = makeSelectable(List);
-
-function wrapState(ComposedComponent) {
-  return class SelectableList extends Component {
-    static propTypes = {
-      children: PropTypes.node.isRequired,
-      defaultValue: PropTypes.number.isRequired,
-    };
-
-    componentWillMount() {
-      this.setState({
-        selectedIndex: this.props.defaultValue,
-      });
-    }
-
-    handleRequestChange = (event, index) => {
-      console.log(index);
-      this.setState({
-        selectedIndex: index,
-      });
-    };
-
-    render() {
-      return (
-        <ComposedComponent
-          value={this.state.selectedIndex}
-          onChange={this.handleRequestChange}
-          className={this.props.className}
-        >
-          {this.props.children}
-        </ComposedComponent>
-      );
-    }
-  };
-}
-
-SelectableList = wrapState(SelectableList);
-
-const renderListItem = (props, index, onTouchTap) => {
-  let style = index > 1 ? { marginTop: '10px', padding: '0px 12px' } : { padding: '0px 12px' };
+function List(props) {
+  let header = props.count > 0 ? props.count + ' - found near you' : 'No places found' 
   return (
-    <ListItem
-      key={index}
-      value={index}
-      primaryText={props.name}
-      leftAvatar={<Avatar src={props.image_url}/>}
-      rightAvatar={<img src={props.rating_img_url}/>}
-      className={styles.listItem}
-      style={style}
-      onTouchTap={() => {onTouchTap(index-1)}}
-    />
-  );
-};
-
-const ListExampleSelectable = (props) => {
-  let { onTouchTap } = props;
-  return (
-    <Paper className={styles.listWrapper}>
-      <SelectableList defaultValue={1} className={styles.list}>
-        {props.places.map((item, i) => {
-          return renderListItem(item, i+1, onTouchTap);
-        })}
-      </SelectableList>
-    </Paper>
+    <ul className="collection with-header">
+    <li class="collection-header"><h4>{header}</h4></li>
+      {props.children}
+    </ul>
   );
 }
 
-export default ListExampleSelectable;
+export default List;

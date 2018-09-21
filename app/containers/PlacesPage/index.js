@@ -23,9 +23,7 @@ import { selectPlaces } from './selectors';
 
 // Component imports
 import Map from '../Map';
-import Loader from '../../components/LoadingSpinner';
-import Card from '../../components/Card';
-import ListWrapper from '../../components/ListWrapper';
+import List from '../../components/List';
 import ListItem from '../../components/ListItem';
 
 import {
@@ -62,17 +60,17 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
   }
 
   componentDidUpdate(prevProps, prevState, prevContext) {
-    if (!prevProps.userLocation.geometry && this.props.userLocation.geometry) {
+    if (prevProps.loadingLocation && !this.props.loadingLocation) {
       this.fetchPlaces();
     }
   }
 
   fetchPlaces = () => {
-    let { geometry: { location: { lat, lng }}} = this.props.userLocation;
+    let { latitude, longitude } = this.props.userLocation;
 
     this.props.fetchPlaces({
-      latitude: lat,
-      longitude: lng,
+      latitude,
+      longitude
     });
   };
 
@@ -91,58 +89,38 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
     return (latitude < 90 && latitude > -90 && longitude < 180 && longitude > -180);
   };
 
-  renderCard() {
-    const { index } = this.props;
-    const place = this.props.places[index];
-    if (this.props.places.length) {
-      console.log('rendering single card')
-      return <div className="col s12 l6"><Card place={place}/></div>
-    }
-  }
+  renderListItems = (places) => {
+    if (!places) return false;
 
-  renderList() {
-    const listItems = this.props.places.map((place) => <ListItem place={place}/>);
+    return places.map((place) => (
+      <ListItem place={place}/>
+    ));
+  };
+
+  renderList = () => {
+    let { places } = this.props;
+    let count = places.length;
+    let items = this.renderListItems(places);
 
     return (
-      <ListWrapper>
-        {listItems}
-      </ListWrapper>
+      <List count={count}>
+        {items}
+      </List>
     )
-  }
-
-  renderCards() {
-    return this.props.places.length ?
-      this.props.places.map((data, i) => <div className="col s12 l6" key={i}><Card place={data}/></div>) : false;
-  }
-
-  renderContent() {
-    if (this.props.loadingLocation || !this.props.userLocation.geometry) {
-      console.log('Loading spinner for location')
-      return (
-        <Loader/>
-      )
-    } else {
-      return (
-        <div className="row">
-          <div className="col s12 m5">
-            <Map/>
-          </div>
-          <div className="col s12 m7">
-            <div className="row">
-              {this.props.index === false ? this.renderList() : this.renderCard()}
-            </div>
-          </div>
-        </div>
-      )
-    }
-  }
+  };
 
   render() {
-    let main = this.renderContent();
+    const List = this.renderList();
+
     return (
-      <div>
-        {main}
-      </div>
+        <div className="row">
+          <div className="col m7">
+            <Map />
+          </div>
+          <div className="col m5">
+            {List}
+          </div>
+        </div>
     );
   }
 }

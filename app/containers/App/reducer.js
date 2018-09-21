@@ -19,6 +19,7 @@ const initialState = fromJS({
 });
 
 function appReducer(state = initialState, action) {
+
   switch (action.type) {
 
     case constants.USER_LOCATION_REQUEST :
@@ -27,6 +28,7 @@ function appReducer(state = initialState, action) {
         .set('location', fromJS({}));
 
     case constants.USER_LOCATION_SUCCESS :
+      
       return state
         .set('loading', false)
         .set('location', fromJS(action.payload));

@@ -37,7 +37,10 @@ class HomePage extends React.Component { // eslint-disable-line react/prefer-sta
       <div className="section">
       <div className="row">
         <div className="col s12 center">
-          <button onClick={() => this.props.push('/search')}>Find Ramen Now</button>
+          <div className="section">
+            <h1>Find Ramen Now.</h1>
+          </div>
+          <button onClick={() => this.props.push('/search')} className="btn waves-effect waves-light" name="action">Search near me</button>
         </div>
       </div>
       </div>
