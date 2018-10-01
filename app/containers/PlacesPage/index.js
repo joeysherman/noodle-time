@@ -111,14 +111,18 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
 
   render() {
     const List = this.renderList();
+    const length = this.props.places.length;
 
     return (
         <div className="row">
+        <div className="section center">
+          <h5>Displaying <b>{length}</b> places near you.</h5>
+        </div>
           <div className="col m7">
-            <Map />
+            {List}
           </div>
           <div className="col m5">
-            {List}
+            <Map />
           </div>
         </div>
     );

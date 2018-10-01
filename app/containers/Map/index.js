@@ -37,12 +37,14 @@ export class Map extends React.Component { // eslint-disable-line react/prefer-s
 
   componentDidUpdate(prevProps, prevState, prevContext) {
     console.log('Map cdu')
+    if (prevProps.userLocation.latitude == undefined && this.props.userLocation.latitude) {
+      this.props.loadMaps();
+    }
   }
 
   componentDidMount() {
     console.log('cdm map')
-    this.props.loadMaps();
-  }
+    }
 
   loadMapsIfNeeded = () => {
     if (!this.props.loaded) {

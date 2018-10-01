@@ -39,7 +39,10 @@ function* mountMap() {
   yield take('MOUNT_MAP');
   console.log('mounting map saga');
   const user = yield select(selectLocation());
-  const userLocation = user.geometry.location;
+  const userLocation = {
+    lat: user.latitude,
+    lng: user.longitude
+  };
 
   if (window.google) {
     googleMap = new window.google.maps.Map(document.getElementById('map'), {
@@ -56,6 +59,7 @@ function* locationsWatcher() {
   // check if payload !== array || length == 0
   console.log('locWat ' + payload.length);
   const placeCoords = getPlaceCoords(payload);
+  console.log(payload)
   placeAllPlacesOnMap(placeCoords);
   extendMapBounds(placeCoords);
 }
@@ -63,8 +67,8 @@ function* locationsWatcher() {
 function getPlaceCoords(places) {
   return places.map((item) => {
     return {
-      lat: item.location.coordinate.latitude,
-      lng: item.location.coordinate.longitude,
+      lat: item.coordinates.latitude,
+      lng: item.coordinates.longitude,
     };
   });
 }
