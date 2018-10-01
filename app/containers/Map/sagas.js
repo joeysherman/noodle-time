@@ -50,6 +50,11 @@ function* mountMap() {
       zoom: 15,
     });
   }
+  // Mount Marker at User Location
+  let marker = new window.google.maps.Marker({
+    map: googleMap,
+    position: userLocation,
+  });
   yield call(locationsWatcher);
 }
 
@@ -94,17 +99,6 @@ function placeAllPlacesOnMap(arrOfCoords) {
     });
   });
 }
-
-function placeUserLocationOnMap() {
-  let { geometry } = this.props.userLocation;
-  let userLocation = geometry.location;
-
-  let marker = new window.google.maps.Marker({
-    map: window.map,
-    position: userLocation,
-  });
-};
-
 
 /*if (!window.mapMarkers){
   window.mapMarkers = [];
