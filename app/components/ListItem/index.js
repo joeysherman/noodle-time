@@ -19,14 +19,15 @@ function ListItem(props) {
   } = props.place;
 
   return (
-    <li className="collection-item avatar">
-      <img src={image_url} alt="" className="responsive-img circle"></img>
-      <span className="title">{name}</span>
-      <p>
-        {distance}
-        <br></br>
-        {rating + ' based off ' + review_count + ' reviews.'}
-      </p>
+    <li className="collection-item">
+      <div className="row lighten-2 z-depth-1-half">
+        <div className='col s5 m4 l3'>
+          <img src={image_url} alt="" className="responsive-img"></img>
+        </div>
+        <div className="col s7 m8 l9">
+          <h2>{name}</h2>
+        </div>
+      </div>
     </li>
   );
 }

@@ -8,8 +8,7 @@ import React from 'react';
 
 import styles from './styles.css';
 
-function List(props) {
-  let header = props.count > 0 ? props.count + ' - found near you' : 'No places found' 
+function List(props) { 
   return (
     <ul className="collection">
       {props.children}
