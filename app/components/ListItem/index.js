@@ -14,18 +14,22 @@ function ListItem(props) {
     name,
     image_url,
     review_count,
+    rating,
     distance,
-    rating
   } = props.place;
 
   return (
     <li className="collection-item">
-      <div className="row lighten-2 z-depth-1-half">
+      <div className="row no-pad-bot lighten-2 z-depth-1-half">
+      <a className="btn-floating btn waves-effect waves-light red right-align">{props.index}</a>
         <div className='col s5 m4 l3'>
-          <img src={image_url} alt="" className="responsive-img"></img>
+          <div className="section">
+            <img src={image_url} alt="" className="responsive-img"></img>
+          </div>
         </div>
         <div className="col s7 m8 l9">
-          <h2>{name}</h2>
+          <h5>{name}</h5>
+          <p>{rating + ' based off of ' + review_count}</p> 
         </div>
       </div>
     </li>

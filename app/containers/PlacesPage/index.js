@@ -92,8 +92,8 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
   renderListItems = (places) => {
     if (!places) return false;
 
-    return places.map((place) => (
-      <ListItem place={place}/>
+    return places.map((place, i) => (
+      <ListItem place={place} index={i+1}/>
     ));
   };
 

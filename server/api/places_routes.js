@@ -12,7 +12,7 @@ module.exports = (function places(){
    *  @param : req.query.lat - latitude of user
    *  @param : req.query.lng - longitude of user
    *  @param (optional) : req.query.radius - radius around location to search.
-   *  @default : 1000 meters
+   *  @default : 1000 meters  
    *
    *  @param : req.query.open - search whether place is open now or closed?
    *  @default : true
