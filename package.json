@@ -7,14 +7,13 @@
     "url": "git://github.com/mxstbr/react-boilerplate.git"
   },
   "engines": {
-    "npm": ">=3",
-    "node": ">=6.10.0"
+    "npm": "5.6.0",
+    "node": "8.11.3"
   },
   "author": "Max Stoiber",
   "license": "MIT",
   "scripts": {
     "preinstall": "npm run npmcheckversion",
-    "postinstall": "npm run build:dll",
     "analyze:clean": "rimraf stats.json",
     "preanalyze": "npm run analyze:clean",
     "analyze": "node ./internals/scripts/analyze.js",
