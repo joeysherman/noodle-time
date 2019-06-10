@@ -25,6 +25,8 @@ import { selectPlaces } from './selectors';
 import Map from '../Map';
 import List from '../../components/List';
 import ListItem from '../../components/ListItem';
+import LoadingSpinner from '../../components/LoadingSpinner';
+import Card from '../../components/Card';
 
 import {
   incrementIndex,
@@ -38,6 +40,7 @@ import {
 import {
   selectLocation,
 } from '../App/selectors';
+import { SET_SELECTED_INDEX } from './constants';
 
 export class PlacesPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -89,11 +92,22 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
     return (latitude < 90 && latitude > -90 && longitude < 180 && longitude > -180);
   };
 
+  clickedItem = (index) => {
+    this.props.setIndex(index);
+  };
+
+  renderCardView = () => {
+    let data = this.props.places[this.props.index];
+    return (
+      <Card place={data}></Card>
+    )
+  };
+
   renderListItems = (places) => {
     if (!places) return false;
 
     return places.map((place, i) => (
-      <ListItem place={place} index={i+1}/>
+      <ListItem place={place} index={i+1} onClick={this.props.setIndex.bind(this, i)}/>
     ));
   };
 
@@ -109,10 +123,12 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
     )
   };
 
+
   render() {
     const List = this.renderList();
     const length = this.props.places.length;
     const header = length ? 'Displaying '+ length +' places near you': 'Searching...';
+    const viewDetailIndex = Number.isInteger(this.props.index);
 
     return (
         <div className="row">
@@ -120,7 +136,7 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
           <h5>{header}</h5>
         </div>
           <div className="col m7">
-            {length ? List : false} 
+            {viewDetailIndex ? this.renderCardView() : List} 
           </div>
           <div className="col m5">
             <Map />

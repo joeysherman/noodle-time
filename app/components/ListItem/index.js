@@ -22,10 +22,10 @@ function ListItem(props) {
       half_star = <i className="material-icons">star_half</i>,
       star = <i className="material-icons">star</i>;
 // mile to meter = 1609.34
-
+  
   let stars_html = [];
   let count = 0;
-
+  // Show the proper amount of stars based on the rating.
   while (count != 5) {
     // rating = 0 
     // rating = 2.5
@@ -50,6 +50,7 @@ function ListItem(props) {
       <p>{review_count} Reviews.<br></br>
       {distance}
       </p>
+      <button onClick={props.onClick}>Extra Info</button>
       <a href="#!" className="secondary-content">{stars_html}</a>
     </li>
   );
