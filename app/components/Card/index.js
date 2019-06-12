@@ -19,7 +19,6 @@ function Card(props) {
       </div>
       <div className="card-content">
         <p>{snippet_text && snippet_text.slice(0, 50)}</p>
-        <a>Read More</a>
       </div>
     </div>
   );

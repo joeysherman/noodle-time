@@ -123,7 +123,6 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
     )
   };
 
-
   render() {
     const length = this.props.places.length;
     const header = length ? 'Displaying '+ length +' places near you': 'Searching...';

@@ -44,7 +44,7 @@ function ListItem(props) {
   }
 
   return (
-    <li className="collection-item avatar">
+    <li className="collection-item avatar" >
       <img src={image_url} alt="" className="circle"></img>
       <span className="title">{name}</span>
       <p>{review_count} Reviews.<br></br>
