@@ -125,7 +125,6 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
 
 
   render() {
-    const List = this.renderList();
     const length = this.props.places.length;
     const header = length ? 'Displaying '+ length +' places near you': 'Searching...';
     const viewDetailIndex = Number.isInteger(this.props.index);
@@ -136,7 +135,8 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
           <h5>{header}</h5>
         </div>
           <div className="col m7">
-            {viewDetailIndex ? this.renderCardView() : List} 
+            {length ? false : <LoadingSpinner/>}
+            {length ? viewDetailIndex ? this.renderCardView() : this.renderList() : false } 
           </div>
           <div className="col m5">
             <Map />
