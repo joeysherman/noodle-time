@@ -41,6 +41,41 @@ export default function createRoutes(store) {
 
       importModules.catch(errorLoading);
     },
+  onChange: (prevState, nextState, _replace, callback) => {
+    console.log(prevState);
+    console.log('ON CHANGE -------------------------------------------------------------')
+    console.log(nextState)
+
+    callback();
+
+  },
+  onEnter: (nextState, replace, callback) => {
+    console.log(nextState)
+    console.log('ON ENTER -------------------------------------------------------------')
+    console.log(replace)
+    callback();
+   }},
+    {
+    path: 'whereami',
+    getComponent(nextState, cb) {
+      console.log('getting component router')
+      console.log(nextState);
+      const importModules = Promise.all([
+        System.import('containers/AutoComplete'),
+        System.import('containers/AutoComplete/reducer'),
+        System.import('containers/AutoComplete/sagas'),
+      ]);
+
+      const renderRoute = loadModule(cb);
+
+      importModules.then(([component, reducer, sagas]) => {
+        injectReducer('autoComplete', reducer.default);
+        injectSagas(sagas.default);
+        renderRoute(component);
+      });
+
+      importModules.catch(errorLoading);
+    },
   }];
 /*  return [{
     path: 'search',

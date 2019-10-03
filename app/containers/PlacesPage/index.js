@@ -63,6 +63,9 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
   }
 
   componentDidUpdate(prevProps, prevState, prevContext) {
+    if (prevProps.userLocation.error == undefined && this.props.userLocation.error) {
+      console.log('error in geolocation')
+    }
     if (prevProps.loadingLocation && !this.props.loadingLocation) {
       this.fetchPlaces();
     }
@@ -104,7 +107,7 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
   };
 
   renderListItems = (places) => {
-    if (!places) return false;
+    if (!places) return <LoadingSpinner/>;
 
     return places.map((place, i) => (
       <ListItem place={place} index={i+1} onClick={this.props.setIndex.bind(this, i)}/>
@@ -126,19 +129,22 @@ export class PlacesPage extends React.Component { // eslint-disable-line react/p
   render() {
     const length = this.props.places.length;
     const header = length ? 'Displaying '+ length +' places near you': 'Searching...';
-    const viewDetailIndex = Number.isInteger(this.props.index);
+    const index = this.props.index;
 
     return (
         <div className="row">
-        <div className="section center">
-          <h5>{header}</h5>
+        <div className="card-panel center">
+          <button className="left" onClick={this.props.setIndex.bind(this, false)}>Back</button>
+          <div>
+          <span>{header}</span>
+            </div>
         </div>
-          <div className="col m7">
-            {length ? false : <LoadingSpinner/>}
-            {length ? viewDetailIndex ? this.renderCardView() : this.renderList() : false } 
+        {length ? false : <div className="center"><LoadingSpinner/></div>}
+          <div className="col s12 m5 push-m7">
+            <Map/>
           </div>
-          <div className="col m5">
-            <Map />
+          <div className="col s12 m7 pull-m5">
+            {length ? Number.isInteger(index) ? this.renderCardView() : this.renderList() : false } 
           </div>
         </div>
     );

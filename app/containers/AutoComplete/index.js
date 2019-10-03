@@ -12,6 +12,7 @@ export class AutoComplete extends React.Component { // eslint-disable-line react
   render() {
     return (
       <div>
+        <h1>Balls</h1>
       </div>
     );
   }

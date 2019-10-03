@@ -44,14 +44,11 @@ function ListItem(props) {
   }
 
   return (
-    <li className="collection-item avatar" >
+    <li className="collection-item avatar" onClick={props.onClick}>
       <img src={image_url} alt="" className="circle"></img>
       <span className="title">{name}</span>
-      <p>{review_count} Reviews.<br></br>
-      {distance}
-      </p>
-      <button onClick={props.onClick}>Extra Info</button>
       <a href="#!" className="secondary-content">{stars_html}</a>
+      <p>{review_count} Reviews.</p>
     </li>
   );
 }
