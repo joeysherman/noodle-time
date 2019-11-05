@@ -38,6 +38,7 @@ export default function configureStore(initialState = {}, history) {
 
   // Run Default Sagas
   appSagas.map(store.runSaga);
+  homePageSagas.map(store.runSaga);
   
   // Make reducers hot reloadable, see http://mxs.is/googmo
   /* istanbul ignore next */

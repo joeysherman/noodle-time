@@ -11,8 +11,7 @@ import request from '../../utils/request';
 import {
   AUTOCOMPLETE_REQUEST,
   AUTOCOMPLETE_ITEM_SELECTED,
-  NOODLE_TIME,
-} from './constants';
+} from '../AutoComplete/constants';
 
 import {
   USER_LOCATION_SUCCESS,

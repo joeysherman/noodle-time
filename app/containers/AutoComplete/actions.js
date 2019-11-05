@@ -4,9 +4,7 @@
  *
  */
 
-import {
-  DEFAULT_ACTION,
-} from './constants';
+import * as constants from './constants';
 
 /* AutoComplete */
 

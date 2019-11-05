@@ -50,7 +50,7 @@ module.exports = (function location_routes() {
 
   Router.get('/api/autocomplete', function (req, res, next) {
     var input = req.query.input;
-
+    
     console.log('Input: ' + input);
     if (input) {
       req.app.locals.google.placesAutoComplete({
