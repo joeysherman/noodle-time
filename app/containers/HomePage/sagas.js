@@ -18,11 +18,6 @@ import {
 } from '../App/constants';
 
 import {
-  autoCompleteSuccess,
-  autoCompleteError,
-} from './actions';
-
-import {
   userLocationError,
   userLocationSuccess,
   geocodeRequest,

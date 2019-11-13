@@ -1,68 +1,46 @@
-Project Title
+![RamenImage](ramen_image.svg)
+# NoodleTime
 
-One Paragraph of project description goes here
-Getting Started
+This is an application that helps you find the greatest food ever known, Ramen, in 1 click.
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-Prerequisites
+#### Prerequisites :
+Please make sure to install Node version >=8.11.3 and npm version >=5.6.0.
 
-What things you need to install the software and how to install them
+Clone the remote repository:
+```
+git clone https://github.com/joeysherman/noodletime.git
+```
 
-Give examples
+#### Installing :
 
-Installing
+```
+npm install
+```
+or with Yarn
+```
+yarn
+```
+When the dependencies are done installing use `npm run start` or `yarn run start` to get the development server up and running.
 
-A step by step series of examples that tell you how to get a development env running
+After the server loads you should be greeted with:
+```
+Server started ✓
 
-Say what the step will be
+Access URLs:
+-----------------------------------
+Localhost: http://localhost:3000
+      LAN: http://192.168.0.114:3000
+-----------------------------------
+Press CTRL-C to stop
 
-Give the example
+webpack built 0cb0dd20aa6799481075 in (time varies) ms
+```
+#### Built With :
+- React Boilerplate - [Repo](https://github.com/react-boilerplate/react-boilerplate)
+- Yelp API - [Yelp Docs](https://www.yelp.com/developers/documentation/v3)
+- Google Maps - [Maps Docs](https://developers.google.com/maps/documentation/javascript/reference)
+- Google Places - [Places Docs](https://developers.google.com/places/web-service/intro)
+- GeoLocation API - [GeoLocation Docs](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API)
 
-And repeat
+This project is licensed under the MIT License - see the LICENSE.md file for details.
 
-until finished
-
-End with an example of getting some data out of the system or using it for a little demo
-Running the tests
-
-Explain how to run the automated tests for this system
-Break down into end to end tests
-
-Explain what these tests test and why
-
-Give an example
-
-And coding style tests
-
-Explain what these tests test and why
-
-Give an example
-
-Deployment
-
-Add additional notes about how to deploy this on a live system
-Built With
-
-    Dropwizard - The web framework used
-    Maven - Dependency Management
-    ROME - Used to generate RSS Feeds
-
-Contributing
-
-Please read CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests to us.
-Versioning
-
-We use SemVer for versioning. For the versions available, see the tags on this repository.
-Authors
-
-    Billie Thompson - Initial work - PurpleBooth
-
-See also the list of contributors who participated in this project.
-License
-
-This project is licensed under the MIT License - see the LICENSE.md file for details
-Acknowledgments
-
-    Hat tip to anyone whose code was used
-    Inspiration
-    etc
