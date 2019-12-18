@@ -1,0 +1,56 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+:global #app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+
+input {
+  border: 1px solid #999;
+  padding: 0.5rem;
+  width: 300px;
+}
+
+:global .no-suggestions {
+  color: #999;
+  padding: 0.5rem;
+}
+
+:global .suggestions {
+  border-top-width: 0;
+  list-style: none;
+  margin-top: 0;
+  max-height: 11rem;
+  overflow-y: auto;
+  padding-left: 0;
+  width: auto;
+}
+
+:global .suggestions li {
+  padding: 0.5rem;
+  border: 1px solid #999;
+}
+
+:global .suggestion-active {
+  background-color: #ee6e73;
+  color: rgba(0,0,0,0.87);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+:global .suggestions li:hover {
+  background-color: #ee6e73;
+  color: rgba(0,0,0,0.87);
+  cursor: pointer;
+}
+
+:global .suggestions li:not(:last-of-type) {
+  border-bottom: 1px solid #999;
+}

@@ -1,0 +1,18 @@
+/*
+ *
+ * Map constants
+ *
+ */
+
+export const MAP_LOAD_REQUEST = 'MAP_LOAD_REQUEST';
+export const MAP_LOAD_SUCCESS = 'MAP_LOAD_SUCCESS';
+export const MAP_LOAD_ERROR = 'MAP_LOAD_ERROR';
+
+export const MOUNT_MAP_REQUEST = 'MOUNT_MAP_REQUEST';
+
+export const DIRECTIONS_REQUEST = 'DIRECTIONS_REQUEST';
+export const DIRECTIONS_SUCCESS = 'DIRECTIONS_SUCCESS';
+export const DIRECTIONS_ERROR = 'DIRECTIONS_ERROR';
+
+
+

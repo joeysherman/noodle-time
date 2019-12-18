@@ -1,0 +1,34 @@
+.main-bg {
+  background-color: aqua !important;
+}
+
+.noOverflow {
+  overflow: hidden;
+  max-height: 25rem;
+}
+
+.subtitle {
+  line-height: 0.5;
+  text-align: center;
+}
+.subtitle span {
+  display: inline-block;
+  position: relative;  
+}
+.subtitle span:before,
+.subtitle span:after {
+  content: "";
+  position: absolute;
+  height: 5px;
+  border-bottom: 1px solid #333;
+  top: 0;
+  width: 600px;
+}
+.subtitle span:before {
+  right: 100%;
+  margin-right: 15px;
+}
+.subtitle span:after {
+  left: 100%;
+  margin-left: 15px;
+}
