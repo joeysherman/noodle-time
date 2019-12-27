@@ -4,36 +4,31 @@
  *
  */
 
-import { fromJS } from 'immutable';
+import produce from 'immer';
 import * as constants from './constants';
 
-let autoCompleteInitialState = {
+export const autoCompleteInitialState = {
   loading: false,
   error: false,
-  predictions: false,
+  suggestions: false,
 };
 
-function autoCompleteReducer(state = fromJS(autoCompleteInitialState), action) {
-
-  switch (action.type) {
-    case constants.AUTOCOMPLETE_ERROR :
-      return state
-        .set('loading', false)
-        .set('error', action.payload);
-
-    case constants.AUTOCOMPLETE_SUCCESS :
-      let predictions = [];
-
-      if (action.payload.json.status == 'OK'){
-        predictions = action.payload.json.predictions;
-      }
-      return state
-        .set('predictions', predictions);
-    case constants.AUTOCOMPLETE_REQUEST :
-      
-
-  }
-
-  return state;
-}
+const autoCompleteReducer = (state = autoCompleteInitialState, action) =>
+  produce(state, draft => {
+    switch (action.type) {
+      case constants.AUTOCOMPLETE_REQUEST:
+        draft.loading = true;
+        break;
+      case constants.AUTOCOMPLETE_SUCCESS:
+        draft.loading = false;
+        draft.error = false;
+        draft.suggestions = action.payload;
+        break;
+      case constants.AUTOCOMPLETE_ERROR:
+        break;
+      case constants.AUTOCOMPLETE_ITEM_SELECTED:
+        break;
+    }
+  });
+  
 export default autoCompleteReducer;

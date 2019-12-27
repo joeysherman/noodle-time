@@ -5,7 +5,7 @@ import { createSelector } from 'reselect';
 /**
  * Direct selector to the App state domain
  */
-const selectApp = () => state => state.app;
+const selectApp = state => state.app;
 
 /**
  * Other specific selectors

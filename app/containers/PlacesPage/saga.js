@@ -1,7 +1,6 @@
 import { take, call, put, select } from "redux-saga/effects";
 import { delay } from "redux-saga";
 import request from "../../utils/request";
-import { push } from "react-router-redux";
 
 import { placesSuccess, placesError, detailSuccess } from "./actions";
 

@@ -8,30 +8,30 @@
  *
  */
 
-import { fromJS } from 'immutable';
+import produce from 'immer';
 import * as constants from './constants';
 
-const initialState = fromJS({
+const initialState = {
   hasGeo: false,
   loadingGeo: false,
   error: false,
-  location: {},
-});
+  location: false,
+};
 
-function appReducer(state = initialState, action) {
+const appReducer = (state = initialState, action) =>
+  produce(state, (draft) => { 
 
   switch (action.type) {
 
     case constants.USER_LOCATION_REQUEST :
-      return state
-        .set('loadingGeo', true)
-        .set('location', fromJS({}));
+      draft.loadingGeo = true;
+      draft.location = {};
+      break;
 
     case constants.USER_LOCATION_SUCCESS :
-      
-      return state
-        .set('loadingGeo', false)
-        .set('location', fromJS(action.payload));
+      draft.loadingGeo = false;
+      draft.location = action.payload;
+      break;
 
     case constants.USER_LOCATION_ERROR :
       let { code } = action.payload;
@@ -51,18 +51,16 @@ function appReducer(state = initialState, action) {
           message = 'DEFAULT';
       }
 
-      return state
-        .set('loadingGeo', false)
-        .set('error', message);
+      draft.loadingGeo = false;
+      draft.error = message;
+      break;
 
     case constants.USER_HAS_GEO :
-      return state
-        .set('hasGeo', action.payload);
-
+      draft.hasGeo = action.payload;
     
     default:
-      return state;
+      return draft;
   }
-}
+});
 
 export default appReducer;

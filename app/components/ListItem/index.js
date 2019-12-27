@@ -16,6 +16,7 @@ function ListItem(props) {
     review_count,
     rating,
     distance,
+    id,
   } = props.place;
 
   let no_star = <i className="material-icons">star_border</i>,
@@ -44,14 +45,14 @@ function ListItem(props) {
   }
 
   return (
-    <li className="collection-item avatar" onClick={props.onClick}>
-      <img src={image_url} alt="" className="circle"></img>
-      <span className={styles.titleWidth + " title truncate"}>{name}</span>
-      <div className="clearfix">
+    <li className="flex justify-between p-4" key={id} onClick={props.onClick}>
+      <img src={image_url} alt="" className="w-24 h-24 m-2"></img>
+      <div className="ml-2 w-auto">
+      <span className="">{name}</span>
        <div>{stars_html}</div>
        <span>{review_count} Reviews.</span>
       </div>
-      <p className="secondary-content">{distanceByMile} mi.</p>
+      <p className="w-1/5">{distanceByMile} mi.</p>
     </li>
   );
 }

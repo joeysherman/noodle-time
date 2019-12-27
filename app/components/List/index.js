@@ -10,7 +10,7 @@ import styles from './styles.css';
 
 function List(props) { 
   return (
-    <ul className="collection">
+    <ul className="flex flex-col p-4">
       {props.children}
     </ul>
   );

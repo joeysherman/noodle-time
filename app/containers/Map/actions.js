@@ -4,7 +4,7 @@
  *
  */
 
-import promisescript from 'promisescript';
+//import promisescript from 'promisescript';
 import {
   MAP_LOAD_ERROR,
   MAP_LOAD_REQUEST,
@@ -40,10 +40,10 @@ const promiseScriptOptions = {
   exposed: 'google',
 };
 
-export function loadGoogleMapsPromise() {
+/* export function loadGoogleMapsPromise() {
   return promisescript(promiseScriptOptions);
 }
-
+ */
 
 export function defaultAction() {
   return {

@@ -4,74 +4,58 @@
  *
  */
 
-import { fromJS } from "immutable";
-import * as constants from "./constants";
+import produce from 'immer';
+import * as constants from './constants';
 
-const initialState = fromJS({
+const initialState = {
   index: false,
   places: [],
   loading: false,
-  error: false
-});
+  error: false,
+};
 
-function placesPageReducer(state = initialState, action) {
-  switch (action.type) {
+const placesPageReducer = (state = initialState, action) =>
+  produce(state, (draft) => {
+    switch (action.type) {
     case constants.PLACES_SUCCESS:
-      return state.withMutations(map => {
-        map
-          .set("loading", false)
-          .set("error", false)
-          .set("places", fromJS(action.payload));
-      });
-
+      draft.loading = false;
+      draft.error = false;
+      draft.places = action.payload;
+      break;
     case constants.PLACES_ERROR:
-      return state.withMutations(map => {
-        map
-          .set("loading", false)
-          .set("places", fromJS([]))
-          .set("error", action.payload);
-      });
+      draft.loading = false;
+      draft.places = [];
+      draft.error = action.payload;
+      break;
     case constants.PLACES_REQUEST:
-      return state.withMutations(map => {
-        map
-          .set("loading", true)
-          .set("places", fromJS([]))
-          .set("error", null);
-      });
-
+      draft.loading = true;
+      draft.places = [];
+      draft.error = false;
+      break;
     case constants.DETAIL_SUCCESS:
-      return state.withMutations(map => {
-        map
-          .set("loading", false)
-          .set("error", false)
-          .setIn(["detail", action.payload.id], fromJS(action.payload.data.jsonBody));
-      });
-
+      draft.loading = false;
+      draft.error = false;
+      draft.detail[action.payload.id] = action.payload.data.jsonBody;
+      break;
     case constants.DETAIL_ERROR:
-      return state.withMutations(map => {
-        map
-          .set("loading", false)
-          .set("error", action.payload);
-      });
+      draft.loading = false;
+      draft.error = action.payload;
+      break;
     case constants.DETAIL_REQUEST:
-      return state.withMutations(map => {
-        map
-          .set("loading", true)
-          .set("error", null);
-      });
-
+      draft.loading = true;
+      draft.error = false;
+      break;
     case constants.INC_SELECTED_INDEX:
-      return state.update("index", i => i + 1);
-
+      draft.index = draft.index + 1;
+      break;
     case constants.DEC_SELECTED_INDEX:
-      return state.update("index", i => i - 1);
-
+      draft.index = draft.index - 1;
+      break;
     case constants.SET_SELECTED_INDEX:
-      return state.set("index", action.payload);
-
+      return state.index = action.payload;
     default:
       return state;
-  }
-}
+    }
+  });
 
 export default placesPageReducer;

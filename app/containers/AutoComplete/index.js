@@ -7,7 +7,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import selectAutoComplete, { selectPredictions } from "./selectors";
-
+import { createStructuredSelector } from 'reselect';
 import { autoCompleteRequest,
 autoCompleteItemSelected } from "./actions";
 class Autocomplete extends React.Component {
@@ -164,25 +164,15 @@ class Autocomplete extends React.Component {
   }
 }
 
-const makeMapStateToProps = () => {
-
-  const predictions = selectPredictions();
-
-  const mapStateToProps = (state, props) => {
-    return {
-     suggestions: predictions(state)
-    }
-  }
-  return mapStateToProps;
-};
+const mapStateToProps = createStructuredSelector({
+  suggestions: makeSelectSuggestions(),
+});
 
 const mapDispatchToProps = dispatch => {
   return {
     sendInputRequest: input => dispatch(autoCompleteRequest(input)),
     autoCompleteSelection: index => dispatch(autoCompleteItemSelected(index)),
-    push: path => dispatch(push(path)),
-    dispatch
   };
 };
 
-export default connect(makeMapStateToProps, mapDispatchToProps)(Autocomplete);
+export default connect(mapStateToProps, mapDispatchToProps)(Autocomplete);

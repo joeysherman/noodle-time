@@ -16,7 +16,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-
+import { Link } from 'react-router-dom';
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import makeSelectExample from './selectors';
@@ -25,15 +25,31 @@ import styles from './styles.css';
 import saga from './saga';
 import messages from './messages';
 
+import { userLocationRequest } from '../App/actions';
+
 import { selectHasGeo, selectLoadingGeo } from '../App/selectors';
-export function HomePage() {
+export function HomePage(props) {
   // eslint-disable-line react/prefer-stateless-function
   useInjectReducer({ key: 'home', reducer });
   useInjectSaga({ key: 'home', saga });
-
+  
   return (
-    <div className="flex">
-      
+    <div className="container mx-auto">
+      <div className="w-full text-center">
+        <div className="p-24">
+          <h1 className="text-3xl">Find ramen near you</h1>
+        </div>
+      </div>
+      <div className="flex justify-center">
+      <div className="w-full max-w-sm rounded overflow-hidden shadow-lg bg-gray-100">
+        <div className="px-6 py-4 text-center">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={props.fetchLocation}>Locate me</button>
+          <p className="text-gray-600 text-base p-3">
+            - or - 
+          </p>
+        </div>
+      </div>
+      </div>
     </div>
   );
 }
@@ -50,7 +66,6 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     fetchLocation: () => dispatch(userLocationRequest()),
-    push: path => dispatch(push(path)),
     dispatch,
   };
 }

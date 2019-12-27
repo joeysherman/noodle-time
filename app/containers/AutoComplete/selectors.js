@@ -3,15 +3,15 @@ import { createSelector } from 'reselect';
 /**
  * Direct selector to the autoComplete state domain
  */
-const selectAutoCompleteDomain = () => (state) => state.get('autoComplete');
+const selectAutoCompleteDomain = () => (state) => state.autoComplete;
 
 /**
  * Other specific selectors
  */
 
-const selectPredictions = () => createSelector(
+const makeSelectSuggestions = () => createSelector(
   selectAutoCompleteDomain(),
-  (root) => root.get('predictions'),
+  (root) => root.suggestions,
 );
 
 /**
@@ -20,11 +20,11 @@ const selectPredictions = () => createSelector(
 
 const selectAutoComplete = () => createSelector(
   selectAutoCompleteDomain(),
-  (substate) => substate.get('autoComplete'),
+  (substate) => substate.autoComplete,
 );
 
 export {
   selectAutoCompleteDomain,
-  selectPredictions,
+  selectSuggestions,
   selectAutoComplete,
 };

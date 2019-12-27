@@ -4,38 +4,56 @@
  *
  */
 // Dependencies
-import React from "react";
-import { connect } from "react-redux";
-import { replace, push } from "react-router-redux";
-import { createStructuredSelector } from "reselect";
-import styles from "./styles.css";
+import React from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import styles from './styles.css';
+
+import { useInjectSaga } from 'utils/injectSaga';
+import { useInjectReducer } from 'utils/injectReducer';
+
+import saga from './saga';
+import reducer from './reducer';
+import { push } from 'connected-react-router';
 
 // Redux imports
-import { placesRequest } from "./actions";
-import { userLocationRequest } from "../App/actions";
-import { incPlacesIndex, decPlacesIndex, setPlacesIndex, detailRequest } from "./actions";
-import { selectLoadingGeo } from "../App/selectors";
-import { selectPlaces } from "./selectors";
+import { placesRequest } from './actions';
+import { userLocationRequest } from '../App/actions';
+import {
+  incPlacesIndex,
+  decPlacesIndex,
+  setPlacesIndex,
+  detailRequest,
+} from './actions';
+import { selectLoadingGeo } from '../App/selectors';
+import { selectPlaces } from './selectors';
 
 // Component imports
-import Map from "../Map";
-import List from "../../components/List";
-import ListItem from "../../components/ListItem";
-import LoadingSpinner from "../../components/LoadingSpinner";
-import Card from "../../components/Card";
+import Map from '../Map';
+import List from '../../components/List';
+import ListItem from '../../components/ListItem';
+import LoadingSpinner from '../../components/LoadingSpinner';
+import Card from '../../components/Card';
 
-import { incrementIndex, decrementIndex } from "./actions";
+import { incrementIndex, decrementIndex } from './actions';
 
-import { selectIndex } from "./selectors";
+import { selectIndex } from './selectors';
 
-import { selectLocation } from "../App/selectors";
-import { SET_SELECTED_INDEX } from "./constants";
-
+import { selectLocation } from '../App/selectors';
+import { SET_SELECTED_INDEX } from './constants';
 export class PlacesPage extends React.Component {
+
   // eslint-disable-line react/prefer-stateless-function
 
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    let { userLocation } = this.props;
+
+    console.log('cdm');
   }
 
   componentWillMount() {
@@ -45,10 +63,14 @@ export class PlacesPage extends React.Component {
     // -- request location
     // location but no places
     // no location and no places
-    if (!this.props.userLocation.geometry) {
+/*     if (!this.props.userLocation.geometry) {
       this.props.fetchLocation();
     } else {
       this.fetchPlaces();
+    } */
+    console.log(typeof this.props.userLocation);
+    if (typeof this.props.userLocation !== 'boolean') {
+      this.props.fetchLocation();   
     }
   }
 
@@ -57,7 +79,7 @@ export class PlacesPage extends React.Component {
       prevProps.userLocation.error == undefined &&
       this.props.userLocation.error
     ) {
-      console.log("error in geolocation");
+      console.log('error in geolocation');
     }
     if (prevProps.loadingLocation && !this.props.loadingLocation) {
       this.fetchPlaces();
@@ -69,7 +91,7 @@ export class PlacesPage extends React.Component {
 
     this.props.fetchPlaces({
       latitude,
-      longitude
+      longitude,
     });
   };
 
@@ -78,7 +100,7 @@ export class PlacesPage extends React.Component {
 
     if (!geometry) return false;
     let {
-      location: { lat, lng }
+      location: { lat, lng },
     } = geometry;
 
     let latitude = parseInt(lat),
@@ -95,10 +117,10 @@ export class PlacesPage extends React.Component {
   renderCardView = () => {
     let data = this.props.places[this.props.index];
 
-    return <Card place={data}></Card>;
-  };  
+    return <Card place={data} />;
+  };
 
-  handleListItemClick = ({id, index}) => {
+  handleListItemClick = ({ id, index }) => {
     this.props.fetchDetail(id);
     this.props.setIndex(index);
   };
@@ -108,41 +130,62 @@ export class PlacesPage extends React.Component {
       <ListItem
         place={place}
         index={i + 1}
-        onClick={this.handleListItemClick.bind(this, { id: place.id, index: i })}
+        onClick={this.handleListItemClick.bind(this, {
+          id: place.id,
+          index: i,
+        })}
       />
     ));
   };
 
   showList = () => {
     this.props.setIndex(false);
-  }
+  };
 
   renderList = () => {
+  if (this.props.places) {
+    console.log('inside renderlist')
     let { places } = this.props;
     let count = places.length;
     let items = this.renderListItems(places);
-
+    
     return <List count={count}>{items}</List>;
+  } else {
+    console.log("no places");
+    return false;
+  }
   };
 
   render() {
-    const length = this.props.places.length;
+    
+    const length = this.props.places && this.props.places.length;
     const arrOfLoadingText = [
-      "Simmering the broth..",
-      "Pulling the noodles..",
-      "Prepping the toppings..",
-      "Cutting the Nori..",
-      "Warming the bowl.."
+      'Simmering the broth..',
+      'Pulling the noodles..',
+      'Prepping the toppings..',
+      'Cutting the Nori..',
+      'Warming the bowl..',
     ];
     const rand = Math.floor(Math.random() * 5);
     const loadingText = arrOfLoadingText[rand];
-    const index = this.props.index;
-    
+    const index = this.props.index; 
+
     return (
-      <div className="row">
+      <div className="container mx-auto">
+        <div className="">
+          {this.renderList()}
+        </div>
+      </div>
+    );
+      /*       <div className="flex">
         <div className="col s12">
           <div className="section">
-            <a className="waves-effect waves-teal waves-ripple btn left-align" onClick={this.showList}>&#8249; back</a>
+            <a
+              className="waves-effect waves-teal waves-ripple btn left-align"
+              onClick={this.showList}
+            >
+              &#8249; back
+            </a>
           </div>
         </div>
         {length ? (
@@ -166,32 +209,22 @@ export class PlacesPage extends React.Component {
         )}
         {length ? (
           <div className="col s12 m7 pull-m5">
-            {Number.isInteger(index) ? this.renderCardView() : this.renderList() }
+            {Number.isInteger(index)
+              ? this.renderCardView()
+              : this.renderList()}
           </div>
         ) : (
           false
         )}
-      </div>
-    );
+      </div> */ 
   }
 }
 
-const makeMapStateToProps = () => {
-  const location = selectLocation(),
-    index = selectIndex(),
-    places = selectPlaces(),
-    loading = selectLoadingGeo();
-
-  const mapStateToProps = (state, props) => {
-    return {
-      loadingLocation: loading(state),
-      userLocation: location(state),
-      index: index(state),
-      places: places(state)
-    };
-  };
-  return mapStateToProps;
-};
+const mapStateToProps = createStructuredSelector({
+      loadingLocation: selectLoadingGeo(),
+      userLocation: selectLocation(),
+      places: selectPlaces(),
+    });
 
 function mapDispatchToProps(dispatch, ownProps) {
   return {
@@ -201,9 +234,16 @@ function mapDispatchToProps(dispatch, ownProps) {
     incIndex: () => dispatch(incPlacesIndex()),
     decIndex: () => dispatch(decPlacesIndex()),
     setIndex: index => dispatch(setPlacesIndex(index)),
-    goTo: address => () => dispatch(push(address)),
-    dispatch
+    goTo: (location) => dispatch(push(location)),
+    dispatch,
   };
 }
 
-export default connect(makeMapStateToProps, mapDispatchToProps)(PlacesPage);
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(
+  withConnect,
+)(PlacesPage)

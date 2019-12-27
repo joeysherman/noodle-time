@@ -4,7 +4,7 @@
 
 import { take, put, call } from 'redux-saga/effects';
 import request from '../../utils/request';
-
+import { push } from 'connected-react-router';
 import { USER_LOCATION_REQUEST, GEOCODE_REQUEST } from './constants';
 
 import {
@@ -27,8 +27,9 @@ export function* appSaga() {
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
           timestamp: location.timestamp,
-        }),
+        })
       );
+      yield put(push('/places'));
     }
   }
 }
@@ -65,4 +66,4 @@ function* geocodeSaga() {
   }
 }
 
-export default appSaga;
+export default [appSaga, geocodeSaga];

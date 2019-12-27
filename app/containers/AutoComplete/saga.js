@@ -10,7 +10,6 @@ import {
 } from "redux-saga/effects";
 
 import { delay, buffers } from "redux-saga";
-import { push } from "react-router-redux";
 import request from "../../utils/request";
 
 import { AUTOCOMPLETE_ERROR, AUTOCOMPLETE_ITEM_SELECTED, AUTOCOMPLETE_REQUEST, AUTOCOMPLETE_SUCCESS } from './constants';
@@ -110,6 +109,4 @@ export function* defaultSaga() {
 }
 
 // All sagas to be loaded
-export default [
-  defaultSaga,
-];
+export default defaultSaga;

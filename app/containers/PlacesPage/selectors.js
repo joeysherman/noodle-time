@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 /**
  * Direct selector to the placesPage state domain
  */
-const selectPlacesPageDomain = () => (state) => state.get('places');
+const selectPlacesPageDomain = (state) => state.places;
 
 /**
  * Other specific selectors
@@ -14,32 +14,22 @@ const selectPlacesPageDomain = () => (state) => state.get('places');
  * Default selector used by PlacesPage
  */
 
-const selectPlacesPage = () => createSelector(
-  selectPlacesPageDomain(),
-  (substate) => substate.toJS()
-);
-
 const selectPlaces = () => createSelector(
-  selectPlacesPageDomain(),
-  (substate) => substate.get('places').toJS(),
+  selectPlacesPageDomain,
+  (substate) => substate.places,
 );
 
 const selectPlaceByIndex = (index) => createSelector(
-  selectPlacesPageDomain(),
-  (substate) => {
-    let places = substate.get('places');
-
-    if (places) return places.getIn([index, 'id']);
-  }
+  selectPlacesPageDomain,
+  (substate) => substate.places,
 );
 
 const selectIndex = () => createSelector(
-  selectPlacesPageDomain(),
-  (substate) => substate.get('index'),
+  selectPlacesPageDomain,
+  (substate) => substate.index,
 )
 
 
-export default selectPlacesPage;
 export {
   selectIndex,
   selectPlacesPageDomain,

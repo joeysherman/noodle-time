@@ -23,4 +23,4 @@ export function* defaultSaga() {
 }
 
 // All sagas to be loaded
-export default [defaultSaga];
+export default defaultSaga;
