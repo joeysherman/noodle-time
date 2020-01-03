@@ -6,7 +6,9 @@
 
 import React from "react";
 import { connect } from "react-redux";
+import { compose } from 'redux';
 import styles from "./styles.css";
+import injectReducer from "utils/injectReducer";
 import { createStructuredSelector } from "reselect";
 
 // State Selectors
@@ -14,16 +16,18 @@ import { selectLocation } from "../App/selectors";
 
 import { selectPlaces, selectPlaceByIndex } from "../PlacesPage/selectors";
 
-import { selectMapsLoaded } from "./selectors";
 import { selectIndex } from "../PlacesPage/selectors";
 
 import { mapLoadRequest } from "./actions";
 import { setPlacesIndex } from "../PlacesPage/actions";
-import { loadGoogleMapsPromise } from "./actions";
 
-export class Map extends React.Component {
+import GoogleMapReact from 'google-map-react';
+
+import reducer from "./reducer";
+
+class Map extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
-
+  
   constructor(props) {
     super(props);
     this.googleMap = undefined;
@@ -33,6 +37,14 @@ export class Map extends React.Component {
     };
   }
 
+  static defaultProps = {
+    center: {
+      lat: '59.95',
+      lng: '30.33',
+    },
+    zoom: 11
+  };
+
   componentDidUpdate(prevProps, prevState, prevContext) {
     // location change?
     // show route to place?
@@ -40,29 +52,14 @@ export class Map extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.googleMap) {
-      loadGoogleMapsPromise().then(() => {
-        this.mountMap();
-      });
-    }
+    
   }
 
-  mountMap = () => {
-    let {
-      userLocation: { latitude: lat, longitude: lng }
-    } = this.props;
-    console.log("mounting map");
-    this.googleMap = new window.google.maps.Map(
-      document.getElementById("map"),
-      {
-        center: { lat, lng },
-        zoom: 15,
-        disableDefaultUI: true
-      }
-    );
-    console.log('wtf')
-    this.userMarker = new window.google.maps.Marker({ position: { lat, lng }, map: this.googleMap });
-  };
+  handleApiLoaded(map, maps) {
+    this.map = map;
+    this.maps = maps;
+    this.placeUserMarkerOnMap();
+  }
 
   showSelectedPlaceOnMap = () => {
     console.log('showSelectedPlacesOnMap');
@@ -88,13 +85,9 @@ export class Map extends React.Component {
     }
   };
 
-  placeUserMarkerOnMap = () => {
-    let {
-      userLocation: { longitude: lng, latitude: lat }
-    } = this.props;
-    console.log(userLocation);
-    console.log("blahhhhh");
-    this.userMarker = new google.maps.Marker({ position: { lat, lng }, map: this.googleMap});
+  placeUserMarkerOnMap() {
+    let { longitude, latitude } = this.props.userLocation;
+    this.userMarker = new this.maps.Marker({ position: { lat: latitude, lng: longitude }, map: this.map});
   };
 
   attachListenerToMarker = (marker, index) => {
@@ -173,16 +166,35 @@ export class Map extends React.Component {
    *
    * @memberof Map
    */
-  placeAllPlacesOnMap = arrOfCoords => {
+  placeAllPlacesOnMap(arrOfCoords) {
     let markers = [];
     arrOfCoords.map((coords, i) => {
-      markers.push(new window.google.maps.Marker({
-        map: googleMap,
+      markers.push(this.maps.Marker({
+        map: this.map,
         position: coords,
         label: i.toString(),
       }));
     });
     return markers;
+  };
+
+  renderPlaceMarkers = () => {
+    const AnyReactComponent = ({ text }) => <div>{text}</div>;
+    const { places } = this.props;
+    const allCoords = this.getPlaceCoords(places);
+
+    const placeMarkers = allCoords.map(function ({lat, lng}) {
+      
+      return (
+        <AnyReactComponent
+          lat={lat}
+          lng={lng}
+          text="My Marker"
+          />
+      )
+    });
+
+    return placeMarkers;
   };
 
   removeMarkersFromMap = (id) => {
@@ -257,35 +269,42 @@ renderDirectionsOnMap = directions => {
     });
   };
 
+  testChildClick(hoverKey, childProps) {
+    console.log(JSON.stringify(childProps));
+  };
+
   render() {
-    let { viewIndex } = this.props;
-    
-    if (Number.isInteger(viewIndex)) {
-      this.showSelectedPlaceOnMap();
+    const { latitude, longitude } = this.props.userLocation;
+    const center = {};
+    const placeMarkers = false;
+    if (latitude && longitude) {
+      center.lat = latitude;
+      center.lng = longitude;
     }
 
     return (
-      <div className={styles.mapWrapper}>
-        <div className={styles.map} id="map"></div>
-      </div>
+      // Important! Always set the container height explicitly
+        <div className="w-full md:w-1/3 h-48 md:30vh">
+        <GoogleMapReact
+          bootstrapURLKeys={{ key: 'AIzaSyBUXW19bkxMuxxTC3it0l_3lG1c8CPSCQc' }}
+          defaultCenter={center}
+          center={{lat: latitude, lng: longitude }}
+          yesIWantToUseGoogleMapApiInternals
+          onGoogleApiLoaded={({map, maps}) => this.handleApiLoaded(map, maps)}
+          defaultZoom={this.props.zoom}
+          onChildClick={this.testChildClick}
+        >
+        {placeMarkers}
+        </GoogleMapReact>
+        </div>
     );
   }
 }
 
-const makeMapStateToProps = () => {
-  return (state, props) => {
-    let viewIndex = selectIndex(),
-      loaded = selectMapsLoaded(),
-      userLocation = selectLocation(),
-      places = selectPlaces();
-    return {
-      loaded: loaded(state),
-      userLocation: userLocation(state),
-      viewIndex: viewIndex(state),
-      places: places(state)
-    };
-  };
-};
+const mapStateToProps = createStructuredSelector({
+  userLocation: selectLocation(),
+  places: selectPlaces(),
+});
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -295,4 +314,11 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(makeMapStateToProps(), mapDispatchToProps)(Map);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+const withReducer = injectReducer({ key: 'map', reducer });
+
+export default compose(
+  withReducer,
+  withConnect,
+  )(Map);

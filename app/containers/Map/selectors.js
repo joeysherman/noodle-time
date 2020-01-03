@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 /**
  * Direct selector to the map state domain
  */
-const selectMapDomain = () => (state) => state.get('map');
+const selectMapDomain = () => (state) => state.map;
 
 /**
  * Other specific selectors
@@ -11,13 +11,13 @@ const selectMapDomain = () => (state) => state.get('map');
 
 const selectMapsLoaded = () => createSelector(
   selectMapDomain(),
-  (map) => map.get('loaded'),
+  (map) => map.loaded,
 );
 
 
 const selectViewIndex = () => createSelector(
   selectMapDomain(),
-  (map) => map.get('viewIndex'),
+  (map) => map.viewIndex,
 );
 
 
@@ -27,7 +27,7 @@ const selectViewIndex = () => createSelector(
 
 const selectMap = () => createSelector(
   selectMapDomain(),
-  (substate) => substate.toJS()
+  (substate) => substate
 );
 
 export default selectMap;

@@ -1,4 +1,4 @@
-import { take, call, put, select } from "redux-saga/effects";
+import { take, call, put, select, takeLatest } from "redux-saga/effects";
 import { delay } from "redux-saga";
 import request from "../../utils/request";
 
@@ -17,12 +17,11 @@ let detailUrl = "/api/details";
 
 // Individual exports for testing
 export function* defaultSaga() {
-  const action = yield take(PLACES_REQUEST);
-  yield call(fetchNoodlePlaces, action.payload);
+  yield takeLatest(PLACES_REQUEST, fetchNoodlePlaces);
 }
 
-function* fetchNoodlePlaces(location) {
-  const { latitude, longitude } = location;
+function* fetchNoodlePlaces(action) {
+  const { latitude, longitude } = action.payload;
 
   if (latitude && longitude) {
     let url = placesUrl + "?" + "lat=" + latitude + "&lng=" + longitude;

@@ -40,10 +40,10 @@ const promiseScriptOptions = {
   exposed: 'google',
 };
 
-/* export function loadGoogleMapsPromise() {
+export function loadGoogleMapsPromise() {
   return promisescript(promiseScriptOptions);
 }
- */
+
 
 export function defaultAction() {
   return {

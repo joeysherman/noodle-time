@@ -51,26 +51,11 @@ export class PlacesPage extends React.Component {
   }
 
   componentDidMount() {
-    let { userLocation } = this.props;
-
-    console.log('cdm');
-  }
-
-  componentWillMount() {
-    // has location
-    // -- request places
-    // doesn't have location
-    // -- request location
-    // location but no places
-    // no location and no places
-/*     if (!this.props.userLocation.geometry) {
-      this.props.fetchLocation();
+    console.log(typeof this.props.userLocation);
+    if (typeof this.props.userLocation === 'boolean') {
+      this.props.fetchLocation();   
     } else {
       this.fetchPlaces();
-    } */
-    console.log(typeof this.props.userLocation);
-    if (typeof this.props.userLocation !== 'boolean') {
-      this.props.fetchLocation();   
     }
   }
 
@@ -128,6 +113,7 @@ export class PlacesPage extends React.Component {
   renderListItems = places => {
     return places.map((place, i) => (
       <ListItem
+        key={i}
         place={place}
         index={i + 1}
         onClick={this.handleListItemClick.bind(this, {
@@ -143,21 +129,25 @@ export class PlacesPage extends React.Component {
   };
 
   renderList = () => {
-  if (this.props.places) {
+  if (this.props.places.length) {
     console.log('inside renderlist')
     let { places } = this.props;
     let count = places.length;
     let items = this.renderListItems(places);
     
-    return <List count={count}>{items}</List>;
+    return (
+    <div className="w-full md:w-2/3 p-2">
+      <List count={count}>{items}</List>;
+    </div>
+    );
   } else {
     console.log("no places");
-    return false;
+    return <LoadingSpinner/>;
   }
   };
 
   render() {
-    
+    const { loadingLocation } = this.props;
     const length = this.props.places && this.props.places.length;
     const arrOfLoadingText = [
       'Simmering the broth..',
@@ -172,51 +162,14 @@ export class PlacesPage extends React.Component {
 
     return (
       <div className="container mx-auto">
-        <div className="">
-          {this.renderList()}
+        <div className="flex flex-wrap flex-col-reverse md:flex-row">
+
+        { loadingLocation && (<div className="max-w-sm mx-auto text-center p-4 mt-4"><h1 className="font-semibold leading-relaxed">{loadingText}</h1></div>)}
+        {this.renderList()}
+        <Map/>
         </div>
       </div>
     );
-      /*       <div className="flex">
-        <div className="col s12">
-          <div className="section">
-            <a
-              className="waves-effect waves-teal waves-ripple btn left-align"
-              onClick={this.showList}
-            >
-              &#8249; back
-            </a>
-          </div>
-        </div>
-        {length ? (
-          false
-        ) : (
-          <div className="col s12">
-            <div className="section center">
-              <div className={styles.loadingWrapper}>
-                <LoadingSpinner />
-                <h5>{loadingText}</h5>
-              </div>
-            </div>
-          </div>
-        )}
-        {length ? (
-          <div className="col s12 m5 push-m7">
-            <Map />
-          </div>
-        ) : (
-          false
-        )}
-        {length ? (
-          <div className="col s12 m7 pull-m5">
-            {Number.isInteger(index)
-              ? this.renderCardView()
-              : this.renderList()}
-          </div>
-        ) : (
-          false
-        )}
-      </div> */ 
   }
 }
 
