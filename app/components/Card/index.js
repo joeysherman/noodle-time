@@ -20,24 +20,12 @@ function Card(props) {
 } = props.place;
 
   return (
-    <div className="card">
-      <div className="card-image">
-        <img src={image_url}/>
-        <span className="card-title">
-          {name}
-        </span>
-      </div>
-      <div className="card-content">
-        <i className="material-icons">place</i>
-         {distance}
-         <br/>
-         <img src={rating_img_url_large} alt="star rating of ramen image"/>
-         <br/>
-         <p>{snippet_text}</p>
-         <br/>
-         <p>{display_phone}</p>
-
-      </div>
+    <div className="max-w-sm rounded overflow-hidden shadow-lg m-auto">
+        <img className="w-full" src={image_url}/>
+        <div className="px-6 py-4">
+          <div className="font-bold text-xl mb-2">{name}</div>
+          <p className="text-gray-700 text-base">{snippet_text}</p>
+        </div>
     </div>
   );
 }

@@ -301,9 +301,9 @@ renderDirectionsOnMap = directions => {
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-  userLocation: selectLocation(),
-  places: selectPlaces(),
+const mapStateToProps = (state, ownProps) => ({
+  userLocation: selectLocation(state),
+  places: selectPlaces(state),
 });
 
 function mapDispatchToProps(dispatch) {

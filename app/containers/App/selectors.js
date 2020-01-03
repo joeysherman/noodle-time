@@ -15,27 +15,27 @@ const selectApp = state => state.app;
  * Default selector used by App
  */
 
-export const selectAppState = () => createSelector(selectApp);
+export const selectAppState = (state) => state.app
 
-export const selectLoadingGeo = () =>
+export const selectLoadingGeo =
   createSelector(
     selectApp,
     substate => substate.loadingGeo,
   );
 
-export const selectHasGeo = () =>
+export const selectHasGeo =
   createSelector(
     selectApp,
     substate => substate.gethasGeo,
   );
 
-export const selectLocation = () =>
+export const selectLocation =
   createSelector(
     selectApp,
     substate => substate.location,
   );
 
-export const selectAddress = () =>
+export const selectAddress =
   createSelector(
     selectApp,
     substate => substate.address,

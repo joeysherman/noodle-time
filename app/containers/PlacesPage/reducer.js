@@ -12,6 +12,7 @@ const initialState = {
   places: [],
   loading: false,
   error: false,
+  detail: {},
 };
 
 const placesPageReducer = (state = initialState, action) =>
@@ -52,9 +53,9 @@ const placesPageReducer = (state = initialState, action) =>
       draft.index = draft.index - 1;
       break;
     case constants.SET_SELECTED_INDEX:
-      return state.index = action.payload;
+      draft.index = action.payload;
     default:
-      return state;
+      return draft;
     }
   });
 

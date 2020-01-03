@@ -58,9 +58,9 @@ HomePage.PropTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector({
-  loadingGeo: selectLoadingGeo(),
-  hasGeo: selectHasGeo(),
+const mapStateToProps = (state, ownProps) => ({
+  loadingGeo: selectLoadingGeo(state),
+  hasGeo: selectHasGeo(state),
 });
 
 function mapDispatchToProps(dispatch) {

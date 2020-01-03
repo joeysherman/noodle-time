@@ -27,7 +27,7 @@ import {
   detailRequest,
 } from './actions';
 import { selectLoadingGeo } from '../App/selectors';
-import { selectPlaces } from './selectors';
+import { selectPlaces, selectDetailById } from './selectors';
 
 // Component imports
 import Map from '../Map';
@@ -45,7 +45,9 @@ import { SET_SELECTED_INDEX } from './constants';
 export class PlacesPage extends React.Component {
 
   // eslint-disable-line react/prefer-stateless-function
-
+  static defaultProps = {
+    test: '1'
+  }
   constructor(props) {
     super(props);
   }
@@ -102,7 +104,11 @@ export class PlacesPage extends React.Component {
   renderCardView = () => {
     let data = this.props.places[this.props.index];
 
-    return <Card place={data} />;
+    return (
+      <div className="w-full md:w-2/3 p-4">
+        <Card place={data} />
+      </div>
+    )
   };
 
   handleListItemClick = ({ id, index }) => {
@@ -165,7 +171,7 @@ export class PlacesPage extends React.Component {
         <div className="flex flex-wrap flex-col-reverse md:flex-row">
 
         { loadingLocation && (<div className="max-w-sm mx-auto text-center p-4 mt-4"><h1 className="font-semibold leading-relaxed">{loadingText}</h1></div>)}
-        {this.renderList()}
+        {Number.isInteger(index) && length ? this.renderCardView() : this.renderList()}
         <Map/>
         </div>
       </div>
@@ -173,10 +179,12 @@ export class PlacesPage extends React.Component {
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-      loadingLocation: selectLoadingGeo(),
-      userLocation: selectLocation(),
-      places: selectPlaces(),
+const mapStateToProps = (state, ownProps) => ({
+      loadingLocation: selectLoadingGeo(state),
+      userLocation: selectLocation(state),
+      places: selectPlaces(state),
+      index: selectIndex(state),
+      detail: selectDetailById(state, ownProps),
     });
 
 function mapDispatchToProps(dispatch, ownProps) {

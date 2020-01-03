@@ -44,9 +44,9 @@ function* detailSaga() {
     let { data, err } = yield call(request, url);
 
     if (err) {
-      //console.log("error in detail saga - " + JSON.stringify(err));
+      console.log("error in detail saga - " + JSON.stringify(err));
     } else if (data) {
-      //console.log("data in detail saga - " + JSON.stringify(data, null, 2));
+      console.log("data in detail saga - " + JSON.stringify(data, null, 2));
       yield put(detailSuccess(payload, data));
     }
   }
