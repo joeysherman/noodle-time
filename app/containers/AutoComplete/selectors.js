@@ -25,6 +25,6 @@ const selectAutoComplete = () => createSelector(
 
 export {
   selectAutoCompleteDomain,
-  selectSuggestions,
   selectAutoComplete,
+  makeSelectSuggestions,
 };

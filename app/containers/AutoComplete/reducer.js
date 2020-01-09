@@ -22,7 +22,7 @@ const autoCompleteReducer = (state = autoCompleteInitialState, action) =>
       case constants.AUTOCOMPLETE_SUCCESS:
         draft.loading = false;
         draft.error = false;
-        draft.suggestions = action.payload;
+        draft.suggestions = action.payload.json.predictions;
         break;
       case constants.AUTOCOMPLETE_ERROR:
         break;

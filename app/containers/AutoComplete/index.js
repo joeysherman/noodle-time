@@ -3,16 +3,30 @@
  * AutoComplete
  *
  */
-
-import React from "react";
-import { connect } from "react-redux";
-import selectAutoComplete, { selectPredictions } from "./selectors";
+import React from 'react';
+import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { autoCompleteRequest,
-autoCompleteItemSelected } from "./actions";
+import { compose } from 'redux';
+
+import reducer from './reducer';
+import saga from './saga';
+
+// Selectors
+import selectAutoComplete, {
+  selectPredictions,
+  makeSelectSuggestions,
+} from './selectors';
+
+// Actions
+import { autoCompleteRequest, autoCompleteItemSelected } from './actions';
+
+// Injectors
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
+
 class Autocomplete extends React.Component {
   static defaultProps = {
-    suggestions: []
+    suggestions: [],
   };
 
   constructor(props) {
@@ -26,7 +40,7 @@ class Autocomplete extends React.Component {
       // Whether or not the suggestion list is shown
       showSuggestions: false,
       // What the user has entered
-      userInput: ""
+      userInput: '',
     };
   }
 
@@ -34,12 +48,12 @@ class Autocomplete extends React.Component {
   onChange = e => {
     const { suggestions } = this.props;
     const userInput = e.currentTarget.value;
-    console.log("inside onChange");
+    console.log('inside onChange');
     this.props.sendInputRequest(userInput);
     // Filter our suggestions that don't contain the user's input
     const filteredSuggestions = [];
 
-    for (var i=0, l = Math.min(suggestions.length, 3); i<l; i++) {
+    for (var i = 0, l = Math.min(suggestions.length, 3); i < l; i++) {
       filteredSuggestions.push(suggestions[i]);
     }
 
@@ -49,12 +63,12 @@ class Autocomplete extends React.Component {
       activeSuggestion: 0,
       filteredSuggestions,
       showSuggestions: true,
-      userInput: e.currentTarget.value
+      userInput: e.currentTarget.value,
     });
   };
 
   // Event fired when the user clicks on a suggestion
-  onClick = (e) => {
+  onClick = e => {
     console.log(e.currentTarget);
     const place_id = e.currentTarget.id;
     const selectedText = e.currentTarget.innerText;
@@ -65,7 +79,7 @@ class Autocomplete extends React.Component {
       activeSuggestion: 0,
       filteredSuggestions: [],
       showSuggestions: false,
-      userInput: selectedText
+      userInput: selectedText,
     });
   };
 
@@ -79,7 +93,7 @@ class Autocomplete extends React.Component {
       this.setState({
         activeSuggestion: 0,
         showSuggestions: false,
-        userInput: filteredSuggestions[activeSuggestion]
+        userInput: filteredSuggestions[activeSuggestion],
       });
     }
     // User pressed the up arrow, decrement the index
@@ -109,8 +123,8 @@ class Autocomplete extends React.Component {
         activeSuggestion,
         filteredSuggestions,
         showSuggestions,
-        userInput
-      }
+        userInput,
+      },
     } = this;
 
     const { suggestions } = this.props;
@@ -119,7 +133,7 @@ class Autocomplete extends React.Component {
 
     if (filteredSuggestions) {
       suggestionsListComponent = (
-        <ul className="suggestions">
+        <ul className="absolute">
           {filteredSuggestions.map((suggestion, index) => {
             let className;
             let _suggestion = suggestion.description;
@@ -127,7 +141,9 @@ class Autocomplete extends React.Component {
 
             // Flag the active suggestion with a class
             if (index === activeSuggestion) {
-              className = "suggestion-active";
+              className = 'bg-gray-400 focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal';
+            } else {
+              className = 'bg-white hover:bg-gray-300 focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal'
             }
 
             return (
@@ -145,20 +161,19 @@ class Autocomplete extends React.Component {
         </div>
       );
     }
-
     return (
-      <div className="input-field">
+      <div className="">
         <input
           type="text"
-          placeholder="Search Here"
-          className="autocomplete"
+          placeholder="San Diego, CA"
+          className="relative bg-white focus:outline-none text-gray- focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
           onChange={onChange}
           onKeyDown={onKeyDown}
           value={userInput}
           id="autocomplete-input"
         />
         {suggestionsListComponent}
-        <span className="helper-text">Powered by Google</span>
+        <span className="text-sm text-gray-500 block text-right">Powered by Google</span>
       </div>
     );
   }
@@ -175,4 +190,17 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Autocomplete);
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+const withReducer = injectReducer({ key: 'autoComplete', reducer });
+
+const withSaga = injectSaga({ key: 'autoComplete', saga });
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(Autocomplete);

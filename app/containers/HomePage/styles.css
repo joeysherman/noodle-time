@@ -1,3 +1,18 @@
+.slideIn {
+  animation-duration: 1.35s;
+  animation-name: slide_in;
+}
+
+@keyframes slide_in {
+  from {
+    top: -100%;
+  }
+
+  to {
+    top: 0%;
+  }
+}
+
 .main-bg {
   background-color: aqua !important;
 }

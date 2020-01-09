@@ -1,15 +1,16 @@
 import {
   take,
   actionChannel,
+  throttle,
   put,
   fork,
   call,
   race,
   cancel,
-  cancelled
+  cancelled,
+  delay
 } from "redux-saga/effects";
 
-import { delay, buffers } from "redux-saga";
 import request from "../../utils/request";
 
 import { AUTOCOMPLETE_ERROR, AUTOCOMPLETE_ITEM_SELECTED, AUTOCOMPLETE_REQUEST, AUTOCOMPLETE_SUCCESS } from './constants';
@@ -83,17 +84,6 @@ function b(
 
 function* throttleAutocomplete(options) {
   yield throttle(750, AUTOCOMPLETE_REQUEST, fetchAutocomplete, options[0]);
-}
-
-/* From the redux docs */
-function* throttle(ms, pattern, task, ...args) {
-  const throttleChannel = yield actionChannel(pattern, buffers.sliding(1));
-  
-  while (true) {
-    const action = yield take(throttleChannel);
-    yield fork(task, ...args, action);
-    yield call(delay, ms);
-  }
 }
 
 export function* defaultSaga() {

@@ -29,9 +29,9 @@ const selectIndex = createSelector(
 )
 
 const selectDetailById = createSelector(
-  (substate, props) => {
-    console.log(JSON.stringify(props));
-    console.log(JSON.stringify(subState));
+  selectPlacesPageDomain,
+  (substate) => {
+    console.log(JSON.stringify(substate));
     //substate.detail[substate.places[substate.index]],
     return false;
   }
