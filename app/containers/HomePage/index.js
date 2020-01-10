@@ -36,28 +36,30 @@ import ramenImage from '../../assets/ramen-noodles-min.jpg';
 import { userLocationRequest } from '../App/actions';
 
 // Selectors
-import { selectHasGeo, selectLoadingGeo } from '../App/selectors';
-export function HomePage({loadingGeo, hasGeo, fetchLocation }) {
+import { selectHasGeo, selectLoadingGeo, selectError } from '../App/selectors';
+export function HomePage({loadingGeo, hasGeo, fetchLocation, error }) {
   // eslint-disable-line react/prefer-stateless-function
   useInjectReducer({ key: 'home', reducer });
   useInjectSaga({ key: 'home', saga });
 
   return (
-    <div className="mx-auto overflow-hidden" style={{
+    <div className="relative h-screen w-full overflow-hidden" style={{
       backgroundImage: 'url(' + ramenImage +')',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',
       backgroundSize: 'cover',
     }}>
-      <div className="w-full">
+      <div style={{ backgroundColor: "rgba(45, 55, 72, 0.3)"}} className="absolute h-full w-full top-0 bottom-0 left-0 right-0"></div>
+      <div className="w-full relative z-10">
         <div className="p-6 md:p-24">
-          <h1 className="text-3xl left-align">Find ramen near you</h1>
+          <h1 className="text-5xl left-align">Find ramen <span className={"text-gray-200 relative " + styles.underlineOffset }>near you.</span></h1>
         </div>
       </div>
-      <div className={ "flex justify-center pb-16 " + styles.slideIn}>
-      <div className="max-w-sm md:max-w-md w-1/3 rounded shadow-lg bg-gray-100">
+      <div className={ "flex relative justify-center pb-16 z-10 " + styles.slideIn}>
+      <div className="max-w-sm md:max-w-md w-full rounded shadow-lg bg-gray-100">
         <div className="px-6 py-4 text-center">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={fetchLocation}>{ loadingGeo ? <LoadingSpinner/> : "Locate me" }</button>
+          <button className="bg-red-500 text-white font-bold py-2 px-4 rounded" onClick={fetchLocation}>{ loadingGeo ? <LoadingSpinner width="80" height="20"/> : "Locate me" }</button>
+          {error && <p className="py-2">{"Location is " + error + " at this time."}</p>}
           <p className="text-gray-600 text-base p-3">
             - or - 
           </p>
@@ -75,9 +77,10 @@ HomePage.PropTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state) => ({
   loadingGeo: selectLoadingGeo(state),
   hasGeo: selectHasGeo(state),
+  error: selectError(state)
 });
 
 function mapDispatchToProps(dispatch) {

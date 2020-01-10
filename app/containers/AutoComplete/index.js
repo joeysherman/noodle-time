@@ -133,7 +133,7 @@ class Autocomplete extends React.Component {
 
     if (filteredSuggestions) {
       suggestionsListComponent = (
-        <ul className="absolute">
+        <ul className="absolute w-10/12">
           {filteredSuggestions.map((suggestion, index) => {
             let className;
             let _suggestion = suggestion.description;
@@ -141,7 +141,7 @@ class Autocomplete extends React.Component {
 
             // Flag the active suggestion with a class
             if (index === activeSuggestion) {
-              className = 'bg-gray-400 focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal';
+              className = 'bg-red-200 focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal';
             } else {
               className = 'bg-white hover:bg-gray-300 focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal'
             }
@@ -166,7 +166,7 @@ class Autocomplete extends React.Component {
         <input
           type="text"
           placeholder="San Diego, CA"
-          className="relative bg-white focus:outline-none text-gray- focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
+          className="relative bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
           onChange={onChange}
           onKeyDown={onKeyDown}
           value={userInput}

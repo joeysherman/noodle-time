@@ -23,6 +23,11 @@ const selectPlaceByIndex = createSelector(
   (substate) => substate.places,
 );
 
+const selectPlacesLoading = createSelector(
+  selectPlacesPageDomain,
+  (substate) => substate.loading,
+);
+
 const selectIndex = createSelector(
   selectPlacesPageDomain,
   (substate) => substate.index,
@@ -41,6 +46,7 @@ const selectDetailById = createSelector(
 export {
   selectIndex,
   selectPlacesPageDomain,
+  selectPlacesLoading,
   selectPlaces,
   selectPlaceByIndex,
   selectDetailById,

@@ -40,5 +40,11 @@ export const selectAddress =
     selectApp,
     substate => substate.address,
   );
+  
+  export const selectError =
+  createSelector(
+    selectApp,
+    substate => substate.error,
+  );
 
 export default selectApp;

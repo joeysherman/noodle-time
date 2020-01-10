@@ -10,9 +10,7 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import styles from './styles.css';
 
-import { useInjectSaga } from 'utils/injectSaga';
-import { useInjectReducer } from 'utils/injectReducer';
-
+import injectSaga from 'utils/injectSaga';
 import saga from './saga';
 import reducer from './reducer';
 import { push } from 'connected-react-router';
@@ -27,7 +25,7 @@ import {
   detailRequest,
 } from './actions';
 import { selectLoadingGeo } from '../App/selectors';
-import { selectPlaces, selectDetailById } from './selectors';
+import { selectPlaces, selectDetailById, selectPlacesLoading } from './selectors';
 
 // Component imports
 import Map from '../Map';
@@ -42,6 +40,7 @@ import { selectIndex } from './selectors';
 
 import { selectLocation } from '../App/selectors';
 import { SET_SELECTED_INDEX } from './constants';
+import PulsingRamen from '../../components/PulsingRamen/pulsingRamen';
 export class PlacesPage extends React.Component {
 
   // eslint-disable-line react/prefer-stateless-function
@@ -148,12 +147,16 @@ export class PlacesPage extends React.Component {
     );
   } else {
     console.log("no places");
-    return <LoadingSpinner/>;
+    return (
+    <div className="flex-1">
+    <LoadingSpinner/>
+    </div>
+    );
   }
   };
 
   render() {
-    const { loadingLocation } = this.props;
+    const { loadingLocation, loadingPlaces } = this.props;
     const length = this.props.places && this.props.places.length;
     const arrOfLoadingText = [
       'Simmering the broth..',
@@ -169,7 +172,6 @@ export class PlacesPage extends React.Component {
     return (
       <div className="container mx-auto">
         <div className="flex flex-wrap flex-col-reverse md:flex-row">
-
         { loadingLocation && (<div className="max-w-sm mx-auto text-center p-4 mt-4"><h1 className="font-semibold leading-relaxed">{loadingText}</h1></div>)}
         {Number.isInteger(index) && length ? this.renderCardView() : this.renderList()}
         <Map/>
@@ -181,6 +183,7 @@ export class PlacesPage extends React.Component {
 
 const mapStateToProps = (state, ownProps) => ({
       loadingLocation: selectLoadingGeo(state),
+      loadingPlaces: selectPlacesLoading(state),
       userLocation: selectLocation(state),
       places: selectPlaces(state),
       index: selectIndex(state),
@@ -205,6 +208,9 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
+const withSaga = injectSaga({ key: "places", saga });
+
 export default compose(
   withConnect,
+  withSaga,
 )(PlacesPage)

@@ -276,7 +276,7 @@ renderDirectionsOnMap = directions => {
   render() {
     const { latitude, longitude } = this.props.userLocation;
     const center = {};
-    const placeMarkers = false;
+    const placeMarkers = this.renderPlaceMarkers();
     if (latitude && longitude) {
       center.lat = latitude;
       center.lng = longitude;
