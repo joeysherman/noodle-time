@@ -36,9 +36,8 @@ const selectIndex = createSelector(
 const selectDetailById = createSelector(
   selectPlacesPageDomain,
   (substate) => {
-    console.log(JSON.stringify(substate));
-    //substate.detail[substate.places[substate.index]],
-    return false;
+    
+  return substate.places[substate.index];
   }
 )
 

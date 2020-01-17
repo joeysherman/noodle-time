@@ -25,7 +25,11 @@ import {
   detailRequest,
 } from './actions';
 import { selectLoadingGeo } from '../App/selectors';
-import { selectPlaces, selectDetailById, selectPlacesLoading } from './selectors';
+import {
+  selectPlaces,
+  selectDetailById,
+  selectPlacesLoading,
+} from './selectors';
 
 // Component imports
 import Map from '../Map';
@@ -42,11 +46,7 @@ import { selectLocation } from '../App/selectors';
 import { SET_SELECTED_INDEX } from './constants';
 import PulsingRamen from '../../components/PulsingRamen/pulsingRamen';
 export class PlacesPage extends React.Component {
-
   // eslint-disable-line react/prefer-stateless-function
-  static defaultProps = {
-    test: '1'
-  }
   constructor(props) {
     super(props);
   }
@@ -54,7 +54,7 @@ export class PlacesPage extends React.Component {
   componentDidMount() {
     console.log(typeof this.props.userLocation);
     if (typeof this.props.userLocation === 'boolean') {
-      this.props.fetchLocation();   
+      this.props.fetchLocation();
     } else {
       this.fetchPlaces();
     }
@@ -107,7 +107,7 @@ export class PlacesPage extends React.Component {
       <div className="w-full md:w-2/3 p-4">
         <Card place={data} />
       </div>
-    )
+    );
   };
 
   handleListItemClick = ({ id, index }) => {
@@ -134,25 +134,25 @@ export class PlacesPage extends React.Component {
   };
 
   renderList = () => {
-  if (this.props.places.length) {
-    console.log('inside renderlist')
-    let { places } = this.props;
-    let count = places.length;
-    let items = this.renderListItems(places);
-    
-    return (
-    <div className="w-full md:w-2/3 p-2">
-      <List count={count}>{items}</List>;
-    </div>
-    );
-  } else {
-    console.log("no places");
-    return (
-    <div className="flex-1">
-    <LoadingSpinner/>
-    </div>
-    );
-  }
+    if (this.props.places.length) {
+      console.log('inside renderlist');
+      let { places } = this.props;
+      let count = places.length;
+      let items = this.renderListItems(places);
+
+      return (
+        <div className="w-full md:w-2/3 p-2">
+          <List count={count}>{items}</List>;
+        </div>
+      );
+    } else {
+      console.log('no places');
+      return (
+        <div className="flex-1">
+          <LoadingSpinner />
+        </div>
+      );
+    }
   };
 
   render() {
@@ -167,14 +167,20 @@ export class PlacesPage extends React.Component {
     ];
     const rand = Math.floor(Math.random() * 5);
     const loadingText = arrOfLoadingText[rand];
-    const index = this.props.index; 
+    const index = this.props.index;
 
     return (
       <div className="container mx-auto">
         <div className="flex flex-wrap flex-col-reverse md:flex-row">
-        { loadingLocation && (<div className="max-w-sm mx-auto text-center p-4 mt-4"><h1 className="font-semibold leading-relaxed">{loadingText}</h1></div>)}
-        {Number.isInteger(index) && length ? this.renderCardView() : this.renderList()}
-        <Map/>
+          {loadingLocation && (
+            <div className="max-w-sm mx-auto text-center p-4 mt-4">
+              <h1 className="font-semibold leading-relaxed">{loadingText}</h1>
+            </div>
+          )}
+          {Number.isInteger(index) && length
+            ? this.renderCardView()
+            : this.renderList()}
+          <Map />
         </div>
       </div>
     );
@@ -182,13 +188,13 @@ export class PlacesPage extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-      loadingLocation: selectLoadingGeo(state),
-      loadingPlaces: selectPlacesLoading(state),
-      userLocation: selectLocation(state),
-      places: selectPlaces(state),
-      index: selectIndex(state),
-      detail: selectDetailById(state, ownProps),
-    });
+  loadingLocation: selectLoadingGeo(state),
+  loadingPlaces: selectPlacesLoading(state),
+  userLocation: selectLocation(state),
+  places: selectPlaces(state),
+  index: selectIndex(state),
+  detail: selectDetailById(state, ownProps),
+});
 
 function mapDispatchToProps(dispatch, ownProps) {
   return {
@@ -198,7 +204,7 @@ function mapDispatchToProps(dispatch, ownProps) {
     incIndex: () => dispatch(incPlacesIndex()),
     decIndex: () => dispatch(decPlacesIndex()),
     setIndex: index => dispatch(setPlacesIndex(index)),
-    goTo: (location) => dispatch(push(location)),
+    goTo: location => dispatch(push(location)),
     dispatch,
   };
 }
@@ -208,9 +214,9 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withSaga = injectSaga({ key: "places", saga });
+const withSaga = injectSaga({ key: 'places', saga });
 
 export default compose(
   withConnect,
   withSaga,
-)(PlacesPage)
+)(PlacesPage);

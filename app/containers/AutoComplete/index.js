@@ -133,7 +133,7 @@ class Autocomplete extends React.Component {
 
     if (filteredSuggestions) {
       suggestionsListComponent = (
-        <ul className="absolute w-10/12">
+        <ul className="absolute max-w-sm w-10/12">
           {filteredSuggestions.map((suggestion, index) => {
             let className;
             let _suggestion = suggestion.description;
