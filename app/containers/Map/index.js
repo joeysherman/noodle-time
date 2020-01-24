@@ -37,14 +37,6 @@ class Map extends React.Component {
     };
   }
 
-  static defaultProps = {
-    center: {
-      lat: '59.95',
-      lng: '30.33',
-    },
-    zoom: 11
-  };
-
   componentDidUpdate(prevProps, prevState, prevContext) {
     // location change?
     // show route to place?
@@ -59,6 +51,7 @@ class Map extends React.Component {
     this.map = map;
     this.maps = maps;
     this.placeUserMarkerOnMap();
+    this.placeAllPlacesOnMap();
   }
 
   showSelectedPlaceOnMap = () => {
@@ -158,7 +151,7 @@ class Map extends React.Component {
       bounds = bounds.extend(coords);
     });
 
-    googleMap.fitBounds(bounds);
+    this.map.fitBounds(bounds);
   };
 
   /**
@@ -166,14 +159,19 @@ class Map extends React.Component {
    *
    * @memberof Map
    */
-  placeAllPlacesOnMap(arrOfCoords) {
+  placeAllPlacesOnMap() {
+    let { places } = this.props;
+    if (!places.length) return;
+    let self = this;
+    let arrOfCoords = this.getPlaceCoords(places);
     let markers = [];
     arrOfCoords.map((coords, i) => {
-      markers.push(this.maps.Marker({
-        map: this.map,
+      let marker = new self.maps.Marker({
+        map: self.map,
         position: coords,
         label: i.toString(),
-      }));
+      });
+      markers.push(marker);
     });
     return markers;
   };
@@ -276,7 +274,6 @@ renderDirectionsOnMap = directions => {
   render() {
     const { latitude, longitude } = this.props.userLocation;
     const center = {};
-    const placeMarkers = this.renderPlaceMarkers();
     if (latitude && longitude) {
       center.lat = latitude;
       center.lng = longitude;
@@ -291,10 +288,9 @@ renderDirectionsOnMap = directions => {
           center={{lat: latitude, lng: longitude }}
           yesIWantToUseGoogleMapApiInternals
           onGoogleApiLoaded={({map, maps}) => this.handleApiLoaded(map, maps)}
-          defaultZoom={this.props.zoom}
+          defaultZoom={11}
           onChildClick={this.testChildClick}
         >
-        {placeMarkers}
         </GoogleMapReact>
         </div>
     );

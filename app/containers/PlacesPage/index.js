@@ -147,11 +147,7 @@ export class PlacesPage extends React.Component {
       );
     } else {
       console.log('no places');
-      return (
-        <div className="flex-1">
-          <LoadingSpinner />
-        </div>
-      );
+      return false;
     }
   };
 
@@ -172,9 +168,10 @@ export class PlacesPage extends React.Component {
     return (
       <div className="container mx-auto">
         <div className="flex flex-wrap flex-col-reverse md:flex-row">
-          {loadingLocation && (
-            <div className="max-w-sm mx-auto text-center p-4 mt-4">
-              <h1 className="font-semibold leading-relaxed">{loadingText}</h1>
+          {loadingLocation || loadingPlaces && (
+            <div className="flex flex-col items-center max-w-sm p-4 mt-4">
+              <h1 className="font-semibold leading-relaxed text-4xl mb-4">{loadingText}</h1>
+              <LoadingSpinner className="w-48 h-auto" />
             </div>
           )}
           {Number.isInteger(index) && length

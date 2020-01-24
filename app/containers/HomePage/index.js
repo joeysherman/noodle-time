@@ -10,7 +10,7 @@
  */
 
 // Library dependencies
-import React, { memo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -97,5 +97,4 @@ const withConnect = connect(
 
 export default compose(
   withConnect,
-  memo,
 )(HomePage);
