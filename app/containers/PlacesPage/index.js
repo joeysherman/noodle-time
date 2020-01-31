@@ -7,9 +7,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { createStructuredSelector } from 'reselect';
-import styles from './styles.css';
-
 import injectSaga from 'utils/injectSaga';
 import saga from './saga';
 import reducer from './reducer';
@@ -17,13 +14,16 @@ import { push } from 'connected-react-router';
 
 // Redux imports
 import { placesRequest } from './actions';
+
 import { userLocationRequest } from '../App/actions';
+
 import {
   incPlacesIndex,
   decPlacesIndex,
   setPlacesIndex,
   detailRequest,
 } from './actions';
+
 import { selectLoadingGeo } from '../App/selectors';
 import {
   selectPlaces,
@@ -168,12 +168,15 @@ export class PlacesPage extends React.Component {
     return (
       <div className="container mx-auto">
         <div className="flex flex-wrap flex-col-reverse md:flex-row">
-          {loadingLocation || loadingPlaces && (
-            <div className="flex flex-col items-center max-w-sm p-4 mt-4">
-              <h1 className="font-semibold leading-relaxed text-4xl mb-4">{loadingText}</h1>
-              <LoadingSpinner className="w-48 h-auto" />
-            </div>
-          )}
+          {loadingLocation ||
+            (loadingPlaces && (
+              <div className="fle+x flex-col items-center max-w-sm p-4 mt-4">
+                <h1 className="font-semibold leading-relaxed text-4xl mb-4">
+                  {loadingText}
+                </h1>
+                <LoadingSpinner className="w-48 h-auto" />
+              </div>
+            ))}
           {Number.isInteger(index) && length
             ? this.renderCardView()
             : this.renderList()}

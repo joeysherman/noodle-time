@@ -15,9 +15,9 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import history from 'utils/history';
 
-import 'tailwindcss/dist/base.css';
+/* import 'tailwindcss/dist/base.css';
 import 'tailwindcss/dist/components.css';
-import 'tailwindcss/dist/utilities.css';
+import 'tailwindcss/dist/utilities.css'; */
 // Import root app
 import App from 'containers/App';
 

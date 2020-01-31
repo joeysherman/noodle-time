@@ -4,8 +4,6 @@ const loadingSpinner = function(props) {
   //<!-- By Sam Herbert (@sherb), for everyone. More @ http://goo.gl/7AJzbL -->
   return (
     <svg
-      width={props.width || "auto"}
-      height={props.height || "auto"}
       className={props.className || ""}
       viewBox="0 0 120 30"
       xmlns="http://www.w3.org/2000/svg"
