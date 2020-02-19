@@ -52,6 +52,12 @@ module.exports = require('./webpack.base.babel')({
       maxInitialRequests: 10,
       minSize: 0,
       cacheGroups: {
+        styles: {
+          name: 'styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true,
+        },
         vendor: {
           test: /[\\/]node_modules[\\/]/,
           name(module) {
@@ -116,9 +122,9 @@ module.exports = require('./webpack.base.babel')({
     }),
 
     new WebpackPwaManifest({
-      name: 'React Boilerplate',
-      short_name: 'React BP',
-      description: 'My React Boilerplate-based project!',
+      name: 'Noodle Time',
+      short_name: 'NoodleTime',
+      description: 'Find ramen near you, in one click.',
       background_color: '#fafafa',
       theme_color: '#b1624d',
       inject: true,

@@ -15,9 +15,8 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import history from 'utils/history';
 
-/* import 'tailwindcss/dist/base.css';
-import 'tailwindcss/dist/components.css';
-import 'tailwindcss/dist/utilities.css'; */
+import './global.css';
+
 // Import root app
 import App from 'containers/App';
 
@@ -44,7 +43,7 @@ const render = messages => {
   ReactDOM.render(
     <Provider store={store}>
       <LanguageProvider messages={messages}>
-        <ConnectedRouter history={history} >
+        <ConnectedRouter history={history}>
           <App />
         </ConnectedRouter>
       </LanguageProvider>

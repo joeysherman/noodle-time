@@ -4,6 +4,14 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const glob = require('glob');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const PurgecssPlugin = require('purgecss-webpack-plugin');
+
+const PATHS = {
+  src: path.join(process.cwd(), 'app'),
+};
+console.log(PATHS.src);
 
 module.exports = options => ({
   mode: options.mode,
@@ -32,33 +40,21 @@ module.exports = options => ({
         // This is the place to add your own loaders (e.g. sass/less etc.)
         // for a list of loaders, see https://webpack.js.org/loaders/#styling
         test: /\.css$/,
-        exclude: /node_modules/,
         use: [
-          'style-loader',
+          process.env.NODE_ENV === 'production'
+            ? MiniCssExtractPlugin.loader
+            : 'style-loader',
           {
             loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-              modules: true,
-            },
           },
           {
             loader: 'postcss-loader',
             options: {
               ident: 'postcss',
-              plugins: [
-                require('tailwindcss'),
-                require('autoprefixer'),
-              ],
+              plugins: [require('tailwindcss'), require('autoprefixer')],
             },
           },
         ],
-      },
-      {
-        // Preprocess 3rd party .css files located in node_modules
-        test: /\.css$/,
-        include: /node_modules/,
-        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(eot|otf|ttf|woff|woff2)$/,
@@ -130,6 +126,13 @@ module.exports = options => ({
     // Always expose NODE_ENV to webpack, in order to use `process.env.NODE_ENV`
     // inside your code for any environment checks; Terser will automatically
     // drop any unreachable code.
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+    }),
+    new PurgecssPlugin({
+      paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
+      defaultExtractor: content => content.match(/[A-Za-z0-9-_:\/]+/g) || [],
+    }),
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
     }),
