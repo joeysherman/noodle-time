@@ -2,16 +2,16 @@
  * Created by Joey on 9/21/2019.
  */
 
+const DEV_MODE = process.env.NODE_ENV !== 'production';
 const Router = require('express').Router();
 const google = require('@google/maps');
 const yelp = require('yelp-fusion');
-const dotEnv = require('dotenv').config();
+const dotEnv = DEV_MODE ? require('dotenv').config() : false;
 
 const { GOOGLE_KEY } = process.env;
 
 const { YELP_KEY } = process.env;
 
-const DEV_MODE = process.env.NODE_ENV !== 'production';
 
 module.exports = function addApiMiddleware(app) {
   const setting = DEV_MODE ? 'dev' : 'short';

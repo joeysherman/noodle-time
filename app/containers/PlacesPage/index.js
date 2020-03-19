@@ -170,11 +170,13 @@ export class PlacesPage extends React.Component {
         <div className="flex flex-wrap flex-col-reverse md:flex-row">
           {loadingLocation ||
             (loadingPlaces && (
-              <div className="fle+x flex-col items-center max-w-sm p-4 mt-4">
+              <div className="w-full md:w-2/3 p-2 text-center">
                 <h1 className="font-semibold leading-relaxed text-4xl mb-4">
                   {loadingText}
                 </h1>
-                <LoadingSpinner className="w-48 h-auto" />
+                <div className="">
+                  <LoadingSpinner className="w-32" />
+                </div>
               </div>
             ))}
           {Number.isInteger(index) && length

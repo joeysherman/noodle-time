@@ -21,7 +21,6 @@ import { useInjectReducer } from 'utils/injectReducer';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import styles from './styles.css';
 
 // Injectors
 
@@ -44,12 +43,14 @@ export function HomePage({ loadingGeo, hasGeo, fetchLocation, error }) {
 
   return (
     <div
-      className={`${styles.test}relative h-screen w-full overflow-hidden`}
+      className="relative h-screen w-full overflow-hidden"
       style={{
         backgroundImage: `url(${ramenImage})`,
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
         backgroundSize: 'cover',
+        marginTop: '-72px',
+        paddingTop: '72px',
       }}
     >
       <div
@@ -59,18 +60,12 @@ export function HomePage({ loadingGeo, hasGeo, fetchLocation, error }) {
       <div className="w-full relative z-10">
         <div className="p-6 md:p-24">
           <h1 className="text-5xl left-align">
-            Find ramen{' '}
-            <span
-              className={`text-gray-200 relative ${styles.underlineOffset}`}
-            >
-              near you.
-            </span>
+            Find ramen
+            <span className="text-gray-200 relative"> near you.</span>
           </h1>
         </div>
       </div>
-      <div
-        className={`flex relative justify-center pb-16 z-10 ${styles.slideIn}`}
-      >
+      <div className="flex relative justify-center pb-16 z-10">
         <div className="max-w-sm md:max-w-md w-full rounded shadow-lg bg-gray-100">
           <div className="px-6 py-4 text-center">
             <button
@@ -78,7 +73,7 @@ export function HomePage({ loadingGeo, hasGeo, fetchLocation, error }) {
               onClick={fetchLocation}
             >
               {loadingGeo ? (
-                <LoadingSpinner width="80" height="20" />
+                <LoadingSpinner className="w10 h4" />
               ) : (
                 'Locate me'
               )}
