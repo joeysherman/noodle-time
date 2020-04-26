@@ -38,7 +38,7 @@ function* fetchNoodlePlaces(action) {
 }
 
 function* fetchPlaceDetail(action) {
-  let { id } = action.payload
+  let { id }= action.payload
   let url = detailUrl + '?id=' + id;
   let { data, err } = yield call(request, url);
 

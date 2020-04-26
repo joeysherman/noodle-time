@@ -30,7 +30,7 @@ export function placesRequest(location) {
 export function detailRequest(id) {
   return {
     type: constants.DETAIL_REQUEST,
-    payload: id
+    payload: { id },
   };
 }
 

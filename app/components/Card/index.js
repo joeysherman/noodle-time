@@ -11,7 +11,7 @@ function Card(props) {
 
   return (
     <div className="flex flex-col md:flex-row rounded overflow-hidden shadow-lg m-auto">
-      <div className="w-1/2 p-2">
+      <div className="w-1/2 p-2 self-center">
         <img className="w-full" src={image_url} />
       </div>
       <div className="w-full px-6 py-4">

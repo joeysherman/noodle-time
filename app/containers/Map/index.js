@@ -80,7 +80,7 @@ class Map extends React.Component {
 
   placeUserMarkerOnMap() {
     let { longitude, latitude } = this.props.userLocation;
-    this.userMarker = new this.maps.Marker({ position: { lat: latitude, lng: longitude }, map: this.map});
+    this.userMarker = new this.maps.Marker({ position: { lat: latitude, lng: longitude }, map: this.map, icon: "http://maps.google.com/mapfiles/kml/shapes/man.png" });
   };
 
   attachListenerToMarker = (marker, index) => {
