@@ -1,30 +1,31 @@
-import { take, call, put, select, takeLatest } from "redux-saga/effects";
-import { delay } from "redux-saga";
-import request from "../../utils/request";
+import { take, call, put, select, takeLatest } from 'redux-saga/effects';
+import { delay } from 'redux-saga';
+import request from '../../utils/request';
 
-import { placesSuccess, placesError, detailSuccess } from "./actions";
+import { placesSuccess, placesError, detailSuccess } from './actions';
 
 import {
   PLACES_REQUEST,
   SET_SELECTED_INDEX,
-  DETAIL_REQUEST
-} from "./constants";
+  DETAIL_REQUEST,
+} from './constants';
 
-import { selectPlaceByIndex } from "./selectors";
+import { selectPlaceByIndex } from './selectors';
 
-let placesUrl = "/api/noodles";
-let detailUrl = "/api/details";
+let placesUrl = '/api/noodles';
+let detailUrl = '/api/details';
 
 // Individual exports for testing
 export function* defaultSaga() {
   yield takeLatest(PLACES_REQUEST, fetchNoodlePlaces);
+  yield takeLatest(DETAIL_REQUEST, fetchPlaceDetail);
 }
 
 function* fetchNoodlePlaces(action) {
   const { latitude, longitude } = action.payload;
 
   if (latitude && longitude) {
-    let url = placesUrl + "?" + "lat=" + latitude + "&lng=" + longitude;
+    let url = placesUrl + '?' + 'lat=' + latitude + '&lng=' + longitude;
 
     const { data, err } = yield call(request, url);
 
@@ -36,19 +37,16 @@ function* fetchNoodlePlaces(action) {
   }
 }
 
-function* detailSaga() {
-  while (true) {
-    const { payload } = yield take(DETAIL_REQUEST);
+function* fetchPlaceDetail(action) {
+  let { id } = action.payload
+  let url = detailUrl + '?id=' + id;
+  let { data, err } = yield call(request, url);
 
-    let url = detailUrl + "?id=" + payload;
-    let { data, err } = yield call(request, url);
-
-    if (err) {
-      console.log("error in detail saga - " + JSON.stringify(err));
-    } else if (data) {
-      console.log("data in detail saga - " + JSON.stringify(data, null, 2));
-      yield put(detailSuccess(payload, data));
-    }
+  if (err) {
+    console.log('error in detail saga - ' + JSON.stringify(err));
+  } else if (data) {
+    console.log('data in detail saga - ' + JSON.stringify(data, null, 2));
+    yield put(detailSuccess(id, data));
   }
 }
 

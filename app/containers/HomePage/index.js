@@ -73,7 +73,7 @@ export function HomePage({ loadingGeo, hasGeo, fetchLocation, error }) {
               onClick={fetchLocation}
             >
               {loadingGeo ? (
-                <LoadingSpinner className="w10 h4" />
+                <LoadingSpinner className="w-20" />
               ) : (
                 'Locate me'
               )}

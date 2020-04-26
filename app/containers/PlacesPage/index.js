@@ -104,7 +104,7 @@ export class PlacesPage extends React.Component {
     let data = this.props.places[this.props.index];
 
     return (
-      <div className="w-full md:w-2/3 p-4">
+      <div className="w-full md:w-2/3">
         <Card place={data} />
       </div>
     );
@@ -141,7 +141,7 @@ export class PlacesPage extends React.Component {
       let items = this.renderListItems(places);
 
       return (
-        <div className="w-full md:w-2/3 p-2">
+        <div className="w-full md:w-2/3">
           <List count={count}>{items}</List>;
         </div>
       );
@@ -167,14 +167,14 @@ export class PlacesPage extends React.Component {
 
     return (
       <div className="container mx-auto">
-        <div className="flex flex-wrap flex-col-reverse md:flex-row">
+        <div className="flex flex-wrap flex-col-reverse md:flex-row md:p-4">
           {loadingLocation ||
             (loadingPlaces && (
-              <div className="w-full md:w-2/3 p-2 text-center">
+              <div className="w-full md:w-2/3 text-center">
                 <h1 className="font-semibold leading-relaxed text-4xl mb-4">
                   {loadingText}
                 </h1>
-                <div className="">
+                <div className="flex justify-center">
                   <LoadingSpinner className="w-32" />
                 </div>
               </div>
@@ -182,7 +182,9 @@ export class PlacesPage extends React.Component {
           {Number.isInteger(index) && length
             ? this.renderCardView()
             : this.renderList()}
-          <Map />
+          
+            <Map classNames="w-full md:w-1/3 h-48 md:30vh"/>
+
         </div>
       </div>
     );

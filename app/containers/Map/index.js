@@ -273,6 +273,7 @@ renderDirectionsOnMap = directions => {
 
   render() {
     const { latitude, longitude } = this.props.userLocation;
+    const { classNames } = this.props;
     const center = {};
     if (latitude && longitude) {
       center.lat = latitude;
@@ -281,7 +282,7 @@ renderDirectionsOnMap = directions => {
 
     return (
       // Important! Always set the container height explicitly
-        <div className="w-full md:w-1/3 h-48 md:30vh">
+      <div className={classNames || false}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: 'AIzaSyBUXW19bkxMuxxTC3it0l_3lG1c8CPSCQc' }}
           defaultCenter={center}
@@ -292,7 +293,7 @@ renderDirectionsOnMap = directions => {
           onChildClick={this.testChildClick}
         >
         </GoogleMapReact>
-        </div>
+      </div>
     );
   }
 }
