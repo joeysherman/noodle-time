@@ -11,9 +11,9 @@ export function PulsingRamen(props) {
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className={styles.ramenSvg}
-        height="64px"
+        height={props.height || "64px"}
         viewBox="0 0 128 128"
-        width="64px"
+        width={props.width || "64px"}
         version="1.1"
         y="32px"
         x="32px"

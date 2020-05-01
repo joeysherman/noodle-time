@@ -22,6 +22,7 @@ import { mapLoadRequest } from "./actions";
 import { setPlacesIndex } from "../PlacesPage/actions";
 
 import GoogleMapReact from 'google-map-react';
+import PulsingRamen from "../../components/PulsingRamen/pulsingRamen";
 
 import reducer from "./reducer";
 
@@ -41,6 +42,11 @@ class Map extends React.Component {
     // location change?
     // show route to place?
     //
+    console.log("did update");
+    if (prevProps.viewIndex !== this.props.viewIndex) {
+      console.log("changing view")
+      this.showSelectedPlaceOnMap();
+    }
   }
 
   componentDidMount() {
@@ -73,8 +79,8 @@ class Map extends React.Component {
       };
       _bounds = _bounds.extend(userCoords);
       _bounds = _bounds.extend(placeCoords);
-      this.markers.push(new google.maps.Marker({ position: placeCoords, map: this.googleMap }));
-      this.googleMap.fitBounds(_bounds, { bottom: 20, left: 20, right: 20, top: 60 });
+      this.markers.push(new this.maps.Marker({ position: placeCoords, map: this.map }));
+      this.map.fitBounds(_bounds, { bottom: 20, left: 20, right: 20, top: 60 });
     }
   };
 
@@ -138,10 +144,15 @@ class Map extends React.Component {
   getPlaceCoords = places => {
     return places.map(item => {
       return {
+        text: item.name,
         lat: item.coordinates.latitude,
         lng: item.coordinates.longitude
       };
     });
+  };
+
+  removeAllMarkers() {
+    this.map.m
   };
 
   extendMapBounds = arrOfCoords => {
@@ -177,30 +188,28 @@ class Map extends React.Component {
   };
 
   renderPlaceMarkers = () => {
+    if (Number.isInteger(this.props.viewIndex)) return false;
+
     const AnyReactComponent = ({ text }) => <div>{text}</div>;
     const { places } = this.props;
     const allCoords = this.getPlaceCoords(places);
 
-    const placeMarkers = allCoords.map(function ({lat, lng}) {
+    const placeMarkers = allCoords.map(function ({lat, lng, text}, index) {
       
       return (
-        <AnyReactComponent
+        <PulsingRamen
+          width={"32px"}
+          height={"32px"}
           lat={lat}
           lng={lng}
-          text="My Marker"
+          text={text}
+          index={index}
+          key={index}
           />
       )
     });
 
     return placeMarkers;
-  };
-
-  removeMarkersFromMap = (id) => {
-    if (id) {
-      delete this.markers[id]; 
-    } else {
-      this.markers = {};
-    }
   };
 
   getDirectionsRequest = () => {
@@ -267,7 +276,8 @@ renderDirectionsOnMap = directions => {
     });
   };
 
-  testChildClick(hoverKey, childProps) {
+  mapChildClick(hoverKey, childProps) {
+    this.props.setPlaceIndex(childProps.index);
     console.log(JSON.stringify(childProps));
   };
 
@@ -279,6 +289,7 @@ renderDirectionsOnMap = directions => {
       center.lat = latitude;
       center.lng = longitude;
     }
+    const markers = this.renderPlaceMarkers();
 
     return (
       // Important! Always set the container height explicitly
@@ -290,8 +301,9 @@ renderDirectionsOnMap = directions => {
           yesIWantToUseGoogleMapApiInternals
           onGoogleApiLoaded={({map, maps}) => this.handleApiLoaded(map, maps)}
           defaultZoom={11}
-          onChildClick={this.testChildClick}
+          onChildClick={this.mapChildClick.bind(this)}
         >
+          {markers}
         </GoogleMapReact>
       </div>
     );
@@ -301,6 +313,7 @@ renderDirectionsOnMap = directions => {
 const mapStateToProps = (state, ownProps) => ({
   userLocation: selectLocation(state),
   places: selectPlaces(state),
+  viewIndex: selectIndex(state),
 });
 
 function mapDispatchToProps(dispatch) {
