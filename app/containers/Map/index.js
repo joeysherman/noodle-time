@@ -38,31 +38,31 @@ class Map extends React.Component {
     };
   }
 
+  componentWillUpdate() {
+
+  }
+
   componentDidUpdate(prevProps, prevState, prevContext) {
     // location change?
     // show route to place?
-    //
-    console.log("did update");
     if (prevProps.viewIndex !== this.props.viewIndex) {
-      console.log("changing view")
-      this.showSelectedPlaceOnMap();
+      if (Number.isInteger(this.props.viewIndex)) {
+        this.extendMapBoundsForSelection();
+      } else {
+        this.extendMapBoundsForAll();
+      }
     }
-  }
-
-  componentDidMount() {
-    
   }
 
   handleApiLoaded(map, maps) {
     this.map = map;
     this.maps = maps;
     this.placeUserMarkerOnMap();
-    this.placeAllPlacesOnMap();
   }
 
-  showSelectedPlaceOnMap = () => {
+  extendMapBoundsForSelection = () => {
     console.log('showSelectedPlacesOnMap');
-    let _bounds = new google.maps.LatLngBounds();
+    let _bounds = new this.maps.LatLngBounds();
     let {
       userLocation: { latitude: lat, longitude: lng }
     } = this.props;
@@ -79,21 +79,13 @@ class Map extends React.Component {
       };
       _bounds = _bounds.extend(userCoords);
       _bounds = _bounds.extend(placeCoords);
-      this.markers.push(new this.maps.Marker({ position: placeCoords, map: this.map }));
-      this.map.fitBounds(_bounds, { bottom: 20, left: 20, right: 20, top: 60 });
+      this.map.fitBounds(_bounds, { bottom: 60, left: 20, right: 20, top: 60 });
     }
   };
 
   placeUserMarkerOnMap() {
     let { longitude, latitude } = this.props.userLocation;
-    this.userMarker = new this.maps.Marker({ position: { lat: latitude, lng: longitude }, map: this.map, icon: "http://maps.google.com/mapfiles/kml/shapes/man.png" });
-  };
-
-  attachListenerToMarker = (marker, index) => {
-    marker.addListener("click", () => {
-      console.log("You clicked: " + index);
-      this.props.setPlaceIndex(index);
-    });
+    this.userMarker = new this.maps.Marker({ position: { lat: latitude, lng: longitude }, map: this.map, icon: "http://maps.google.com/mapfiles/kml/shapes/man.png", zIndex: 999999999 });
   };
 
   checkDirectionsService = () => {
@@ -151,12 +143,11 @@ class Map extends React.Component {
     });
   };
 
-  removeAllMarkers() {
-    this.map.m
-  };
-
-  extendMapBounds = arrOfCoords => {
-    let bounds = new google.maps.LatLngBounds();
+  extendMapBoundsForAll() {
+    let { places } = this.props;
+    if (!places.length) return;
+    let arrOfCoords = this.getPlaceCoords(places);
+    let bounds = new this.maps.LatLngBounds();
 
     arrOfCoords.forEach(coords => {
       bounds = bounds.extend(coords);
@@ -187,13 +178,28 @@ class Map extends React.Component {
     return markers;
   };
 
-  renderPlaceMarkers = () => {
-    if (Number.isInteger(this.props.viewIndex)) return false;
+  renderSingleMarker = () => {
+    const { places, viewIndex } = this.props;
+    const place = places[viewIndex];
+    console.log(place);
+    return (
+      <PulsingRamen
+        width={"32px"}
+        height={"32px"}
+        lat={place.coordinates.latitude}
+        lng={place.coordinates.longitude}
+        text={place.name}
+        index={viewIndex}
+        key={viewIndex}
+        />
+    );
+  };
 
-    const AnyReactComponent = ({ text }) => <div>{text}</div>;
+  renderPlaceMarkers = () => {
+    if (Number.isInteger(this.props.viewIndex)) return this.renderSingleMarker();
+
     const { places } = this.props;
     const allCoords = this.getPlaceCoords(places);
-
     const placeMarkers = allCoords.map(function ({lat, lng, text}, index) {
       
       return (
@@ -289,7 +295,7 @@ renderDirectionsOnMap = directions => {
       center.lat = latitude;
       center.lng = longitude;
     }
-    const markers = this.renderPlaceMarkers();
+    const markers = this.props.places.length ? this.renderPlaceMarkers() : false;
 
     return (
       // Important! Always set the container height explicitly

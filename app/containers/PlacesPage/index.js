@@ -167,6 +167,9 @@ export class PlacesPage extends React.Component {
 
     return (
       <div className="container mx-auto">
+        <div className="flex w-full">
+          <button className="p-2 m-2 rounded bg-gray-600" onClick={this.props.setIndex.bind(this, false)}>View List</button>
+        </div>
         <div className="flex flex-wrap flex-col-reverse md:flex-row md:p-4">
           {loadingLocation ||
             (loadingPlaces && (

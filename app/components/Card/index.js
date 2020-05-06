@@ -22,17 +22,17 @@ function Card(props) {
           <div className="flex mb-2">
             
           {categories.length &&
-            categories.map(function(val, ind) {
+            categories.map(function(val, index) {
               return (
-                <p className="bg-blue-400 px-2 py-1 mr-2 rounded-full w font-light text-xs" key={ind}>{val.title}</p>
+                <p className="bg-blue-400 px-2 py-1 mr-2 rounded-full w font-light text-xs" key={index}>{val.title}</p>
                 );
               })}
               </div>
 
-          <div className="flex w-full justify-around">
-          <button className="rounded shadow-md text-gray-700 bg-blue-500 leading-normal font-bold py-3 px-5">Take me there</button>
-          <a href={`tel:${display_phone}`} className="transition duration-300 ease-in-out bg-red-500 hover:opacity-75 rounded shadow-md text-gray-700 leading-normal font-bold py-3 px-5">
-            {display_phone}
+          <div className="flex w-full justify-around p-4">
+          <button className="w-full block rounded shadow-md text-gray-700 bg-blue-500 leading-normal font-bold py-3 px-5 mr-2">Open in Maps</button>
+          <a href={`tel:${display_phone}`} className="w-full text-center transition duration-300 ease-in-out bg-red-500 hover:opacity-75 rounded shadow-md text-gray-700 leading-normal font-bold py-3 px-5">
+            Call
           </a>
           </div>
         </div>
