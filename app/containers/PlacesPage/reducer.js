@@ -29,7 +29,7 @@ const placesPageReducer = (state = initialState, action) =>
       draft.error = action.payload;
       break;
     case constants.PLACES_REQUEST:
-      draft.loading = true;
+      draft.loading = 'places';
       draft.places = [];
       draft.error = false;
       break;
@@ -43,7 +43,7 @@ const placesPageReducer = (state = initialState, action) =>
       draft.error = action.payload;
       break;
     case constants.DETAIL_REQUEST:
-      draft.loading = true;
+      draft.loading = 'details';
       draft.error = false;
       break;
     case constants.INC_SELECTED_INDEX:

@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const express = require('express');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 
@@ -21,6 +22,8 @@ module.exports = function addDevMiddlewares(app, webpackConfig) {
 
   app.use(middleware);
   app.use(webpackHotMiddleware(compiler));
+
+  app.use('/static', express.static(path.join(__dirname, '../../app/assets')));
 
   // Since webpackDevMiddleware uses memory-fs internally to store build
   // artifacts, we use it instead

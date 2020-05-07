@@ -102,10 +102,10 @@ export class PlacesPage extends React.Component {
 
   renderCardView = () => {
     let data = this.props.places[this.props.index];
-
+    let loading = this.props.loading === 'details';
     return (
-      <div className="w-full md:w-2/3">
-        <Card place={data} />
+      <div className="w-full md:w-3/5">
+        <Card place={data} loading={loading} />
       </div>
     );
   };
@@ -141,7 +141,7 @@ export class PlacesPage extends React.Component {
       let items = this.renderListItems(places);
 
       return (
-        <div className="w-full md:w-2/3">
+        <div className="w-full md:w-3/5 bg-white rounded shadow-md">
           <List count={count}>{items}</List>;
         </div>
       );
@@ -152,7 +152,7 @@ export class PlacesPage extends React.Component {
   };
 
   render() {
-    const { loadingLocation, loadingPlaces } = this.props;
+    const { loadingLocation, loading } = this.props;
     const length = this.props.places && this.props.places.length;
     const arrOfLoadingText = [
       'Simmering the broth..',
@@ -168,12 +168,17 @@ export class PlacesPage extends React.Component {
     return (
       <div className="container mx-auto">
         <div className="flex w-full">
-          <button className="p-2 m-2 rounded bg-gray-600" onClick={this.props.setIndex.bind(this, false)}>View List</button>
+          <button
+            className="p-2 m-2 rounded bg-gray-600"
+            onClick={this.props.setIndex.bind(this, false)}
+          >
+            View List
+          </button>
         </div>
-        <div className="flex flex-wrap flex-col-reverse md:flex-row md:p-4">
+        <div className="flex flex-wrap flex-col-reverse md:flex-row md:flex-no-wrap md:p-4">
           {loadingLocation ||
-            (loadingPlaces && (
-              <div className="w-full md:w-2/3 text-center">
+            (loading === 'places' && (
+              <div className="w-full md:w-3/5 text-center">
                 <h1 className="font-semibold leading-relaxed text-4xl mb-4">
                   {loadingText}
                 </h1>
@@ -185,9 +190,8 @@ export class PlacesPage extends React.Component {
           {Number.isInteger(index) && length
             ? this.renderCardView()
             : this.renderList()}
-          
-            <Map classNames="w-full md:w-1/3 h-48 md:30vh"/>
 
+          <Map classNames="w-full md:w-2/5 h-48 md:h-64 md:ml-8" />
         </div>
       </div>
     );
@@ -196,7 +200,7 @@ export class PlacesPage extends React.Component {
 
 const mapStateToProps = (state, ownProps) => ({
   loadingLocation: selectLoadingGeo(state),
-  loadingPlaces: selectPlacesLoading(state),
+  loading: selectPlacesLoading(state),
   userLocation: selectLocation(state),
   places: selectPlaces(state),
   index: selectIndex(state),
