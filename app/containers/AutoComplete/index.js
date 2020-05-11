@@ -141,9 +141,9 @@ class Autocomplete extends React.Component {
 
             // Flag the active suggestion with a class
             if (index === activeSuggestion) {
-              className = 'bg-red-200 focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal';
+              className = 'bg-red-200 focus:outline-none focus:shadow-outline border border-gray-300 py-2 px-4 block w-full appearance-none leading-normal';
             } else {
-              className = 'bg-white hover:bg-gray-300 focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal'
+              className = 'bg-white hover:bg-gray-300 focus:outline-none focus:shadow-outline border border-gray-300 py-2 px-4 block w-full appearance-none leading-normal'
             }
 
             return (
