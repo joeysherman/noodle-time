@@ -11,6 +11,7 @@ import injectSaga from 'utils/injectSaga';
 import saga from './saga';
 import reducer from './reducer';
 import { push } from 'connected-react-router';
+import queryString from "query-string";
 
 // Redux imports
 import { placesRequest } from './actions';
@@ -111,6 +112,10 @@ export class PlacesPage extends React.Component {
   };
 
   handleListItemClick = ({ id, index }) => {
+    this.props.history.push({
+      pathname: '/places',
+      search: `?detail=${id}`,
+    });
     this.props.fetchDetail(id);
     this.props.setIndex(index);
   };
@@ -142,7 +147,7 @@ export class PlacesPage extends React.Component {
 
       return (
         <div className="w-full md:w-3/5 bg-white rounded shadow-md">
-          <List count={count}>{items}</List>;
+          <List count={count}>{items}</List>
         </div>
       );
     } else {
@@ -164,17 +169,11 @@ export class PlacesPage extends React.Component {
     const rand = Math.floor(Math.random() * 5);
     const loadingText = arrOfLoadingText[rand];
     const index = this.props.index;
+    const showMap = this.props.location.state && this.props.location.state.map;
+    const qs = queryString.parse(this.props.history.location.search);
 
     return (
       <div className="container mx-auto">
-        <div className="flex w-full">
-          <button
-            className="p-2 m-2 rounded bg-gray-600"
-            onClick={this.props.setIndex.bind(this, false)}
-          >
-            View List
-          </button>
-        </div>
         <div className="flex flex-wrap flex-col-reverse md:flex-row md:flex-no-wrap md:p-4">
           {loadingLocation ||
             (loading === 'places' && (
@@ -187,11 +186,10 @@ export class PlacesPage extends React.Component {
                 </div>
               </div>
             ))}
-          {Number.isInteger(index) && length
+          {qs && qs.detail && length
             ? this.renderCardView()
             : this.renderList()}
-
-          <Map classNames="w-full md:w-2/5 h-48 md:h-64 md:ml-8" />
+          { showMap ? <Map classNames="w-full md:w-2/5 h-48 md:h-64 md:ml-8" /> : false }
         </div>
       </div>
     );

@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 function Navbar() {
   return (
-    <nav className="relative z-10 flex items-center justify-between flex-wrap bg-red-500 p-4 relative z-10">
+    <nav className="relative z-10 flex items-center justify-between flex-wrap bg-red-500 p-2 md:p-4 relative z-10">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
         <svg
           className="fill-current h-10 w-10 mr-2"

@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import Rating from '../Rating';
 
 function Card(props) {
   let {
@@ -12,19 +13,27 @@ function Card(props) {
     display_phone,
     distance,
     is_closed,
-    loading,
     categories,
     image_url,
+    rating,
+    review_count,
   } = props.place;
 
+  let { detail } = props;
+
+  let { loading } = props;
   return (
-    <div className="flex flex-col md:flex-row bg-white rounded overflow-hidden shadow-lg m-auto">
-      <div className="w-1/2 p-2 self-center">
-        <img className="w-full" src={image_url} />
+    <div className="flex flex-col md:flex-row bg-white rounded overflow-hidden shadow-lg m-auto p-4">
+      <div className="relative pb-2/3">
+        <img className="absolute h-full w-full object-cover" src={image_url} />
       </div>
-      <div className="w-full px-6 py-4">
+      <h1 className="font-bold text-4xl mb-1">{name}</h1>
+      <div className="w-full">
         <div className="flex flex-col h-full justify-around">
-          <h1 className="font-bold text-3xl mb-1">{name}</h1>
+          <div className="flex mb-2">
+            <Rating rating={rating} className="pb-2" />
+            <p className="pl-3">{review_count} reviews.</p>
+          </div>
           <h2
             className={
               is_closed
@@ -32,7 +41,7 @@ function Card(props) {
                 : 'font-semibold text-green-600 pb-2'
             }
           >
-            {is_closed ? 'Closed' : 'Open'}
+            {loading ? 'loading' : 'done'}
           </h2>
           <div className="flex mb-2">
             {categories.length &&
@@ -49,16 +58,16 @@ function Card(props) {
           </div>
 
           <div className="flex w-full justify-around p-4">
-            <button className="w-full inline-flex items-center justify-center rounded shadow-md text-gray-900 leading-normal font-bold py-3 px-5 mr-2">
+            <button className="w-full inline-flex flex-col items-center justify-center rounded shadow-md text-gray-900 leading-normal font-bold py-3 px-5 mr-2">
               <img
                 className="inline-block mr-2"
                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAADR0lEQVRYhe2Xz2tcVRTHP+e9WUzepG1Kg4v8QLsrLkSEuinFjRt/bMQOpYhgmZknWkuThQvBxfM/KAykyZvBBEUDDqILNQV10+hCIWo3dqFIoZkQi5AyJtdJ+t47LjITL5M3Y6MzgtDvZu79nnPe9zv33nfnjNBnKMhWsfgCIr7AYwCquoLjzOXCcFFA7Xzpq3g+724dPfqeqJ7tYm4xd+fOi1KrxW3O6acBc+TIm93EAQTOmZGRNzq4/kCnp4fM5uZtYLhFbQrMICKq+kqbF/h96O7dB2RhoQmQuZeHm/PnJzWTKQIvsbtqHzmqtezExNcSBAlA05iTljgCBa9S+QDAlErfKSwCKBxqZjIngeWeBjSfd83hw0/jOL7CU4BrhS8mIhdNvb6m+fxxqdV2EtVDdr0DP7THURx/77p/lSewl7vPQMP3R114zagWgIkUb2vAWGs81jx2bAy4GUfRz7ZIBK8qTAMY171gP8B13Z/a431nYKtUug48kiIMgDc+7jZXV08lInngeRV5fTgM3wcwpdINhRNW+s3W50MWdyNXqTzcnqRtQVdxgNaeLwPLGgRTm+vro1Z4FrhszW3h3XqRGXt+T4fwb8zcbs+HstlZ02xeAo6nF8gvQxsboU319R6QcnlbVV+m47ZrQ0UuSK22MzADAMPV6udAmBKaHZ6bu9pJ9t0AgJfNXgK+tahvvGx2Ki13IAakXN6WKDoD/IrquqiekXJ5+z8xYIrFswDe/PwtVJ8BnvWq1VU7NlADKrJgCoVTALlqdSVXra4AmELhcRV5e+AGgKw6zscN39+7kBq+f0Id51PA60z+V/dAD4y6ql80ff8JjeMoUb0KjKYlDsoAwHis+iWOA/Bgt6RBGugp3MZAXsOD4P9n4I9i8bQGQd+MH/gMJCLXTL3+mymVljRJat7k5JIEQfRPDaQ1JKm/ZD2wBnzY7hFNvR73yL2eq1QetYmDLGVT4F2g3BJtY4zdHvGaqddvdaldReStWOTJzkDaFkQd/I8C4U4m887IlSsbABoEU3ZbhtUjWnUxsESShF6j8Zn9Z8TG/i0oFmcQOScinwjMDYXhV12+FS0zjmXmOSABFiSKqt78fLcVuY/72MOfC0Q3AtCc5dYAAAAASUVORK5CYII="
               />
-              Open in Maps
+              Directions
             </button>
             <a
               href={`tel:${display_phone}`}
-              className="w-full inline-flex items-center justify-center transition duration-300 ease-in-out bg-red-500 hover:opacity-75 rounded shadow-md text-white leading-normal font-bold py-3 px-5"
+              className="w-full inline-flex flex-col items-center justify-center transition duration-300 ease-in-out bg-red-500 hover:opacity-75 rounded shadow-md text-white leading-normal font-bold py-3 px-5"
             >
               <img
                 className="inline-block mr-2"

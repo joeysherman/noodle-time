@@ -65,9 +65,19 @@ export function HomePage({ loadingGeo, hasGeo, fetchLocation, error }) {
           </h1>
         </div>
       </div>
-      <div className="flex relative justify-center p-16 lg:pb-16 z-10">
+      <div className="flex relative justify-center p-4 md:pb-16 z-10">
         <div className="max-w-sm md:max-w-md w-full rounded shadow-lg bg-gray-100">
           <div className="flex flex-col items-center px-6 py-4">
+            <Link
+              to={{
+                pathname: '/places',
+                search: '?sort=name',
+                hash: '#the-hash',
+                state: { map: true },
+              }}
+            >
+              Tester
+            </Link>
             {loadingGeo ? (
               <LoadingSpinner className="w-20" />
             ) : (
@@ -76,7 +86,10 @@ export function HomePage({ loadingGeo, hasGeo, fetchLocation, error }) {
                 onClick={fetchLocation}
               >
                 Locate me
-                <img className="inline-block w-6 h-6" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAACXklEQVRIie2Wu2sUQRzHP2dhEjvF+Lq9QqM26YP/ghhTSlohgppLwCcWCnbWVuLjXwjiK9FGUQvPSlFBDCiIEa3CXXwEcznXYr7Lzs3Nzu2GXOcXhp39/h7fndnfPGD90QdMAzXgp1oNmJKtJygDr4E4o72Sz7qir4uoLV5o5BWgCswB7zFT+Bs4Kvt0DtGkVfMIloGbwGpGkmH5vXT4+4qNgFnH9qKb6BiwJOc/wF/13wBDwH5go3x/OMkjK0/FsS2FRKeAlhxngAn168Auj/9iAeHF0EhbGuEpcY8UdDEjpuYkn5V4BVMXtq3mS1Amnd7T4rZg/vEqMJghPOkkD7VJX4JbMt6xuHFxjzNEIf9yegcMuMEVsqs31I4rfghYCPgtyKcD1TWIxsAvYEQ59gDzHp952bxI1tu4w3+gfc36EAEH1B/E7FD2bpVVG20C7pd9F+9bRgl2YkZ+UO/DlnDog4G0mjc5/LL4jqKw0C+fZYt7DjxTf3OvhAc8wjZO2C8bHOM3PXc4fEPP0FcntobD9wMXgJMh4Y96jjh8EeG6w48BV4DPgdhCu89a17oXEdDsgWiTHDePG3KeA0riki3zSSDuqXyOWNw9cde6iYJZq0l1nxVnHxLbPDHbZWuS/uvzylGns1gzcZj0WDwj7qESXfL4XyY9CkvAOcW2gEN5RRNUSS8Ct4Fj6jdo38Ei0hmawJxqsWK9x18ejEooBlZIrz5vgb3APswxF8u2Qjq9hUfqYitwlXzV3gSuY/btIErdHCyUMZvBKLAbc3YDfAE+AQ+Au8DXAjn/o/f4B6+MPYaVc7Q8AAAAAElFTkSuQmCC" />
+                <img
+                  className="inline-block w-6 h-6"
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAACXklEQVRIie2Wu2sUQRzHP2dhEjvF+Lq9QqM26YP/ghhTSlohgppLwCcWCnbWVuLjXwjiK9FGUQvPSlFBDCiIEa3CXXwEcznXYr7Lzs3Nzu2GXOcXhp39/h7fndnfPGD90QdMAzXgp1oNmJKtJygDr4E4o72Sz7qir4uoLV5o5BWgCswB7zFT+Bs4Kvt0DtGkVfMIloGbwGpGkmH5vXT4+4qNgFnH9qKb6BiwJOc/wF/13wBDwH5go3x/OMkjK0/FsS2FRKeAlhxngAn168Auj/9iAeHF0EhbGuEpcY8UdDEjpuYkn5V4BVMXtq3mS1Amnd7T4rZg/vEqMJghPOkkD7VJX4JbMt6xuHFxjzNEIf9yegcMuMEVsqs31I4rfghYCPgtyKcD1TWIxsAvYEQ59gDzHp952bxI1tu4w3+gfc36EAEH1B/E7FD2bpVVG20C7pd9F+9bRgl2YkZ+UO/DlnDog4G0mjc5/LL4jqKw0C+fZYt7DjxTf3OvhAc8wjZO2C8bHOM3PXc4fEPP0FcntobD9wMXgJMh4Y96jjh8EeG6w48BV4DPgdhCu89a17oXEdDsgWiTHDePG3KeA0riki3zSSDuqXyOWNw9cde6iYJZq0l1nxVnHxLbPDHbZWuS/uvzylGns1gzcZj0WDwj7qESXfL4XyY9CkvAOcW2gEN5RRNUSS8Ct4Fj6jdo38Ei0hmawJxqsWK9x18ejEooBlZIrz5vgb3APswxF8u2Qjq9hUfqYitwlXzV3gSuY/btIErdHCyUMZvBKLAbc3YDfAE+AQ+Au8DXAjn/o/f4B6+MPYaVc7Q8AAAAAElFTkSuQmCC"
+                />
               </button>
             )}
             {error && (
