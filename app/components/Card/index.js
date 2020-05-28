@@ -20,11 +20,11 @@ function Card(props) {
   } = props.place;
 
   let { detail } = props;
-
   let { loading } = props;
+
   return (
-    <div className="flex flex-col md:flex-row bg-white rounded overflow-hidden shadow-lg m-auto p-4">
-      <div className="relative pb-2/3">
+    <div className="flex flex-col bg-white rounded overflow-hidden shadow-lg m-auto p-4">
+      <div className="relative pb-2/3 md: pb-1/5">
         <img className="absolute h-full w-full object-cover" src={image_url} />
       </div>
       <h1 className="font-bold text-4xl mb-1">{name}</h1>

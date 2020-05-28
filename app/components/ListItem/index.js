@@ -22,7 +22,7 @@ function ListItem(props) {
       onClick={props.onClick}
     >
       <div className="flex justify-between">
-        <div className="relative pb-1/5 w-24 flex-shrink-0">
+        <div className="relative pb-1/5 w-24 md:w-48 bg-white flex-shrink-0">
           <img
             src={image_url}
             alt=""
@@ -30,13 +30,13 @@ function ListItem(props) {
           />
         </div>
         <div className="flex flex-col justify-between w-full ml-2 pr-2 truncate">
-          <span className="whitespace-no-wrap text-xl">{name}</span>
+          <span className="whitespace-no-wrap truncate text-xl font-semibold mb-2">{name}</span>
           <div className="">
             <Rating rating={rating} />
           </div>
-            <span>{review_count} Reviews.</span>
+            <span className="text-gray-600">{review_count} Reviews.</span>
         </div>
-        <p className="flex-shrink-0">{distanceByMile} mi.</p>
+        <p className="flex-shrink-0 text-gray-600">{distanceByMile} mi.</p>
       </div>
     </li>
   );

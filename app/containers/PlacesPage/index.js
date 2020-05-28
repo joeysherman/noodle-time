@@ -11,7 +11,8 @@ import injectSaga from 'utils/injectSaga';
 import saga from './saga';
 import reducer from './reducer';
 import { push } from 'connected-react-router';
-import queryString from "query-string";
+import { Link } from 'react-router-dom';
+import queryString from 'query-string';
 
 // Redux imports
 import { placesRequest } from './actions';
@@ -38,6 +39,7 @@ import List from '../../components/List';
 import ListItem from '../../components/ListItem';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import Card from '../../components/Card';
+import ActionBar from '../../components/ActionBar';
 
 import { incrementIndex, decrementIndex } from './actions';
 
@@ -50,6 +52,9 @@ export class PlacesPage extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
+  
+    this.state = { showMap: (window.innerWidth >= 768) };
+
   }
 
   componentDidMount() {
@@ -70,6 +75,15 @@ export class PlacesPage extends React.Component {
     }
     if (prevProps.loadingLocation && !this.props.loadingLocation) {
       this.fetchPlaces();
+    }
+  }
+
+  componentWillUnmount() {
+  }
+
+  componentWillMount() {
+    if (window.innerWidth >= 768) {
+
     }
   }
 
@@ -169,11 +183,43 @@ export class PlacesPage extends React.Component {
     const rand = Math.floor(Math.random() * 5);
     const loadingText = arrOfLoadingText[rand];
     const index = this.props.index;
-    const showMap = this.props.location.state && this.props.location.state.map;
     const qs = queryString.parse(this.props.history.location.search);
+    const showMap = this.state.showMap || qs.mode && qs.mode == 'map';
+    const mapLink = {
+      ...qs,
+      mode: 'map',
+    };
 
     return (
       <div className="container mx-auto">
+        <ActionBar className="p-2 flex justify-between items-center bg-white">
+            <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
+              Filter
+            </button>
+          <div>
+        
+            <h3>Showing {length} places.</h3>
+          </div>
+          <div className="inline-flex">
+            <Link
+              to={{
+                pathname: '/places',
+                search: queryString.stringify(mapLink),
+              }}
+              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
+            >
+              Map
+            </Link>
+            <Link
+              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r"
+              to={{
+                pathname: '/places',
+              }}
+            >
+              List
+            </Link>
+          </div>
+        </ActionBar>
         <div className="flex flex-wrap flex-col-reverse md:flex-row md:flex-no-wrap md:p-4">
           {loadingLocation ||
             (loading === 'places' && (
@@ -189,7 +235,11 @@ export class PlacesPage extends React.Component {
           {qs && qs.detail && length
             ? this.renderCardView()
             : this.renderList()}
-          { showMap ? <Map classNames="w-full md:w-2/5 h-48 md:h-64 md:ml-8" /> : false }
+          {showMap ? (
+            <Map classNames="w-full md:w-2/5 h-48 md:h-64 md:ml-8" />
+          ) : (
+            false
+          )}
         </div>
       </div>
     );
