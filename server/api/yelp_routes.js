@@ -24,12 +24,20 @@ module.exports = (function yelp_routes() {
 
   Router.get('/api/details', function(req, res) {
     var id = req.query.id || null;
+    var detailPromise;
+    var reviewPromise;
 
-    if (!id) return res.error('No business ID supplied');
+    if (!Boolean(id)) return res.error('No business ID supplied.');
 
-    req.app.locals.yelp.business(id)
-      .then((business) => res.send(business))
-      .catch((err) => res.send(err));
+    detailPromise = req.app.locals.yelp.business(id);
+    reviewPromise = req.app.locals.yelp.reviews(id);
+
+    Promise.all([detailPromise, reviewPromise]).then(values => {
+      res.send({
+        details: values[0].jsonBody,
+        reviews: values[1].jsonBody
+      });
+    });
   });
 
   return Router;
