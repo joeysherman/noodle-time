@@ -32,7 +32,6 @@ function* fetchNoodlePlaces(action) {
     if (err) {
       yield put(placesError(data.data));
     } else if (data) {
-      console.log(data);
       yield put(placesSuccess(data.jsonBody.businesses));
     }
   }
@@ -46,6 +45,7 @@ function* fetchPlaceDetail(action) {
   if (err) {
     console.log('error in detail saga - ' + JSON.stringify(err));
   } else if (data) {
+    console.log(data);
     yield put(detailSuccess(id, data));
   }
 }

@@ -39,6 +39,7 @@ import List from '../../components/List';
 import ListItem from '../../components/ListItem';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import Card from '../../components/Card';
+import Review from '../../components/Review';
 import ActionBar from '../../components/ActionBar';
 
 import { incrementIndex, decrementIndex } from './actions';
@@ -58,7 +59,6 @@ export class PlacesPage extends React.Component {
   }
 
   componentDidMount() {
-    console.log(typeof this.props.userLocation);
     if (typeof this.props.userLocation === 'boolean') {
       this.props.fetchLocation();
     } else {
@@ -116,11 +116,20 @@ export class PlacesPage extends React.Component {
   };
 
   renderCardView = () => {
-    let data = this.props.places[this.props.index];
+    let placeData = this.props.places[this.props.index];
     let loading = this.props.loading === 'details';
+    let detailData = this.props.detail;
+    let reviewData = detailData && detailData.reviews;
+    let reviews = false;
+    if (reviewData && reviewData.reviews.length) {
+      console.log('We have reviews');
+      reviews = reviewData.reviews.map(val => <Review data={val}></Review>);
+    }
     return (
       <div className="w-full md:w-3/5">
-        <Card place={data} loading={loading} />
+        <Card place={placeData} loading={loading}>
+          {reviews}
+        </Card>
       </div>
     );
   };
@@ -193,7 +202,7 @@ export class PlacesPage extends React.Component {
     return (
       <div className="container mx-auto">
         <ActionBar className="p-2 flex justify-between items-center bg-white">
-            <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
+            <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
               Filter
             </button>
           <div>
@@ -252,7 +261,7 @@ const mapStateToProps = (state, ownProps) => ({
   userLocation: selectLocation(state),
   places: selectPlaces(state),
   index: selectIndex(state),
-  detail: selectDetailById(state, ownProps),
+  detail: selectDetailById(state, queryString.parse(ownProps.history.location.search)),
 });
 
 function mapDispatchToProps(dispatch, ownProps) {

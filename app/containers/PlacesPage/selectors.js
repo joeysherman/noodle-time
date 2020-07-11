@@ -4,6 +4,9 @@ import { createSelector } from 'reselect';
  * Direct selector to the placesPage state domain
  */
 const selectPlacesPageDomain = (state, props) => state.places;
+
+const selectQueryString = (state, qs) => qs;
+
 /**
  * Other specific selectors
  */
@@ -34,10 +37,11 @@ const selectIndex = createSelector(
 )
 
 const selectDetailById = createSelector(
-  selectPlacesPageDomain,
-  (substate) => {
-    
-  return substate.places[substate.index];
+  [selectPlacesPageDomain, selectQueryString],
+  (placesSubState, qs) => {
+    let { detail } = qs;
+
+  return placesSubState.detail[detail];
   }
 )
 
