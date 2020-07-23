@@ -119,16 +119,19 @@ export class PlacesPage extends React.Component {
     let placeData = this.props.places[this.props.index];
     let loading = this.props.loading === 'details';
     let detailData = this.props.detail;
-    let reviewData = detailData && detailData.reviews;
-    let reviews = false;
-    if (reviewData && reviewData.reviews.length) {
-      console.log('We have reviews');
-      reviews = reviewData.reviews.map(val => <Review data={val}></Review>);
+    let reviewsObject = detailData && detailData.reviews;
+    let details = detailData && detailData.detail;
+    let reviewsComponents = false;
+
+    if (reviewsObject && reviewsObject.reviews.length) {
+      reviewsComponents = reviewsObject.reviews.map(val => <Review data={val}></Review>);
     }
     return (
       <div className="w-full md:w-3/5">
-        <Card place={placeData} loading={loading}>
-          {reviews}
+        <Card place={placeData}
+         detail={details}
+         loading={loading}>
+          {reviewsComponents}
         </Card>
       </div>
     );

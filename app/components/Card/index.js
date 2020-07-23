@@ -19,10 +19,12 @@ function Card(props) {
     rating,
     review_count,
   } = props.place;
-
+  
   let { detail } = props;
   let { loading } = props;
   let { children } = props;
+
+  let _open_now = false;
 
   return (
     <div className="flex flex-col bg-white rounded overflow-hidden shadow-lg m-auto p-4">
@@ -43,7 +45,7 @@ function Card(props) {
                 : 'font-semibold text-green-600 pb-2'
             }
           >
-          {loading ? <GrayLoadingBox size="medium"/> : 'done'}
+          {loading && !detail ? <GrayLoadingBox size="medium"/> : detail.hours && detail.hours[0].is_open_now }
           </h2>
           <div className="flex mb-2">
             {categories.length &&

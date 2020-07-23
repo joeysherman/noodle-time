@@ -24,15 +24,15 @@ function Review(props) {
   let { text, rating, time_created } = data;
 
   return (
-  <div className="flex justify-between p-4 border-gray-500 rounded-sm shadow">
-    <div className="flex flex-col w-2/6">
-      <div className="flex">
+  <div className="flex flex-col p-2 border-gray-500 rounded-sm shadow">
+    <div className="flex w-full justify-between items-center">
+      <div className="flex justify-center items-center">
       <img className="h-12 w-12 m-2 rounded-full" src={image_url}></img>
       <p className="px-2 py-4 leading-tight font-semibold">{name}</p>
       </div>
       <Rating rating={rating}></Rating>
     </div>
-    <ReviewText className="w-4/6 p-4">{text}</ReviewText>
+    <ReviewText className="w-full p-1">{text}</ReviewText>
   </div>);
 }
 
