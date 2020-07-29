@@ -9,15 +9,6 @@ import React from 'react';
 import styled from 'styled-components';
 import Rating from './../Rating'
 
-// 
-const ReviewText = styled.p`
-  
-`;
-
-const UserAvatar = styled.img`
-
-`;
-
 function Review(props) {
   let { data } = props;
   let { user: { name, image_url, profile_url }} = data;
@@ -32,7 +23,7 @@ function Review(props) {
       </div>
       <Rating rating={rating}></Rating>
     </div>
-    <ReviewText className="w-full p-1">{text}</ReviewText>
+    <p className="w-full p-1">{text}</p>
   </div>);
 }
 
