@@ -127,13 +127,11 @@ class Autocomplete extends React.Component {
       },
     } = this;
 
-    const { suggestions } = this.props;
-
     let suggestionsListComponent;
 
-    if (filteredSuggestions) {
+    if (filteredSuggestions.length) {
       suggestionsListComponent = (
-        <ul className="absolute max-w-sm w-10/12">
+        <ul className="absolute">
           {filteredSuggestions.map((suggestion, index) => {
             let className;
             let _suggestion = suggestion.description;
@@ -141,9 +139,11 @@ class Autocomplete extends React.Component {
 
             // Flag the active suggestion with a class
             if (index === activeSuggestion) {
-              className = 'bg-red-200 focus:outline-none focus:shadow-outline border border-gray-300 py-2 px-4 block w-full appearance-none leading-normal';
+              className =
+                'bg-red-200 focus:outline-none focus:shadow-outline border border-gray-300 py-2 px-4 block w-full appearance-none leading-normal';
             } else {
-              className = 'bg-white hover:bg-gray-300 focus:outline-none focus:shadow-outline border border-gray-300 py-2 px-4 block w-full appearance-none leading-normal'
+              className =
+                'bg-white hover:bg-gray-300 focus:outline-none focus:shadow-outline border border-gray-300 py-2 px-4 block w-full appearance-none leading-normal';
             }
 
             return (
@@ -154,18 +154,20 @@ class Autocomplete extends React.Component {
           })}
         </ul>
       );
-    } else {
+    } else if (userInput.length) {
       suggestionsListComponent = (
-        <div className="no-suggestions">
-          <em>No suggestions, try turning on your GPS.</em>
-        </div>
+        <ul className="absolute mx-2 my-1">
+          <li className="bg-red-200 focus:outline-none focus:shadow-outline border border-gray-300 py-2 px-4 block w-full appearance-none leading-normal">
+            No suggestions, try turning on your GPS.
+          </li>
+        </ul>
       );
     }
     return (
-      <div className="">
+      <div className="w-full relative">
         <input
           type="text"
-          placeholder="San Diego, CA"
+          placeholder="New York"
           className="relative bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
           onChange={onChange}
           onKeyDown={onKeyDown}
@@ -173,7 +175,9 @@ class Autocomplete extends React.Component {
           id="autocomplete-input"
         />
         {suggestionsListComponent}
-        <span className="text-sm text-gray-500 block text-right">Powered by Google</span>
+        <span className="text-sm text-gray-500 block text-right">
+          Powered by Google
+        </span>
       </div>
     );
   }

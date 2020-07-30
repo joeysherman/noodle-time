@@ -67,7 +67,7 @@ export function HomePage({ loadingGeo, hasGeo, fetchLocation, error }) {
       </div>
       <div className="flex relative justify-center p-4 md:pb-16 z-10">
         <div className="max-w-sm md:max-w-md w-full rounded shadow-lg bg-gray-100">
-          <div className="flex flex-col items-center px-6 py-4">
+          <div className="flex flex-col items-center px-6 py-4 relative">
             <Link
               to={{
                 pathname: '/places',
