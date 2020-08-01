@@ -19,6 +19,7 @@ export function* homePageSaga() {
     yield put(
       push({
         pathname: '/places',
+        search: ""
       }),
     );
   }

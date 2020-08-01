@@ -18,11 +18,17 @@ function Card(props) {
     image_url,
     rating,
     review_count,
-    detail
   } = props.place;
 
-  let open_now = detail && datail.hours && detail.hours[0].is_open_now;
+  let { detail } = props;
+  let open_now = detail && detail.hours && detail.hours[0].is_open_now;
+  let display_address = false;
 
+  if (detail && detail.location) {
+    display_address = detail.location.display_address.map((val, i) => {
+      return <p key={i}>{val}</p>;
+    });
+  }
 
   let { loading } = props;
   let { children } = props;
@@ -41,27 +47,31 @@ function Card(props) {
           <h2
             className={
               open_now
-              ? 'font-semibold text-green-600 pb-2'
-              : 'inline-block mr-2 font-semibold text-red-600 pb-2'
+                ? 'font-semibold text-green-600 pb-2 pl-2'
+                : 'inline-block mr-2 font-semibold text-red-600 pb-2 pl-2'
             }
           >
             {loading && !detail ? (
               <GrayLoadingBox size="medium" />
+            ) : open_now ? (
+              'OPEN'
             ) : (
-              open_now ? "OPEN" : "CLOSED"
+              'CLOSED'
             )}
           </h2>
-          <div className="flex w-full justify-around p-4">
-            <button className="w-full inline-flex items-center justify-center rounded-lg shadow-md text-gray-900 leading-normal font-bold py-3 px-5 mr-2">
-              <img
-                className="inline-block mr-2"
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAADR0lEQVRYhe2Xz2tcVRTHP+e9WUzepG1Kg4v8QLsrLkSEuinFjRt/bMQOpYhgmZknWkuThQvBxfM/KAykyZvBBEUDDqILNQV10+hCIWo3dqFIoZkQi5AyJtdJ+t47LjITL5M3Y6MzgtDvZu79nnPe9zv33nfnjNBnKMhWsfgCIr7AYwCquoLjzOXCcFFA7Xzpq3g+724dPfqeqJ7tYm4xd+fOi1KrxW3O6acBc+TIm93EAQTOmZGRNzq4/kCnp4fM5uZtYLhFbQrMICKq+kqbF/h96O7dB2RhoQmQuZeHm/PnJzWTKQIvsbtqHzmqtezExNcSBAlA05iTljgCBa9S+QDAlErfKSwCKBxqZjIngeWeBjSfd83hw0/jOL7CU4BrhS8mIhdNvb6m+fxxqdV2EtVDdr0DP7THURx/77p/lSewl7vPQMP3R114zagWgIkUb2vAWGs81jx2bAy4GUfRz7ZIBK8qTAMY171gP8B13Z/a431nYKtUug48kiIMgDc+7jZXV08lInngeRV5fTgM3wcwpdINhRNW+s3W50MWdyNXqTzcnqRtQVdxgNaeLwPLGgRTm+vro1Z4FrhszW3h3XqRGXt+T4fwb8zcbs+HstlZ02xeAo6nF8gvQxsboU319R6QcnlbVV+m47ZrQ0UuSK22MzADAMPV6udAmBKaHZ6bu9pJ9t0AgJfNXgK+tahvvGx2Ki13IAakXN6WKDoD/IrquqiekXJ5+z8xYIrFswDe/PwtVJ8BnvWq1VU7NlADKrJgCoVTALlqdSVXra4AmELhcRV5e+AGgKw6zscN39+7kBq+f0Id51PA60z+V/dAD4y6ql80ff8JjeMoUb0KjKYlDsoAwHis+iWOA/Bgt6RBGugp3MZAXsOD4P9n4I9i8bQGQd+MH/gMJCLXTL3+mymVljRJat7k5JIEQfRPDaQ1JKm/ZD2wBnzY7hFNvR73yL2eq1QetYmDLGVT4F2g3BJtY4zdHvGaqddvdaldReStWOTJzkDaFkQd/I8C4U4m887IlSsbABoEU3ZbhtUjWnUxsESShF6j8Zn9Z8TG/i0oFmcQOScinwjMDYXhV12+FS0zjmXmOSABFiSKqt78fLcVuY/72MOfC0Q3AtCc5dYAAAAASUVORK5CYII="
-              />
-              Directions
-            </button>
+          <div className="flex justify-between">
+          <div className="flex flex-col">{display_address}
+          <a href={`tel:${display_phone}`}>{display_phone}</a>
+          </div>
+            <div className="flex">
+                <Rating rating={rating}/>
+                <p className="pl-2">{rating}</p>
+            </div>
+          </div>
+          <div className="flex justify-around p-2">
             <a
               href={`tel:${display_phone}`}
-              className="w-full inline-flex items-center justify-center transition duration-300 ease-in-out bg-red-500 hover:opacity-75 rounded-lg shadow-md text-white leading-normal font-bold py-3 px-5"
+              className="inline-flex items-center justify-center transition duration-300 ease-in-out bg-red-500 hover:opacity-75 rounded-lg shadow-md text-white leading-normal font-bold py-3 px-5"
             >
               <img
                 className="inline-block mr-2"
@@ -69,20 +79,22 @@ function Card(props) {
               />
               Call
             </a>
+            <button className="inline-flex items-center justify-center rounded-lg shadow-md text-gray-900 leading-normal font-bold py-3 px-5 mr-2">
+              <img
+                className="inline-block mr-2"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAADR0lEQVRYhe2Xz2tcVRTHP+e9WUzepG1Kg4v8QLsrLkSEuinFjRt/bMQOpYhgmZknWkuThQvBxfM/KAykyZvBBEUDDqILNQV10+hCIWo3dqFIoZkQi5AyJtdJ+t47LjITL5M3Y6MzgtDvZu79nnPe9zv33nfnjNBnKMhWsfgCIr7AYwCquoLjzOXCcFFA7Xzpq3g+724dPfqeqJ7tYm4xd+fOi1KrxW3O6acBc+TIm93EAQTOmZGRNzq4/kCnp4fM5uZtYLhFbQrMICKq+kqbF/h96O7dB2RhoQmQuZeHm/PnJzWTKQIvsbtqHzmqtezExNcSBAlA05iTljgCBa9S+QDAlErfKSwCKBxqZjIngeWeBjSfd83hw0/jOL7CU4BrhS8mIhdNvb6m+fxxqdV2EtVDdr0DP7THURx/77p/lSewl7vPQMP3R114zagWgIkUb2vAWGs81jx2bAy4GUfRz7ZIBK8qTAMY171gP8B13Z/a431nYKtUug48kiIMgDc+7jZXV08lInngeRV5fTgM3wcwpdINhRNW+s3W50MWdyNXqTzcnqRtQVdxgNaeLwPLGgRTm+vro1Z4FrhszW3h3XqRGXt+T4fwb8zcbs+HstlZ02xeAo6nF8gvQxsboU319R6QcnlbVV+m47ZrQ0UuSK22MzADAMPV6udAmBKaHZ6bu9pJ9t0AgJfNXgK+tahvvGx2Ki13IAakXN6WKDoD/IrquqiekXJ5+z8xYIrFswDe/PwtVJ8BnvWq1VU7NlADKrJgCoVTALlqdSVXra4AmELhcRV5e+AGgKw6zscN39+7kBq+f0Id51PA60z+V/dAD4y6ql80ff8JjeMoUb0KjKYlDsoAwHis+iWOA/Bgt6RBGugp3MZAXsOD4P9n4I9i8bQGQd+MH/gMJCLXTL3+mymVljRJat7k5JIEQfRPDaQ1JKm/ZD2wBnzY7hFNvR73yL2eq1QetYmDLGVT4F2g3BJtY4zdHvGaqddvdaldReStWOTJzkDaFkQd/I8C4U4m887IlSsbABoEU3ZbhtUjWnUxsESShF6j8Zn9Z8TG/i0oFmcQOScinwjMDYXhV12+FS0zjmXmOSABFiSKqt78fLcVuY/72MOfC0Q3AtCc5dYAAAAASUVORK5CYII="
+              />
+              Map
+            </button>
+            <button className="inline-flex items-center justify-center rounded-lg shadow-md text-gray-900 leading-normal font-bold py-3 px-5 mr-2">
+              <img
+                className="inline-block mr-2"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAADR0lEQVRYhe2Xz2tcVRTHP+e9WUzepG1Kg4v8QLsrLkSEuinFjRt/bMQOpYhgmZknWkuThQvBxfM/KAykyZvBBEUDDqILNQV10+hCIWo3dqFIoZkQi5AyJtdJ+t47LjITL5M3Y6MzgtDvZu79nnPe9zv33nfnjNBnKMhWsfgCIr7AYwCquoLjzOXCcFFA7Xzpq3g+724dPfqeqJ7tYm4xd+fOi1KrxW3O6acBc+TIm93EAQTOmZGRNzq4/kCnp4fM5uZtYLhFbQrMICKq+kqbF/h96O7dB2RhoQmQuZeHm/PnJzWTKQIvsbtqHzmqtezExNcSBAlA05iTljgCBa9S+QDAlErfKSwCKBxqZjIngeWeBjSfd83hw0/jOL7CU4BrhS8mIhdNvb6m+fxxqdV2EtVDdr0DP7THURx/77p/lSewl7vPQMP3R114zagWgIkUb2vAWGs81jx2bAy4GUfRz7ZIBK8qTAMY171gP8B13Z/a431nYKtUug48kiIMgDc+7jZXV08lInngeRV5fTgM3wcwpdINhRNW+s3W50MWdyNXqTzcnqRtQVdxgNaeLwPLGgRTm+vro1Z4FrhszW3h3XqRGXt+T4fwb8zcbs+HstlZ02xeAo6nF8gvQxsboU319R6QcnlbVV+m47ZrQ0UuSK22MzADAMPV6udAmBKaHZ6bu9pJ9t0AgJfNXgK+tahvvGx2Ki13IAakXN6WKDoD/IrquqiekXJ5+z8xYIrFswDe/PwtVJ8BnvWq1VU7NlADKrJgCoVTALlqdSVXra4AmELhcRV5e+AGgKw6zscN39+7kBq+f0Id51PA60z+V/dAD4y6ql80ff8JjeMoUb0KjKYlDsoAwHis+iWOA/Bgt6RBGugp3MZAXsOD4P9n4I9i8bQGQd+MH/gMJCLXTL3+mymVljRJat7k5JIEQfRPDaQ1JKm/ZD2wBnzY7hFNvR73yL2eq1QetYmDLGVT4F2g3BJtY4zdHvGaqddvdaldReStWOTJzkDaFkQd/I8C4U4m887IlSsbABoEU3ZbhtUjWnUxsESShF6j8Zn9Z8TG/i0oFmcQOScinwjMDYXhV12+FS0zjmXmOSABFiSKqt78fLcVuY/72MOfC0Q3AtCc5dYAAAAASUVORK5CYII="
+              />
+              Share
+            </button>
           </div>
-          <div className="flex mb-2">
-            {categories.length &&
-              categories.map(function(val, index) {
-                return (
-                  <p
-                    className="bg-blue-400 px-2 py-1 mr-2 rounded-full w font-light text-xs"
-                    key={index}
-                  >
-                    {val.title}
-                  </p>
-                );
-              })}
-          </div>
+          <p className="p-2">Showing 1-3 of {review_count} reviews.</p>
           {children}
         </div>
       </div>

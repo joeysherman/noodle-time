@@ -167,7 +167,7 @@ class Autocomplete extends React.Component {
       <div className="w-full relative">
         <input
           type="text"
-          placeholder="New York"
+          placeholder="Search here.."
           className="relative bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
           onChange={onChange}
           onKeyDown={onKeyDown}
