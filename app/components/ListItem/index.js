@@ -16,7 +16,7 @@ function ListItem(props) {
   let distanceByMile = (distance / 1609.34).toFixed(1);
 
   return (
-    <li
+    <div
       className="py-4 border-gray-200 border-b-2"
       key={id}
       onClick={props.onClick}
@@ -36,9 +36,9 @@ function ListItem(props) {
           </div>
             <span className="text-gray-600">{review_count} Reviews.</span>
         </div>
-        <p className="flex-shrink-0 text-gray-600">{distanceByMile} mi.</p>
+        <p className="flex-shrink-0 text-gray-600 pr-2">{distanceByMile} mi.</p>
       </div>
-    </li>
+    </div>
   );
 }
 

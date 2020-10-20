@@ -41,6 +41,7 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import Card from '../../components/Card';
 import Review from '../../components/Review';
 import ActionBar from '../../components/ActionBar';
+import { Trail } from 'react-spring/renderprops';
 
 import { incrementIndex, decrementIndex } from './actions';
 
@@ -53,9 +54,8 @@ export class PlacesPage extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
-  
-    this.state = { showMap: (window.innerWidth >= 768) };
 
+    this.state = { showMap: window.innerWidth >= 768 };
   }
 
   componentDidMount() {
@@ -78,12 +78,10 @@ export class PlacesPage extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-  }
+  componentWillUnmount() {}
 
   componentWillMount() {
     if (window.innerWidth >= 768) {
-
     }
   }
 
@@ -124,14 +122,22 @@ export class PlacesPage extends React.Component {
     let reviewsComponents = false;
 
     if (reviewsObject && reviewsObject.reviews.length) {
-      reviewsComponents = reviewsObject.reviews.map(val => <Review data={val}></Review>);
+      reviewsComponents = reviewsObject.reviews.map(val => (
+        <Review data={val} />
+      ));
     }
     return (
       <div className="w-full md:w-3/5">
-        <Card place={placeData}
-         detail={details}
-         loading={loading}>
-          {reviewsComponents}
+        <Card place={placeData} detail={details} loading={loading}>
+        <Trail
+            items={reviewsComponents}
+            keys={item => item.key}
+            from={{ opacity: 0, transform: 'translate3d(-40px,0,0)' }}
+            to={{ opacity: 1, transform: 'translate3d(0,0px,0)' }}
+            delay={100}
+          >
+            {item => props => <div style={props}>{item}</div>}
+          </Trail>
         </Card>
       </div>
     );
@@ -170,10 +176,18 @@ export class PlacesPage extends React.Component {
       let { places } = this.props;
       let count = places.length;
       let items = this.renderListItems(places);
-
+      console.log(items);
       return (
         <div className="w-full md:w-3/5 bg-white rounded shadow-md">
-          <List count={count}>{items}</List>
+          <Trail
+            items={items}
+            keys={item => item.key}
+            from={{ opacity: 0, transform: 'translate3d(0,-20px,0)' }}
+            to={{ opacity: 1, transform: 'translate3d(0,0px,0)' }}
+            delay={100}
+          >
+            {item => props => <div style={props}>{item}</div>}
+          </Trail>
         </div>
       );
     } else {
@@ -196,7 +210,7 @@ export class PlacesPage extends React.Component {
     const loadingText = arrOfLoadingText[rand];
     const index = this.props.index;
     const qs = queryString.parse(this.props.history.location.search);
-    const showMap = this.state.showMap || qs.mode && qs.mode == 'map';
+    const showMap = this.state.showMap || (qs.mode && qs.mode == 'map');
     const mapLink = {
       ...qs,
       mode: 'map',
@@ -205,11 +219,10 @@ export class PlacesPage extends React.Component {
     return (
       <div className="container mx-auto">
         <ActionBar className="p-2 flex justify-between items-center bg-white">
-            <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
-              Filter
-            </button>
+          <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
+            Filter
+          </button>
           <div>
-        
             <h3>Showing {length} places.</h3>
           </div>
           <div className="inline-flex">
@@ -264,7 +277,10 @@ const mapStateToProps = (state, ownProps) => ({
   userLocation: selectLocation(state),
   places: selectPlaces(state),
   index: selectIndex(state),
-  detail: selectDetailById(state, queryString.parse(ownProps.history.location.search)),
+  detail: selectDetailById(
+    state,
+    queryString.parse(ownProps.history.location.search),
+  ),
 });
 
 function mapDispatchToProps(dispatch, ownProps) {
