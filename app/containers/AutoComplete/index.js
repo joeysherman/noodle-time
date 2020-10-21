@@ -90,6 +90,7 @@ class Autocomplete extends React.Component {
     // User pressed the enter key, update the input and close the
     // suggestions
     if (e.keyCode === 13) {
+      console.log("enter autocomplete")
       this.setState({
         activeSuggestion: 0,
         showSuggestions: false,

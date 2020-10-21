@@ -215,6 +215,7 @@ export class PlacesPage extends React.Component {
       ...qs,
       mode: 'map',
     };
+    const showDetail = qs && qs.detail && length;
 
     return (
       <div className="container mx-auto">
@@ -223,7 +224,7 @@ export class PlacesPage extends React.Component {
             Filter
           </button>
           <div>
-            <h3>Showing {length} places.</h3>
+            {!showDetail && <h3>Showing {length} places near you.</h3>}
           </div>
           <div className="inline-flex">
             <Link
@@ -257,7 +258,7 @@ export class PlacesPage extends React.Component {
                 </div>
               </div>
             ))}
-          {qs && qs.detail && length
+          {showDetail
             ? this.renderCardView()
             : this.renderList()}
           {showMap ? (

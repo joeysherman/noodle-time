@@ -23,6 +23,15 @@ function Card(props) {
   let { detail } = props;
   let open_now = detail && detail.hours && detail.hours[0].is_open_now;
   let display_address = false;
+  let dayOfWeek = new Date().getDay();
+  if (dayOfWeek == 6) {
+    dayOfWeek == 6
+  } else {
+    dayOfWeek -= 1;
+  }
+  let tomorrow = dayOfWeek == 6 ? 0 : dayOfWeek + 1;
+
+  console.log(dayOfWeek)
 
   if (detail && detail.location) {
     display_address = detail.location.display_address.map((val, i) => {
@@ -35,7 +44,7 @@ function Card(props) {
 
   return (
     <div className="flex flex-col bg-white p-4">
-      <div className="relative pb-2/3 md:pb-1/5">
+      <div className="relative pb-2/3 md:pb-2/5">
         <img
           className="absolute h-full w-full object-cover rounded shadow-lg"
           src={image_url}
@@ -44,22 +53,32 @@ function Card(props) {
       <h1 className="font-bold text-4xl mb-1 pl-2">{name}</h1>
       <div className="w-full">
         <div className="flex flex-col h-full justify-around">
-          <h2
+          <div className="flex">
+
+          <p
             className={
               open_now
                 ? 'font-semibold text-green-600 pb-2 pl-2'
                 : 'inline-block mr-2 font-semibold text-red-600 pb-2 pl-2'
-            }
-          >
+              }
+              >
             {loading && !detail ? (
               <GrayLoadingBox size="medium" />
-            ) : open_now ? (
-              'OPEN'
-            ) : (
-              'CLOSED'
-            )}
-          </h2>
-          <div className="flex justify-between">
+              ) : open_now ? (
+                'OPEN'
+                ) : (
+                  'CLOSED'
+                  )}
+          </p>
+          <p>{loading && !detail ? (
+              <GrayLoadingBox size="medium" />
+              ) : open_now ? 
+                " until " + detail && detail.hours && detail.hours[0].open[dayOfWeek].end
+                 : 
+                  " opens at " + detail && detail.hours && detail.hours[0].open[tomorrow].start + " tomorrow."
+                  }</p>
+                  </div>
+          <div className="flex justify-between p-2 border-gray-500 rounded-sm shadow">
           <div className="flex flex-col">{display_address}
           <a href={`tel:${display_phone}`}>{display_phone}</a>
           </div>
@@ -68,7 +87,7 @@ function Card(props) {
                 <p className="pl-2">{rating}</p>
             </div>
           </div>
-          <div className="flex justify-around p-2">
+          <div className="flex justify-around p-4">
             <a
               href={`tel:${display_phone}`}
               className="inline-flex items-center justify-center transition duration-300 ease-in-out bg-red-500 hover:opacity-75 rounded-lg shadow-md text-white leading-normal font-bold py-3 px-5"
