@@ -72,6 +72,7 @@
     "query-string": "^6.12.1",
     "react": "16.8.6",
     "react-dom": "16.8.6",
+    "react-ga": "^3.2.1",
     "react-helmet": "6.0.0-beta",
     "react-intl": "2.8.0",
     "react-redux": "7.0.2",

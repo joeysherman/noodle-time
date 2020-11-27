@@ -123,7 +123,7 @@ export class PlacesPage extends React.Component {
 
     if (reviewsObject && reviewsObject.reviews.length) {
       reviewsComponents = reviewsObject.reviews.map(val => (
-        <Review data={val} />
+        <Review data={val} key={val.id}/>
       ));
     }
     return (
