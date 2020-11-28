@@ -173,7 +173,8 @@ export class PlacesPage extends React.Component {
       console.log('inside renderlist');
       let { places } = this.props;
       let count = places.length;
-      let items = this.renderListItems(places);
+      let placesToRender = places.slice(0, count >= 5 ? 5 : count);
+      let items = this.renderListItems(placesToRender);
       return (
         <div className="w-full md:w-3/5 bg-white rounded shadow-md">
           <Trail
