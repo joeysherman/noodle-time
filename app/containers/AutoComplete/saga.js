@@ -26,7 +26,6 @@ import {
 } from "../AutoComplete/actions"
 
 let autoCompleteUrl = "/api/autocomplete";
-let geocodeUrl = "/api/geocode";
 
 // Individual exports for testing
 

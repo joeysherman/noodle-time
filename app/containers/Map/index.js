@@ -48,6 +48,7 @@ class Map extends React.Component {
     if (prevProps.viewIndex !== this.props.viewIndex) {
       if (Number.isInteger(this.props.viewIndex)) {
         this.extendMapBoundsForSelection();
+        this.getDirections();
       } else {
         this.extendMapBoundsForAll();
       }
@@ -79,7 +80,7 @@ class Map extends React.Component {
       };
       _bounds = _bounds.extend(userCoords);
       _bounds = _bounds.extend(placeCoords);
-      this.map.fitBounds(_bounds, { bottom: 60, left: 20, right: 20, top: 60 });
+      this.map.fitBounds(_bounds, { bottom: 20, left: 20, right: 20, top: 20 });
     }
   };
 
@@ -90,15 +91,15 @@ class Map extends React.Component {
 
   checkDirectionsService = () => {
     if (!window.directionService) {
-      window.directionService = new window.google.maps.DirectionsService();
+      window.directionService = new this.maps.DirectionsService();
     }
     return true;
   };
 
   checkRendererService = () => {
     if (!window.rendererService) {
-      window.rendererService = new window.google.maps.DirectionsRenderer({
-        map: window.map
+      window.rendererService = new this.maps.DirectionsRenderer({
+        map: this.map
       });
     }
     return true;
@@ -219,13 +220,16 @@ class Map extends React.Component {
   };
 
   getDirectionsRequest = () => {
+    const { places, viewIndex, userLocation } = this.props;
+    const place = places[viewIndex];
+
     let origin = {
-      lat: this.props.userLocation.geometry.location.lat,
-      lng: this.props.userLocation.geometry.location.lng
+      lat: userLocation.latitude,
+      lng: userLocation.longitude
     };
     let destination = {
-      lat: this.props.destination.location.coordinate.latitude,
-      lng: this.props.destination.location.coordinate.longitude
+      lat: place.coordinates.latitude,
+      lng: place.coordinates.longitude
     };
     let query = {
       origin,
@@ -241,6 +245,7 @@ class Map extends React.Component {
  * @memberof Map
  */
 renderDirectionsOnMap = directions => {
+  console.log("Rendering Directions")
     if (this.checkRendererService()) {
       window.rendererService.setDirections(directions);
       window.rendererService.setMap(window.map);
@@ -254,24 +259,20 @@ renderDirectionsOnMap = directions => {
    *
    * */
   getDirections = () => {
+    console.log("Getting Directions")
     if (this.checkDirectionsService()) {
       let request = this.getDirectionsRequest();
-
-      window.directionService.route(request, (result, status) => {
-        if (result) {
-          console.log(result);
-          console.log(status);
-          this.renderDirectionsOnMap(result);
-          // check status
-          // renderDirections
-        }
-      });
+      console.log("Getting Directions inside")
+      // window.directionService.route(request, (result, status) => {
+      //   if (result) {
+      //     console.log(result);
+      //     console.log(status);
+      //     this.renderDirectionsOnMap(result);
+      //     // check status
+      //     // renderDirections
+      //   }
+      // });
     }
-  };
-
-  setDirections = () => {
-    // DirectionsRenders.setDirections(result)
-    this.getDirections();
   };
 
   toggleDialog = () => {
@@ -289,7 +290,7 @@ renderDirectionsOnMap = directions => {
 
   render() {
     const { latitude, longitude } = this.props.userLocation;
-    const { classNames } = this.props;
+    const { classNames, viewIndex } = this.props;
     const center = {};
     if (latitude && longitude) {
       center.lat = latitude;

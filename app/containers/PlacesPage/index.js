@@ -119,25 +119,23 @@ export class PlacesPage extends React.Component {
     let detailData = this.props.detail;
     let reviewsObject = detailData && detailData.reviews;
     let details = detailData && detailData.detail;
-    let reviewsComponents = false;
 
-    if (reviewsObject && reviewsObject.reviews.length) {
-      reviewsComponents = reviewsObject.reviews.map(val => (
-        <Review data={val} key={val.id}/>
-      ));
-    }
     return (
       <div className="w-full md:w-3/5">
         <Card place={placeData} detail={details} loading={loading}>
-        <Trail
-            items={reviewsComponents}
-            keys={item => item.key}
-            from={{ opacity: 0, transform: 'translate3d(-40px,0,0)' }}
-            to={{ opacity: 1, transform: 'translate3d(0,0px,0)' }}
-            delay={100}
-          >
-            {item => props => <div style={props}>{item}</div>}
-          </Trail>
+          {reviewsObject ? (
+            <Trail
+              keys={item => item.id}
+              items={reviewsObject.reviews}
+              from={{ opacity: 0, transform: 'translate3d(-40px,0,0)' }}
+              to={{ opacity: 1, transform: 'translate3d(0,0px,0)' }}
+              delay={100}
+            >
+              {item => props => <Review data={item} style={props} />}
+            </Trail>
+          ) : (
+            <LoadingSpinner />
+          )}
         </Card>
       </div>
     );
@@ -176,7 +174,6 @@ export class PlacesPage extends React.Component {
       let { places } = this.props;
       let count = places.length;
       let items = this.renderListItems(places);
-      console.log(items);
       return (
         <div className="w-full md:w-3/5 bg-white rounded shadow-md">
           <Trail
@@ -223,9 +220,7 @@ export class PlacesPage extends React.Component {
           <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
             Filter
           </button>
-          <div>
-            {!showDetail && <h3>Showing {length} places near you.</h3>}
-          </div>
+          <div>{!showDetail && <h3>Showing {length} places near you.</h3>}</div>
           <div className="inline-flex">
             <Link
               to={{
@@ -258,9 +253,7 @@ export class PlacesPage extends React.Component {
                 </div>
               </div>
             ))}
-          {showDetail
-            ? this.renderCardView()
-            : this.renderList()}
+          {showDetail ? this.renderCardView() : this.renderList()}
           {showMap ? (
             <Map classNames="w-full md:w-2/5 h-48 md:h-64 md:ml-8" />
           ) : (
