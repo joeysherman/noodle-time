@@ -248,7 +248,7 @@ renderDirectionsOnMap = directions => {
   console.log("Rendering Directions")
     if (this.checkRendererService()) {
       window.rendererService.setDirections(directions);
-      window.rendererService.setMap(window.map);
+      window.rendererService.setMap(this.map);
     }
   };
 
@@ -263,15 +263,15 @@ renderDirectionsOnMap = directions => {
     if (this.checkDirectionsService()) {
       let request = this.getDirectionsRequest();
       console.log("Getting Directions inside")
-      // window.directionService.route(request, (result, status) => {
-      //   if (result) {
-      //     console.log(result);
-      //     console.log(status);
-      //     this.renderDirectionsOnMap(result);
-      //     // check status
-      //     // renderDirections
-      //   }
-      // });
+      window.directionService.route(request, (result, status) => {
+        if (result) {
+          console.log(result);
+          console.log(status);
+          this.renderDirectionsOnMap(result);
+          // check status
+          // renderDirections
+        }
+      });
     }
   };
 
