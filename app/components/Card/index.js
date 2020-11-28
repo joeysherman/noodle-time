@@ -25,13 +25,13 @@ function Card(props) {
   let display_address = false;
   let dayOfWeek = new Date().getDay();
   if (dayOfWeek == 6) {
-    dayOfWeek == 6
+    dayOfWeek == 6;
   } else {
     dayOfWeek -= 1;
   }
   let tomorrow = dayOfWeek == 6 ? 0 : dayOfWeek + 1;
 
-  console.log(dayOfWeek)
+  console.log(dayOfWeek);
 
   if (detail && detail.location) {
     display_address = detail.location.display_address.map((val, i) => {
@@ -42,8 +42,38 @@ function Card(props) {
   let { loading } = props;
   let { children } = props;
 
+  function renderHoursSection() {
+    if (!loading && detail) {
+      return (
+        <>
+          <p
+            className={
+              open_now
+                ? 'font-semibold text-green-600 pb-2 pl-2'
+                : 'inline-block mr-2 font-semibold text-red-600 pb-2 pl-2'
+            }
+          >
+            {open_now ? 'OPEN' : 'CLOSED'}
+          </p>
+          <p>
+            {open_now
+              ? ' until ' + detail &&
+                detail.hours &&
+                detail.hours[0].open[dayOfWeek].end
+              : detail &&
+                detail.hours &&
+                ' opens at ' + detail.hours[0].open[tomorrow].start + ' tomorrow.'}
+          </p>
+        </>
+      );
+    }
+    return (
+      <p>Loading...</p>
+    )
+  }
+
   return (
-    <div className="flex flex-col bg-white p-4">
+    <div className="flex flex-col bg-white">
       <div className="relative pb-2/3 md:pb-2/5">
         <img
           className="absolute h-full w-full object-cover rounded shadow-lg"
@@ -53,38 +83,15 @@ function Card(props) {
       <h1 className="font-bold text-4xl mb-1 pl-2">{name}</h1>
       <div className="w-full">
         <div className="flex flex-col h-full justify-around">
-          <div className="flex">
-
-          <p
-            className={
-              open_now
-                ? 'font-semibold text-green-600 pb-2 pl-2'
-                : 'inline-block mr-2 font-semibold text-red-600 pb-2 pl-2'
-              }
-              >
-            {loading && !detail ? (
-              <GrayLoadingBox size="medium" />
-              ) : open_now ? (
-                'OPEN'
-                ) : (
-                  'CLOSED'
-                  )}
-          </p>
-          <p>{loading && !detail ? (
-              <GrayLoadingBox size="medium" />
-              ) : open_now ? 
-                " until " + detail && detail.hours && detail.hours[0].open[dayOfWeek].end
-                 : 
-                  " opens at " + detail && detail.hours && detail.hours[0].open[tomorrow].start + " tomorrow."
-                  }</p>
-                  </div>
+          <div className="flex">{renderHoursSection()}</div>
           <div className="flex justify-between p-2 border-gray-500 rounded-sm shadow">
-          <div className="flex flex-col">{display_address}
-          <a href={`tel:${display_phone}`}>{display_phone}</a>
-          </div>
+            <div className="flex flex-col">
+              {display_address}
+              <a href={`tel:${display_phone}`}>{display_phone}</a>
+            </div>
             <div className="flex">
-                <Rating rating={rating}/>
-                <p className="pl-2">{rating}</p>
+              <Rating rating={rating} />
+              <p className="pl-2">{rating}</p>
             </div>
           </div>
           <div className="flex justify-around p-4">

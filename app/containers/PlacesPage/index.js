@@ -180,7 +180,7 @@ export class PlacesPage extends React.Component {
           <Trail
             items={items}
             keys={item => item.key}
-            from={{ opacity: 0, transform: 'translate3d(0,-20px,0)' }}
+            from={{ opacity: 0, transform: 'translate3d(-20px,0px,0)' }}
             to={{ opacity: 1, transform: 'translate3d(0,0px,0)' }}
             delay={100}
           >
@@ -193,6 +193,24 @@ export class PlacesPage extends React.Component {
       return false;
     }
   };
+
+  renderBackButton = () => {
+    return (
+      <Link to={{
+        pathname: "/places"
+      }} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
+      Back
+    </Link>
+    )
+  }
+
+  renderActionButton = () => {
+    return (
+      <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
+            Filter
+          </button>
+    )
+  }
 
   render() {
     const { loadingLocation, loading } = this.props;
@@ -218,9 +236,7 @@ export class PlacesPage extends React.Component {
     return (
       <div className="container mx-auto">
         <ActionBar className="p-2 flex justify-between items-center bg-white">
-          <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
-            Filter
-          </button>
+          {showDetail ? this.renderBackButton() : this.renderActionButton()}
           <div>{!showDetail && <h3>Showing {length} places near you.</h3>}</div>
           <div className="inline-flex">
             <Link
@@ -242,7 +258,7 @@ export class PlacesPage extends React.Component {
             </Link>
           </div>
         </ActionBar>
-        <div className="flex flex-wrap flex-col-reverse md:flex-row md:flex-no-wrap md:p-4">
+        <div className="flex flex-wrap flex-col-reverse md:flex-row md:flex-no-wrap">
           {loadingLocation ||
             (loading === 'places' && (
               <div className="w-full md:w-3/5 text-center">
